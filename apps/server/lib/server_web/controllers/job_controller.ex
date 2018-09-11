@@ -1,16 +1,18 @@
 defmodule Harvest.ServerWeb.JobController do
   use Harvest.ServerWeb, :controller
-  alias Harvest.Server.Scheduling
+
+  alias Harvest.Server.Jobs
+  alias Harvest.Server.Jobs.Service, as: JobService
 
   action_fallback Harvest.ServerWeb.FallbackController
 
   def index(conn, _params) do
-    jobs = Scheduling.list_jobs()
+    jobs = Jobs.list_jobs()
     render(conn, "index.json", jobs: jobs)
   end
 
-  def create(conn, %{"job" => job_params}) do
-    with {:ok, job} <- Scheduling.create_job(job_params) do
+  def create(conn, %{"data" => job_params}) do
+    with {:ok, job} <- JobService.create_job(job_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", job_path(conn, :show, job))
@@ -19,7 +21,7 @@ defmodule Harvest.ServerWeb.JobController do
   end
 
   def show(conn, %{"id" => id}) do
-    job = Scheduling.get_job!(id)
+    job = Jobs.get_job!(id)
     render(conn, "show.json", job: job)
   end
 

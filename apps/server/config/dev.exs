@@ -41,7 +41,10 @@ config :server, Harvest.ServerWeb.Endpoint,
   ]
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n"
+config :logger, :console,
+  format: "[$level] $message\n",
+  handle_sasl_reports: false,
+  handle_otp_reports: false
 
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
@@ -49,11 +52,9 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
 config :server, Harvest.Server.Repo,
-  adapter: Sqlite.Ecto2,
-  database: "dev.sqlite3"
-  # adapter: Ecto.Adapters.Postgres,
-  # username: "postgres",
-  # password: "postgres",
-  # database: "server_dev",
-  # hostname: "localhost",
-  # pool_size: 10
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "harvest_dev",
+  hostname: "localhost",
+  pool_size: 10

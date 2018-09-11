@@ -18,16 +18,15 @@ defmodule Harvest.Agent.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {Harvest.Agent, []}
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:exd, path: "../../../exd"},
-      {:gen_queue, "~> 0.1.8"},
-      {:gen_queue_opq, "~> 0.1.1"}
+      {:common, in_umbrella: true}
     ]
   end
 end

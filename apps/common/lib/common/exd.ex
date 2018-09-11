@@ -1,4 +1,4 @@
-defmodule Harvest.Server.Cmd do
+defmodule Harvest.Exd do
   @moduledoc """
   ...
   """

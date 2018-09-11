@@ -1,18 +1,20 @@
 defmodule Harvest.Agent do
-  @moduledoc """
-  Documentation for Harvest.Agent.
-  """
+  use Application
 
-  @doc """
-  Hello world.
+  # See https://hexdocs.pm/elixir/Application.html
+  # for more information on OTP Applications
+  def start(_type, _args) do
+    import Supervisor.Spec
 
-  ## Examples
+    # Define workers and child supervisors to be supervised
+    children = [
+      supervisor(Exq, [[name: :agent_exq]])
+    ]
 
-      iex> Harvest.Agent.hello
-      :world
-
-  """
-  def hello do
-    :world
+    # See https://hexdocs.pm/elixir/Supervisor.html
+    # for other strategies and supported options
+    opts = [strategy: :one_for_one, name: Harvest.Agent.Supervisor]
+    Supervisor.start_link(children, opts)
   end
+
 end

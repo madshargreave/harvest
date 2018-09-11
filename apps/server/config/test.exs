@@ -11,11 +11,9 @@ config :logger, level: :warn
 
 # Configure your database
 config :server, Harvest.Server.Repo,
-  adapter: Sqlite.Ecto2,
-  database: "dev.sqlite3",
-  # adapter: Ecto.Adapters.Postgres,
-  # username: "postgres",
-  # password: "postgres",
-  # database: "server_test",
-  # hostname: "localhost",
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "server_test",
+  hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

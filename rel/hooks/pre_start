@@ -1,0 +1,5 @@
+echo "we're starting!"
+
+echo "Migrating database..."
+bin/server migrate
+echo "Migration complete"

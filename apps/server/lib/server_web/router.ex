@@ -17,5 +17,6 @@ defmodule Harvest.ServerWeb.Router do
   scope "/api", Harvest.ServerWeb do
     pipe_through :api
     resources "/jobs", JobController
+    resources "/users", UserController
   end
 end

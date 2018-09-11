@@ -9,7 +9,10 @@ use Mix.Config
 # back to each application for organization purposes.
 import_config "../apps/*/config/config.exs"
 
-config :sasl, sasl_error_logger: false
+config :logger,
+  level: :info
+  # handle_sasl_reports: true,
+  # handle_otp_reports: true
 
 # Sample configuration (overrides the imported configuration above):
 #

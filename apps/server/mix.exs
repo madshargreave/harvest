@@ -23,7 +23,7 @@ defmodule Harvest.Server.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Harvest.Server.Application, []},
+      mod: {Harvest.Server, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -37,9 +37,7 @@ defmodule Harvest.Server.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:sqlite_ecto2, "~> 2.2"},
-      {:gen_queue, "~> 0.1.8"},
-      {:gen_queue_opq, "~> 0.1.1"},
+      {:common, in_umbrella: true},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
@@ -61,7 +59,7 @@ defmodule Harvest.Server.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

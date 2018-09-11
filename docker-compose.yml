@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  redis:
+    image: bitnami/redis:latest
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+  db:
+    image: postgres:10
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=harvest_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  # harvest-server:
+  #   image: server:latest
+  #   ports:
+  #     - 4000:4000
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   environment:
+  #     - PORT=4000
+  #     - HARVEST_HOST=http://localhost:4000
+  #     - HARVEST_DB_DATABASE=harvest_dev
+  #     - HARVEST_DB_USERNAME=postgres
+  #     - HARVEST_DB_PASSWORD=postgres
+  #     - HARVEST_DB_HOSTNAME=db
+  # harvest-agent:
+  #   image: harvest-agent:latest
+  #   restart: always
+  #   depends_on:
+  #     - harvest-server
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - HARVEST_SERVER=harvest-server:4000
+  #     - HARVEST_MAX_PROCS=3
