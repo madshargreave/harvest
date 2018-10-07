@@ -38,6 +38,7 @@ defmodule Harvest.Server.Mixfile do
   defp deps do
     [
       {:common, in_umbrella: true},
+      {:harvest_catalog, in_umbrella: true},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
