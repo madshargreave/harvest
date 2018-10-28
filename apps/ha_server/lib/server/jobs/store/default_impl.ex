@@ -22,7 +22,14 @@ defmodule HAServer.Jobs.Store.DefaultImpl do
 
   @impl true
   def save(changeset) do
-    Repo.insert_or_update(changeset)
+    transaction_result =
+      Repo.transaction(fn ->
+        job = Repo.insert_or_update(changeset)
+        for dispatch <- Map.get(changeset, :__register_event__, []), do: dispatch.(job)
+        job
+      end)
+
+    with {:ok, job} <- transaction_result, do: job
   end
 
 end

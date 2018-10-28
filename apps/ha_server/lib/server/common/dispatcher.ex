@@ -13,13 +13,14 @@ defmodule HAServer.Dispatcher do
   """
   @spec register_event(Changeset.t, term) :: Changeset.t
   def register_event(changeset, event_module) do
-    changeset
-    |> prepare_changes(fn changeset ->
-      aggregate = apply_changes(changeset)
+    current_dispatches = Map.get(changeset, :__register_event__, [])
+    dispatch = fn aggregate ->
       event = event_module.make(aggregate)
       IO.inspect "Dispatching event: #{inspect event.type} #{inspect event.data}"
-      changeset
-    end)
+      aggregate
+    end
+
+    Map.put(changeset, :__register_event__, [dispatch | current_dispatches])
   end
 
 end
