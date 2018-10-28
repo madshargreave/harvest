@@ -1,4 +1,4 @@
-defmodule Harvest.Server.Common.Supervisor do
+defmodule HAServer.Common.Supervisor do
   use Supervisor
 
   def start_link(args \\ []) do
@@ -7,7 +7,7 @@ defmodule Harvest.Server.Common.Supervisor do
 
   def init([args]) do
     children = [
-      supervisor(Exq, [[name: :server_exq]])
+      # supervisor(Exq, [[name: :server_exq]])
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

@@ -1,4 +1,4 @@
-defmodule Harvest.Server.Validations.ExdQuery do
+defmodule HAServer.Validations.ExdQuery do
   @moduledoc false
   import Ecto.Changeset
 

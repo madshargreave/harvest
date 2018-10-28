@@ -1,4 +1,4 @@
 ExUnit.start()
 
-Ecto.Adapters.SQL.Sandbox.mode(Harvest.Server.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(HAServer.Repo, :manual)
 

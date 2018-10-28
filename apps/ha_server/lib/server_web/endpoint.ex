@@ -1,12 +1,12 @@
-defmodule Harvest.ServerWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :server
+defmodule HAServerWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :ha_server
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :server, gzip: false,
+    at: "/", from: :ha_server, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -35,7 +35,7 @@ defmodule Harvest.ServerWeb.Endpoint do
     key: "_server_key",
     signing_salt: "lAc4Hp8r"
 
-  plug Harvest.ServerWeb.Router
+  plug HAServerWeb.Router
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.

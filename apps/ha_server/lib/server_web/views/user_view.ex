@@ -1,6 +1,6 @@
-defmodule Harvest.ServerWeb.UserView do
-  use Harvest.ServerWeb, :view
-  alias Harvest.ServerWeb.UserView
+defmodule HAServerWeb.UserView do
+  use HAServerWeb, :view
+  alias HAServerWeb.UserView
 
   def render("index.json", %{users: users}) do
     %{data: render_many(users, UserView, "user.json")}

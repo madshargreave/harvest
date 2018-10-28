@@ -1,11 +1,11 @@
-defmodule Harvest.Server.Accounts.Store do
+defmodule HAServer.Accounts.Store do
   @moduledoc """
   Account store
   """
   import Ecto.Query, warn: false
 
-  alias Harvest.Server.Repo
-  alias Harvest.Server.Accounts.User
+  alias HAServer.Repo
+  alias HAServer.Accounts.User
 
   @doc """
   Returns number of users.

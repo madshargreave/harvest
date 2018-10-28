@@ -1,8 +1,8 @@
-defmodule Harvest.ServerWeb.UserControllerTest do
-  use Harvest.ServerWeb.ConnCase
+defmodule HAServerWeb.UserControllerTest do
+  use HAServerWeb.ConnCase
 
-  alias Harvest.Server.Accounts
-  alias Harvest.Server.Accounts.User
+  alias HAServer.Accounts
+  alias HAServer.Accounts.User
 
   @create_attrs %{admin: true, email: "some email", name: "some name"}
   @update_attrs %{admin: false, email: "some updated email", name: "some updated name"}

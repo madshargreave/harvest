@@ -1,5 +1,5 @@
-defmodule Harvest.ServerWeb.ErrorView do
-  use Harvest.ServerWeb, :view
+defmodule HAServerWeb.ErrorView do
+  use HAServerWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

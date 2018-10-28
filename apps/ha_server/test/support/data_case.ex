@@ -1,4 +1,4 @@
-defmodule Harvest.Server.DataCase do
+defmodule HAServer.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,20 +16,20 @@ defmodule Harvest.Server.DataCase do
 
   using do
     quote do
-      alias Harvest.Server.Repo
+      alias HAServer.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Harvest.Server.DataCase
+      import HAServer.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Harvest.Server.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(HAServer.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Harvest.Server.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(HAServer.Repo, {:shared, self()})
     end
 
     :ok

@@ -6,16 +6,16 @@
 use Mix.Config
 
 # General application configuration
-config :server,
-  namespace: Harvest.Server,
-  ecto_repos: [Harvest.Server.Repo]
+config :ha_server,
+  namespace: HAServer,
+  ecto_repos: [HAServer.Repo]
 
 # Configures the endpoint
-config :server, Harvest.ServerWeb.Endpoint,
+config :ha_server, HAServerWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "imPGtAEbpbZRQ3Xef9ZwCaaLEGtqmGC2Pwt0CoYS3SeFexuTqhaBpE40wymJ2Hkk",
-  render_errors: [view: Harvest.ServerWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Harvest.Server.PubSub,
+  render_errors: [view: HAServerWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: HAServer.PubSub,
            adapter: Phoenix.PubSub.PG2],
   server: true
 
@@ -24,11 +24,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
-config :exq,
-  host: "127.0.0.1",
-  port: 6379,
-  namespace: "exq",
-  queues: ["default"]
+# config :exq,
+#   host: "127.0.0.1",
+#   port: 6379,
+#   namespace: "exq",
+#   queues: ["default"]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

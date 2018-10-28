@@ -1,9 +1,9 @@
-defmodule Harvest.Server.Mixfile do
+defmodule HAServer.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :server,
+      app: :ha_server,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -23,7 +23,7 @@ defmodule Harvest.Server.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Harvest.Server, []},
+      mod: {HAServer, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -37,8 +37,8 @@ defmodule Harvest.Server.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:common, in_umbrella: true},
-      {:harvest_catalog, in_umbrella: true},
+      # {:common, in_umbrella: true},
+      # {:harvest_catalog, in_umbrella: true},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},

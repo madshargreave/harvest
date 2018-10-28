@@ -1,12 +1,12 @@
-defmodule Harvest.ServerWeb do
+defmodule HAServerWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use Harvest.ServerWeb, :controller
-      use Harvest.ServerWeb, :view
+      use HAServerWeb, :controller
+      use HAServerWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,17 +19,17 @@ defmodule Harvest.ServerWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: Harvest.ServerWeb
+      use Phoenix.Controller, namespace: HAServerWeb
       import Plug.Conn
-      import Harvest.ServerWeb.Router.Helpers
-      import Harvest.ServerWeb.Gettext
+      import HAServerWeb.Router.Helpers
+      import HAServerWeb.Gettext
     end
   end
 
   def view do
     quote do
       use Phoenix.View, root: "lib/server_web/templates",
-                        namespace: Harvest.ServerWeb
+                        namespace: HAServerWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
@@ -37,9 +37,9 @@ defmodule Harvest.ServerWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Harvest.ServerWeb.Router.Helpers
-      import Harvest.ServerWeb.ErrorHelpers
-      import Harvest.ServerWeb.Gettext
+      import HAServerWeb.Router.Helpers
+      import HAServerWeb.ErrorHelpers
+      import HAServerWeb.Gettext
     end
   end
 
@@ -54,7 +54,7 @@ defmodule Harvest.ServerWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import Harvest.ServerWeb.Gettext
+      import HAServerWeb.Gettext
     end
   end
 

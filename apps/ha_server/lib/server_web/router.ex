@@ -1,5 +1,5 @@
-defmodule Harvest.ServerWeb.Router do
-  use Harvest.ServerWeb, :router
+defmodule HAServerWeb.Router do
+  use HAServerWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,7 +14,7 @@ defmodule Harvest.ServerWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  scope "/api", Harvest.ServerWeb do
+  scope "/api", HAServerWeb do
     pipe_through :api
     resources "/jobs", JobController
     resources "/users", UserController

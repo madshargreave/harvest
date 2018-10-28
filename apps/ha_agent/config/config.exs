@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure your application as:
 #
-#     config :agent, key: :value
+#     config :ha_agent, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:agent, :key)
+#     Application.get_env(:ha_agent, :key)
 #
 # You can also configure a 3rd-party app:
 #
@@ -29,9 +29,9 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :exq,
-  host: "127.0.0.1",
-  port: 6379,
-  namespace: "exq",
-  concurrency: 1,
-  queues: ["default"]
+# config :exq,
+#   host: "127.0.0.1",
+#   port: 6379,
+#   namespace: "exq",
+#   concurrency: 1,
+#   queues: ["default"]

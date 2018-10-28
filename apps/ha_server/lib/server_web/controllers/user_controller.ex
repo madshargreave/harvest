@@ -1,10 +1,10 @@
-defmodule Harvest.ServerWeb.UserController do
-  use Harvest.ServerWeb, :controller
+defmodule HAServerWeb.UserController do
+  use HAServerWeb, :controller
 
-  alias Harvest.Server.Accounts
-  alias Harvest.Server.Accounts.User
+  alias HAServer.Accounts
+  alias HAServer.Accounts.User
 
-  action_fallback Harvest.ServerWeb.FallbackController
+  action_fallback HAServerWeb.FallbackController
 
   def index(conn, _params) do
     users = Accounts.list_users()

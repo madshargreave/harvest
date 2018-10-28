@@ -1,5 +1,5 @@
-defmodule Harvest.Server.Repo do
-  use Ecto.Repo, otp_app: :server
+defmodule HAServer.Repo do
+  use Ecto.Repo, otp_app: :ha_server
 
   @doc """
   Dynamically loads the repository url from the

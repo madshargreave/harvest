@@ -1,4 +1,4 @@
-defmodule Harvest.Server.Accounts.Service do
+defmodule HAServer.Accounts.Service do
   @moduledoc """
   Account service
   """

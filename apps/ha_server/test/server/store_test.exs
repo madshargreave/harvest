@@ -1,6 +1,6 @@
-defmodule Harvest.Server.StoreTest do
-  use Harvest.Server.DataCase
-  alias Harvest.Server.Store
+defmodule HAServer.StoreTest do
+  use HAServer.DataCase
+  alias HAServer.Store
   describe "list/0" do
     test "it lists all users" do
       assert [

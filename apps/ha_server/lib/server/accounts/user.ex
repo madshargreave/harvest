@@ -1,8 +1,8 @@
-defmodule Harvest.Server.Accounts.User do
+defmodule HAServer.Accounts.User do
   @moduledoc """
   User model
   """
-  use Harvest.Server.Schema
+  use HAServer.Schema
 
   schema "users" do
     field :admin, :boolean, default: false
@@ -21,6 +21,14 @@ defmodule Harvest.Server.Accounts.User do
     |> cast(attrs, optional ++ required)
     |> unique_constraint(:email, message: "User with email already exists")
     |> validate_required(required)
+  end
+
+  @doc """
+  Check if user is admin
+  """
+  @spec admin?(t) :: boolean
+  def admin?(user) do
+    user.admin
   end
 
 end

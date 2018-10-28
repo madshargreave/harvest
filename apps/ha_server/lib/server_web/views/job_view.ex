@@ -1,6 +1,6 @@
-defmodule Harvest.ServerWeb.JobView do
-  use Harvest.ServerWeb, :view
-  alias Harvest.ServerWeb.JobView
+defmodule HAServerWeb.JobView do
+  use HAServerWeb, :view
+  alias HAServerWeb.JobView
 
   def render("index.json", %{jobs: jobs}) do
     %{data: render_many(jobs, JobView, "job.json")}

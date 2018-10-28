@@ -1,65 +1,36 @@
-defmodule Harvest.Server.Jobs.Store do
+defmodule HAServer.Jobs.Store do
   @moduledoc """
   Account store
   """
-  import Ecto.Query, warn: false
-
-  alias Harvest.Server.Repo
-  alias Harvest.Server.Jobs.Job
+  alias Ecto.Changeset
+  alias HaServer.Jobs
+  alias HAServer.Jobs.Job
 
   @doc """
   Returns number of jobs.
   """
-  def count do
-    Repo.count(Job)
-  end
+  @callback count(Jobs.user) :: {:ok, integer}
 
   @doc """
   Returns the list of jobs.
   """
-  def list do
-    Repo.all(Job)
-  end
+  @callback list(Jobs.user) :: {:ok, [Job.t]}
 
   @doc """
   Gets a single job.
-
-  Raises `Ecto.NoResultsError` if the job does not exist.
   """
-  def get!(id) do
-    Repo.get!(Job, id)
-  end
+  @callback get!(Jobs.user, Jobs.id) :: Job.t
 
   @doc """
-  Creates a job.
+  Saves a job changeset
   """
-  def create(attrs \\ %{}) do
-    %Job{}
-    |> Job.changeset(attrs)
-    |> Repo.insert()
-  end
+  @callback save(Changeset.t) :: {:ok, Job.t}
 
-  @doc """
-  Updates a job.
-  """
-  def update(%Job{} = job, attrs) do
-    job
-    |> Job.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a job.
-  """
-  def delete(%Job{} = job) do
-    Repo.delete(Job)
-  end
-
-  @doc """
-  Cancels a job.
-  """
-  def cancel(%Job{} = job) do
-    __MODULE__.update(job, %{status: :canceled})
+  @doc false
+  defmacro __using__(_opts) do
+    quote do
+      @behaviour HAServer.Jobs.Store
+    end
   end
 
 end

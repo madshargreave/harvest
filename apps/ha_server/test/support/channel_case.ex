@@ -1,4 +1,4 @@
-defmodule Harvest.ServerWeb.ChannelCase do
+defmodule HAServerWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule Harvest.ServerWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint Harvest.ServerWeb.Endpoint
+      @endpoint HAServerWeb.Endpoint
     end
   end
 
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Harvest.Server.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(HAServer.Repo)
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Harvest.Server.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(HAServer.Repo, {:shared, self()})
     end
     :ok
   end

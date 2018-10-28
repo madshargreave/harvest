@@ -1,5 +1,5 @@
-# defmodule Harvest.ServerWeb.JobControllerTest do
-#   use Harvest.ServerWeb.ConnCase
+# defmodule HAServerWeb.JobControllerTest do
+#   use HAServerWeb.ConnCase
 
 #   @create_attrs %{
 #     "user_id" => "1",

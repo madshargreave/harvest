@@ -1,4 +1,4 @@
-defmodule Harvest.Server do
+defmodule HAServer do
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
@@ -8,21 +8,21 @@ defmodule Harvest.Server do
 
     # Define workers and child supervisors to be supervised
     children = [
-      supervisor(Harvest.Server.Repo, []),
-      supervisor(Harvest.ServerWeb.Endpoint, []),
-      supervisor(Harvest.Server.Common.Supervisor, [])
+      supervisor(HAServer.Repo, []),
+      supervisor(HAServerWeb.Endpoint, []),
+      # supervisor(HAServer.Common.Supervisor, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Harvest.Server.Supervisor]
+    opts = [strategy: :one_for_one, name: HAServer.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    Harvest.ServerWeb.Endpoint.config_change(changed, removed)
+    HAServerWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

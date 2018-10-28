@@ -7,6 +7,8 @@ defmodule ExdBackend.Repo.Migrations.CreateJobs do
       add :user_id, :string, null: false
       add :status, :string, null: false
       add :query, :map, null: false
+      add :canceled_at, :naive_datetime
+      add :deleted_at, :naive_datetime
       timestamps()
     end
 

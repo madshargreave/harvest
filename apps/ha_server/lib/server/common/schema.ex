@@ -1,4 +1,4 @@
-defmodule Harvest.Server.Schema do
+defmodule HAServer.Schema do
   @moduledoc """
   Base schema module
   """
@@ -7,13 +7,15 @@ defmodule Harvest.Server.Schema do
   defmacro __using__(_opts) do
     quote do
       use Ecto.Schema
+      alias Ecto.Changeset
       import Ecto.Changeset
-      import Harvest.Server.Validations
+      import HAServer.Validations
+      import HAServer.Dispatcher
 
       @primary_key {:id, :binary_id, autogenerate: true}
       @foreign_key_type :binary_id
 
-      @before_compile Harvest.Server.Schema
+      @before_compile HAServer.Schema
     end
   end
 

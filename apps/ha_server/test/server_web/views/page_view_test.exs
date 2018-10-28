@@ -1,3 +1,3 @@
-defmodule Harvest.ServerWeb.PageViewTest do
-  use Harvest.ServerWeb.ConnCase, async: true
+defmodule HAServerWeb.PageViewTest do
+  use HAServerWeb.ConnCase, async: true
 end

@@ -1,4 +1,4 @@
-# Harvest.Server
+# HAServer
 
 To start your Phoenix server:
 

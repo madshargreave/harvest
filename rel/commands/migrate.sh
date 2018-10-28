@@ -1,3 +1,3 @@
 #!/bin/sh
 
-release_ctl eval --mfa "Harvest.Server.Task.migrate/1" -- "$@"
+release_ctl eval --mfa "HAServer.Task.migrate/1" -- "$@"

@@ -1,17 +1,28 @@
-defmodule Harvest.Server.Jobs do
+defmodule HAServer.Jobs do
   @moduledoc """
   The jobs context.
   """
-  alias Harvest.Server.Jobs.Store, as: JobStore
-  alias Harvest.Server.Jobs.Domain, as: JobDomain
+  alias HaServer.Accounts
 
-  defdelegate count_jobs, to: JobStore, as: :count
-  defdelegate list_jobs, to: JobStore, as: :list
-  defdelegate get_job!(id), to: JobStore, as: :get!
-  defdelegate create_job(attrs), to: JobStore, as: :create
-  defdelegate cancel_job(job), to: JobStore, as: :cancel
-  defdelegate in_progress?(job), to: JobDomain
-  defdelegate complete?(job), to: JobDomain
+  alias HAServer.Jobs.Store.DefaultImpl
+  alias HAServer.Jobs.{
+    Job,
+    Service,
+    Store
+  }
+
+  @store_impl Application.get_env(:ha_server, :job_store_impl) || DefaultImpl
+
+  @type user :: Accounts.User.t
+  @type job :: Job.t
+  @type id :: binary
+
+  defdelegate count_jobs(user), to: @store_impl, as: :count
+  defdelegate list_jobs(user), to: @store_impl, as: :list
+  defdelegate get_job!(user, id), to: Service, as: :get!
+  defdelegate create_job(user, attrs), to: Service, as: :create
+  defdelegate delete_job(user, job), to: Service, as: :delete
+  defdelegate cancel_job(user, job), to: Service, as: :cancel
 
 end
 

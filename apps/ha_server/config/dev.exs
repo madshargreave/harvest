@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
-config :server, Harvest.ServerWeb.Endpoint,
+config :ha_server, HAServerWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -30,7 +30,7 @@ config :server, Harvest.ServerWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :server, Harvest.ServerWeb.Endpoint,
+config :ha_server, HAServerWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
@@ -51,7 +51,7 @@ config :logger, :console,
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :server, Harvest.Server.Repo,
+config :ha_server, HAServer.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",

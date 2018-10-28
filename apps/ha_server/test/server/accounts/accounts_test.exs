@@ -1,10 +1,10 @@
-defmodule Harvest.Server.AccountsTest do
-  use Harvest.Server.DataCase
+defmodule HAServer.AccountsTest do
+  use HAServer.DataCase
 
-  alias Harvest.Server.Accounts
+  alias HAServer.Accounts
 
   describe "users" do
-    alias Harvest.Server.Accounts.User
+    alias HAServer.Accounts.User
 
     @valid_attrs %{admin: true, email: "some email", name: "some name"}
     @update_attrs %{admin: false, email: "some updated email", name: "some updated name"}

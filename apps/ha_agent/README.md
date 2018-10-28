@@ -10,7 +10,7 @@ by adding `agent` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:agent, "~> 0.1.0"}
+    {:ha_agent, "~> 0.1.0"}
   ]
 end
 ```

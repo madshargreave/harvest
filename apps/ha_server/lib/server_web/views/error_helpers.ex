@@ -1,4 +1,4 @@
-defmodule Harvest.ServerWeb.ErrorHelpers do
+defmodule HAServerWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -36,9 +36,9 @@ defmodule Harvest.ServerWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(Harvest.ServerWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(HAServerWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(Harvest.ServerWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(HAServerWeb.Gettext, "errors", msg, opts)
     end
   end
 end

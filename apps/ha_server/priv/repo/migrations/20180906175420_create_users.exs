@@ -1,4 +1,4 @@
-defmodule Harvest.Server.Repo.Migrations.CreateUsers do
+defmodule HAServer.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do

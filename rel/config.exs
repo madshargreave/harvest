@@ -67,12 +67,12 @@ release :server do
   ]
 end
 
-release :agent do
+release :ha_agent do
   set version: "0.0.1"
   set applications: [
     :runtime_tools,
     :common,
-    :agent
+    :ha_agent
   ]
 end
 

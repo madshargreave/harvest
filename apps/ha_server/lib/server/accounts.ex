@@ -1,9 +1,9 @@
-defmodule Harvest.Server.Accounts do
+defmodule HAServer.Accounts do
   @moduledoc """
   The Accounts context.
   """
-  alias Harvest.Server.Accounts.Store, as: UserStore
-  alias Harvest.Server.Accounts.Domain, as: UserDomain
+  alias HAServer.Accounts.Store, as: UserStore
+  alias HAServer.Accounts.Domain, as: UserDomain
 
   defdelegate count_users, to: UserStore, as: :count
   defdelegate list_users, to: UserStore, as: :list

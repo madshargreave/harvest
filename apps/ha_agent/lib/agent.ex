@@ -8,7 +8,7 @@ defmodule Harvest.Agent do
 
     # Define workers and child supervisors to be supervised
     children = [
-      supervisor(Exq, [[name: :agent_exq]])
+      # supervisor(Exq, [[name: :ha_agent_exq]])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
