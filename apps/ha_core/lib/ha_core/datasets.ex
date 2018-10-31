@@ -17,7 +17,7 @@ defmodule HaCore.Datasets do
 
   defdelegate count_datasets(user), to: @store_impl, as: :count
   defdelegate list_datasets(user), to: @store_impl, as: :list
-  defdelegate get_dataset!(user, id), to: DatasetService, as: :get!
+  defdelegate get_dataset!(user, id), to: @store_impl, as: :get!
   defdelegate create_dataset(user, attrs), to: DatasetService, as: :create
   defdelegate delete_dataset(user, dataset), to: DatasetService, as: :delete
 

@@ -2,8 +2,6 @@ defmodule HaCore.Datasets.DatasetService do
   @moduledoc """
   Datasets service
   """
-  import Ecto
-
   alias HaCore.Datasets
   alias HaCore.Datasets.Store.DefaultImpl
   alias HaCore.Datasets.{

@@ -2,16 +2,17 @@ defmodule HaCore.Queries.Service do
   @moduledoc """
   Jobs service
   """
-  import Ecto
-
   alias HaCore.Queries
   alias HaCore.Queries.Store.DefaultImpl
-  alias HaCore.Queries.{Query, Store}
+  alias HaCore.Queries.{
+    Query,
+    QueryStore
+  }
 
-  @store Application.get_env(:ha_server, :job_store_impl) || DefaultImpl
+  @store Application.get_env(:ha_core, :query_store_impl) || DefaultImpl
 
   @doc """
-  Creates a new job and enqueues it processing
+  Saves query
   """
   @spec save(HaCore.user, map) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
   def save(user, attrs \\ %{}) do
@@ -20,12 +21,22 @@ defmodule HaCore.Queries.Service do
   end
 
   @doc """
-  Cancels a running job
+  Runs a saved query
   """
-  @spec delete(HaCore.user, Jobs.job_id) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
-  def delete(user, job_id) do
-    job = @store.get!(user, job_id)
-    changeset = Query.delete_changeset(user, job)
+  @spec run(HaCore.user, Queries.id) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
+  def run(user, query_id) do
+    query = @store.get!(user, query_id)
+    changeset = Query.run_changeset(query)
+    @store.save(changeset)
+  end
+
+  @doc """
+  Deletes a saved query
+  """
+  @spec delete(HaCore.user, Queries.id) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
+  def delete(user, query_id) do
+    query = @store.get!(user, query_id)
+    changeset = Query.delete_changeset(user, query)
     @store.save(changeset)
   end
 
