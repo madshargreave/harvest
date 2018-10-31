@@ -5,7 +5,12 @@ defmodule HaCore.Datasets.Events.DatasetCreated do
   def make(dataset) do
     %{
       type: :dataset_created,
-      data: dataset
+      data: %{
+        id: dataset.id,
+        name: dataset.name,
+        user_id: dataset.user_id,
+        inserted_at: dataset.inserted_at
+      }
     }
   end
 

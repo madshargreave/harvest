@@ -8,9 +8,7 @@ defmodule HaCore.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
-      supervisor(HaCore.Repo, []),
-      supervisor(HaCoreWeb.Endpoint, []),
-      # supervisor(HaCore.Common.Supervisor, [])
+      supervisor(HaCore.Repo.EctoImpl, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -19,10 +17,4 @@ defmodule HaCore.Application do
     Supervisor.start_link(children, opts)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
-  def config_change(changed, _new, removed) do
-    HaCoreWeb.Endpoint.config_change(changed, removed)
-    :ok
-  end
 end

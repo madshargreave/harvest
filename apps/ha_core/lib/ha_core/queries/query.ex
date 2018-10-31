@@ -13,8 +13,7 @@ defmodule HaCore.Queries.Query do
     field :status, :string, default: "idle"
     field :query, :map
     field :schedule, :string
-    field :last_started_at, :naive_datetime
-    field :last_finished_at, :naive_datetime
+    field :last_job_id, :string
     field :deleted_at, :naive_datetime
     field :deleted_by, :map, virtual: true
 

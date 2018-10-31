@@ -10,7 +10,7 @@ defmodule HaCore.Queries do
     QueryService
   }
 
-  @store_impl Application.get_env(:ha_server, :query_store_impl) || DefaultQueryStore
+  @store_impl Application.get_env(:ha_core, :query_store_impl) || DefaultQueryStore
 
   @type query :: Query.t
   @type id :: binary

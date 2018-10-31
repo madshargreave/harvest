@@ -9,9 +9,8 @@ defmodule HaCore.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.4",
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       deps: deps()
     ]
@@ -22,6 +21,7 @@ defmodule HaCore.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
+      mod: {HaCore.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -35,6 +35,8 @@ defmodule HaCore.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:ecto, "~> 2.2.11"},
+      {:postgrex, ">= 0.0.0"},
       {:mox, "~> 0.4", only: :test}
     ]
   end
