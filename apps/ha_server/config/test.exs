@@ -8,12 +8,3 @@ config :ha_server, HAServerWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-
-# Configure your database
-config :ha_server, HAServer.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "server_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox

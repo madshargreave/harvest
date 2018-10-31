@@ -16,23 +16,10 @@ defmodule HAServer.DataCase do
 
   using do
     quote do
-      alias HAServer.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import HAServer.DataCase
     end
-  end
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(HAServer.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(HAServer.Repo, {:shared, self()})
-    end
-
-    :ok
   end
 
   @doc """

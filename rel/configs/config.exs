@@ -26,12 +26,3 @@ config :server, HAServerWeb.Endpoint,
   url: [host: "localhost", port: port],
   root: "./apps/server",
   secret_key_base: "u1QXlca4XEZKb1o3HL/aUlznI1qstCNAQ6yme/lFbFIs0Iqiq/annZ+Ty8JyUCDc"
-
-  # Configure your database
-config :server, HAServer.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("HARVEST_DB_USERNAME"),
-  password: System.get_env("HARVEST_DB_PASSWORD"),
-  database: System.get_env("HARVEST_DB_DATABASE"),
-  hostname: System.get_env("HARVEST_DB_HOSTNAME"),
-  pool_size: 15

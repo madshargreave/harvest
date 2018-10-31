@@ -23,7 +23,6 @@ defmodule HAServer.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {HAServer, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -38,7 +37,7 @@ defmodule HAServer.Mixfile do
   defp deps do
     [
       # {:common, in_umbrella: true},
-      # {:harvest_catalog, in_umbrella: true},
+      {:ha_core, in_umbrella: true},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},

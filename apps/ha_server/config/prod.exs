@@ -31,16 +31,6 @@ use Mix.Config
 # Do not print debug messages in production
 # config :logger, level: :info
 
-# Configure your database
-config :ha_server, HAServer.Repo,
-  adapter: Ecto.Adapters.Postgres,
-#   username: "${HARVEST_DB_USERNAME}",
-#   password: "${HARVEST_DB_PASSWORD}",
-#   database: "${HARVEST_DB_DATABASE}",
-#   hostname: "${HARVEST_DB_HOSTNAME}",
-  pool_size: 15
-
-
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

@@ -7,8 +7,7 @@ use Mix.Config
 
 # General application configuration
 config :ha_server,
-  namespace: HAServer,
-  ecto_repos: [HAServer.Repo]
+  namespace: HAServer
 
 # Configures the endpoint
 config :ha_server, HAServerWeb.Endpoint,
