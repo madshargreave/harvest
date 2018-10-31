@@ -1,3 +1,4 @@
+Code.require_file("test/support/test_utils.exs")
 ExUnit.start()
 
 Mox.defmock(HaCore.DatasetStoreMock, for: HaCore.Datasets.DatasetStore)

@@ -2,7 +2,7 @@ defmodule HaCore.DatasetsTest do
   use ExUnit.Case
   import Mox
 
-  alias HaCore.{RepoMock, DispatcherMock}
+  alias HaCore.{TestUtils, RepoMock, DispatcherMock}
   alias HaCore.Accounts.User
   alias HaCore.Datasets
   alias HaCore.Datasets.Dataset
@@ -10,8 +10,8 @@ defmodule HaCore.DatasetsTest do
   @user %User{id: 1}
 
   setup do
-    create_dispatcher_mock()
-    create_repo_mock()
+    TestUtils.create_dispatcher_mock()
+    TestUtils.create_repo_mock()
 
     :ok
   end
@@ -64,9 +64,7 @@ defmodule HaCore.DatasetsTest do
   describe "when deleting a dataset" do
     setup [:verify_on_exit!]
     setup do
-      RepoMock
-      |> expect(:get!, fn module, id -> struct(module, %{id: id}) end)
-
+      expect(RepoMock, :get!, fn module, id -> struct(module, %{id: id}) end)
       :ok
     end
 
@@ -82,23 +80,6 @@ defmodule HaCore.DatasetsTest do
       assert event.data.user_id == 1
       assert event.data.dataset_id == 1
     end
-  end
-
-  defp create_dispatcher_mock do
-    DispatcherMock
-    |> expect(:dispatch, fn event -> send self(), {:event, event} end)
-  end
-
-  defp create_repo_mock do
-    RepoMock
-    |> expect(:transaction, fn callback -> {:ok, callback.()} end)
-    |> expect(:insert_or_update, fn changeset ->
-      if changeset.valid? do
-        {:ok, Ecto.Changeset.apply_changes(changeset)}
-      else
-        {:error, changeset}
-      end
-    end)
   end
 
 end
