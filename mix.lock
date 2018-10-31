@@ -34,6 +34,7 @@
   "mimerl": {:hex, :mimerl, "1.0.2", "993f9b0e084083405ed8252b99460c4f0563e41729ab42d9074fd5e52439be88", [:rebar3], [], "hexpm"},
   "mix_test_watch": {:hex, :mix_test_watch, "0.8.0", "acf97da2abc66532e7dc1aa66a5d6c9fc4442d7992d5d7eb4faeaeb964c2580e", [:mix], [{:file_system, "~> 0.2.1 or ~> 0.3", [hex: :file_system, repo: "hexpm", optional: false]}], "hexpm"},
   "mochiweb": {:hex, :mochiweb, "2.18.0", "eb55f1db3e6e960fac4e6db4e2db9ec3602cc9f30b86cd1481d56545c3145d2e", [:rebar3], [], "hexpm"},
+  "mox": {:hex, :mox, "0.4.0", "7f120840f7d626184a3d65de36189ca6f37d432e5d63acd80045198e4c5f7e6e", [:mix], [], "hexpm"},
   "mustache": {:hex, :mustache, "0.3.1", "4c6ee79b13aae954035fe31b83c94480ddc7b536d09c44d4c65e61a9ead38d6b", [:mix], [], "hexpm"},
   "opq": {:hex, :opq, "3.1.0", "793189781354849dd9da355bc8a0edbfc16379d4ac7e9fa84397375c7ba20d9e", [:mix], [{:gen_stage, "~> 0.12", [hex: :gen_stage, repo: "hexpm", optional: false]}], "hexpm"},
   "parse_trans": {:hex, :parse_trans, "3.3.0", "09765507a3c7590a784615cfd421d101aec25098d50b89d7aa1d66646bc571c1", [:rebar3], [], "hexpm"},

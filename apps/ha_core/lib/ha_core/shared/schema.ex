@@ -10,7 +10,7 @@ defmodule HaCore.Schema do
       alias Ecto.Changeset
       import Ecto.Changeset
       import HaCore.Validations
-      import HaCore.Dispatcher
+      import HaCore.Changeset
 
       @primary_key {:id, :binary_id, autogenerate: true}
       @foreign_key_type :binary_id

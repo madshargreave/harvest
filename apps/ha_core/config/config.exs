@@ -28,6 +28,6 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 
-config :ha_agent, ecto_repos: [HaCore.Repo]
+config :ha_core, ecto_repos: [HaCore.Repo.EctoImpl]
 
 import_config "#{Mix.env}.exs"

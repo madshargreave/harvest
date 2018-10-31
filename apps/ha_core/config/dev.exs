@@ -7,7 +7,7 @@ config :logger, :console,
   handle_otp_reports: false
 
 # Configure your database
-config :ha_core, HaCore.Repo,
+config :ha_core, HaCore.Repo.EctoImpl,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",

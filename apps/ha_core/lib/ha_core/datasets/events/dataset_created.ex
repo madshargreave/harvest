@@ -1,11 +1,11 @@
 defmodule HaCore.Datasets.Events.DatasetCreated do
   @moduledoc false
-  defstruct job: nil
+  defstruct data: nil
 
-  def make(job) do
+  def make(dataset) do
     %{
-      type: :job_created,
-      data: job
+      type: :dataset_created,
+      data: dataset
     }
   end
 

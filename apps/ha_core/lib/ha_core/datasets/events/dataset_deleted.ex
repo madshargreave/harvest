@@ -1,14 +1,14 @@
 defmodule HaCore.Datasets.Events.DatasetDeleted do
   @moduledoc false
-  defstruct job_id: nil,
+  defstruct dataset_id: nil,
             user_id: nil
 
-  def make(job) do
+  def make(dataset) do
     %{
-      type: :job_deleted,
+      type: :dataset_deleted,
       data: %__MODULE__{
-        user_id: job.deleted_by.id,
-        job_id: job.id
+        user_id: dataset.deleted_by.id,
+        dataset_id: dataset.id
       }
     }
   end

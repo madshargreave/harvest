@@ -22,14 +22,7 @@ defmodule HaCore.Datasets.Store.DefaultImpl do
 
   @impl true
   def save(changeset) do
-    transaction_result =
-      Repo.transaction(fn ->
-        query = Repo.insert_or_update(changeset)
-        for dispatch <- Map.get(changeset, :__register_event__, []), do: dispatch.(query)
-        query
-      end)
-
-    with {:ok, query} <- transaction_result, do: query
+    Repo.save(changeset)
   end
 
 end

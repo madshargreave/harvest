@@ -10,7 +10,7 @@ defmodule HaCore.Datasets do
     DatasetService
   }
 
-  @store_impl Application.get_env(:ha_server, :dataset_store_impl) || DefaultDatasetStore
+  @store_impl Application.get_env(:ha_core, :dataset_store_impl) || DefaultDatasetStore
 
   @type dataset :: Dataset.t
   @type id :: binary

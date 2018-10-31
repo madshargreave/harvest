@@ -34,7 +34,9 @@ defmodule HaCore.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    []
+    [
+      {:mox, "~> 0.4", only: :test}
+    ]
   end
 
 end

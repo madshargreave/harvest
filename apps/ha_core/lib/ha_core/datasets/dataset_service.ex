@@ -11,24 +11,24 @@ defmodule HaCore.Datasets.DatasetService do
     DatasetStore
   }
 
-  @store Application.get_env(:ha_server, :dataset_store_impl) || DefaultImpl
+  @store Application.get_env(:ha_core, :dataset_store_impl) || DefaultImpl
 
   @doc """
-  Creates a new job and enqueues it processing
+  Creates a new dataset
   """
-  @spec save(HaCore.user, map) :: {:ok, Dataset.t} | {:error, InvalidChangesetError.t}
-  def save(user, attrs \\ %{}) do
-    changeset = Dataset.save_changeset(user, attrs)
+  @spec create(HaCore.user, map) :: {:ok, Dataset.t} | {:error, InvalidChangesetError.t}
+  def create(user, attrs \\ %{}) do
+    changeset = Dataset.create_changeset(user, attrs)
     @store.save(changeset)
   end
 
   @doc """
-  Cancels a running job
+  Deletes an existing dataset
   """
   @spec delete(HaCore.user, Datasets.id) :: {:ok, Dataset.t} | {:error, InvalidChangesetError.t}
-  def delete(user, job_id) do
-    job = @store.get!(user, job_id)
-    changeset = Dataset.delete_changeset(user, job)
+  def delete(user, dataset_id) do
+    dataset = @store.get!(user, dataset_id)
+    changeset = Dataset.delete_changeset(user, dataset)
     @store.save(changeset)
   end
 
