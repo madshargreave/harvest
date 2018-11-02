@@ -1,4 +1,4 @@
-defmodule Harvest.Agent.Worker do
+defmodule HaAgent.Worker do
   @moduledoc """
   Worker module
   """

@@ -1,3 +1,3 @@
-defmodule Harvest.AgentTest do
+defmodule HaAgentTest do
   use ExUnit.Case
 end

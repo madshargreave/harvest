@@ -33,4 +33,16 @@ config :ha_core,
     HaCore.Repo.EctoImpl
   ]
 
+config :ha_core,
+  repo_impl: HaCore.Repo.EctoImpl,
+  dispatcher_impl: HaCore.Dispatcher.EventBusImpl
+
+config :event_bus,
+  topics: [
+    :domain_events
+  ],
+  ttl: 30_000_000, # integer
+  time_unit: :microsecond, # atom
+  id_generator: EventBus.Util.Base62 # module: must implement 'unique_id/0' function
+
 import_config "#{Mix.env}.exs"

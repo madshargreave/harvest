@@ -1,4 +1,4 @@
-defmodule Harvest.Agent.MixProject do
+defmodule HaAgent.MixProject do
   use Mix.Project
 
   def project do
@@ -9,7 +9,7 @@ defmodule Harvest.Agent.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.6",
+      elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -18,15 +18,15 @@ defmodule Harvest.Agent.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Harvest.Agent, []}
+      mod: {HaAgent, []},
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:common, in_umbrella: true}
+      {:ha_core, in_umbrella: true}
     ]
   end
 end

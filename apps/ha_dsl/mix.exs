@@ -9,7 +9,7 @@ defmodule HAShared.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.4",
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -34,7 +34,9 @@ defmodule HAShared.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    []
+    [
+      {:exd, path: "../../../exd"}
+    ]
   end
 
 end

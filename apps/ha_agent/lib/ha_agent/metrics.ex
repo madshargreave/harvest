@@ -1,4 +1,4 @@
-defmodule Harvest.Agent.Metrics do
+defmodule HaAgent.Metrics do
   @moduledoc """
   Agent metrics
   """

@@ -1,4 +1,4 @@
-defmodule Harvest.Agent do
+defmodule HaAgent do
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
@@ -8,12 +8,10 @@ defmodule Harvest.Agent do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # supervisor(Exq, [[name: :ha_agent_exq]])
+      worker(HaAgent.Subscriber, [])
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Harvest.Agent.Supervisor]
+    opts = [strategy: :one_for_one, name: HaAgent.Supervisor]
     Supervisor.start_link(children, opts)
   end
 

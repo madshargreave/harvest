@@ -1,17 +1,22 @@
 defmodule HaCore.Datasets.Events.DatasetCreated do
   @moduledoc false
-  defstruct data: nil
+  alias HaCore.DomainEvent
+
+  defstruct id: nil,
+            name: nil,
+            user_id: nil,
+            inserted_at: nil
 
   def make(dataset) do
-    %{
-      type: :dataset_created,
-      data: %{
+    DomainEvent.make(
+      :dataset_created,
+      %__MODULE__{
         id: dataset.id,
         name: dataset.name,
         user_id: dataset.user_id,
         inserted_at: dataset.inserted_at
       }
-    }
+    )
   end
 
 end

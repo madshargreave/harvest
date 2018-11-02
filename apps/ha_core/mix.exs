@@ -37,6 +37,7 @@ defmodule HaCore.Mixfile do
     [
       {:ecto, "~> 2.2.11"},
       {:postgrex, ">= 0.0.0"},
+      {:event_bus, "~> 1.6.0"},
       {:mox, "~> 0.4", only: :test}
     ]
   end
