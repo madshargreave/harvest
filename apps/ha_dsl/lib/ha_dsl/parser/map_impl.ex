@@ -103,46 +103,4 @@ defmodule HaDSL.Parser.MapImpl do
     {String.to_atom(type), [expr | args]}
   end
 
-  # defp parse_from(%{
-  #   from: %{
-  #     name: name,
-  #     source: %{
-  #       type: type,
-  #       args: args
-  #     }
-  #   }
-  # }) do
-  #   name = String.to_existing_atom(name)
-  #   type = String.to_existing_atom(type)
-  #   {:ok, %Exd.Query{from: {name, {type, args}}}}
-  # end
-  # defp parse_from(_), do: {:error, :invalid_from}
-
-  # defp parse_select(query, %{
-  #   from: %{
-  #     name: name
-  #   },
-  #   select: select
-  # }) do
-  #   result =
-  #     select
-  #     |> Enum.reduce(query, fn {key, steps}, acc ->
-  #       value = parse_select_expr(name, key, steps)
-  #       select = Map.put(acc.select || %{}, key, value)
-  #       %Exd.Query{acc | select: select}
-  #     end)
-
-  #   {:ok, result}
-  # end
-  # defp parse_select_expr(name, key, steps) when is_list(steps) do
-  #   steps
-  #   |> Enum.reduce([], fn step, expr ->
-  #     type = String.to_existing_atom(step.type)
-  #     parse_select_expr_type(expr, name, type, step.args)
-  #   end)
-  # end
-  # defp parse_select_expr_type(expr, binding, :unnest, args), do: {:unnest, [expr]}
-  # defp parse_select_expr_type(expr, binding, :html_parse_list, args), do: {:html_parse_list, [expr] ++ args}
-  # defp parse_select_expr_type([], binding, :field, field), do: {:binding, [String.to_atom(binding), String.to_atom(field)]}
-
 end

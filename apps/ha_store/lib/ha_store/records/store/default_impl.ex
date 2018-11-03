@@ -1,6 +1,7 @@
 defmodule HaStore.Records.Store.DefaultImpl do
   @moduledoc false
   use HaStore.Records.RecordStore
+  import Ecto.Query
 
   alias HaStore.Repo
   alias HaStore.Records.Record
@@ -14,7 +15,8 @@ defmodule HaStore.Records.Store.DefaultImpl do
 
   @impl true
   def list(table_id) do
-    Repo.all(Record)
+    query = from r in Record, where: r.table_id == ^table_id
+    Repo.all(query)
   end
 
   @impl true
@@ -24,7 +26,11 @@ defmodule HaStore.Records.Store.DefaultImpl do
           record = Ecto.Changeset.apply_changes(changeset),
           do: Map.take(record, @attrs)
 
-    with {count, _} <- Repo.insert_all(Record, records) do
+    opts = [
+      on_conflict: :replace_all,
+      conflict_target: [:table_id, :unique_id]
+    ]
+    with {count, _} <- Repo.insert_all(Record, records, opts) do
       {:ok, count}
     end
   end

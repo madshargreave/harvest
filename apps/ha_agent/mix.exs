@@ -28,7 +28,8 @@ defmodule HaAgent.MixProject do
     [
       {:ha_core, in_umbrella: true},
       {:ha_dsl, in_umbrella: true},
-      {:ha_support, in_umbrella: true}
+      {:ha_support, in_umbrella: true},
+      {:elixir_uuid, "~> 1.2"}
     ]
   end
 end

@@ -10,7 +10,7 @@ defmodule HaStore do
     children = [
       {HaStore.Repo, []},
       {Redix, [[], [name: :redix_store]]},
-      worker(HaStore.Records.RecordHandler, [])
+      worker(HaStore.Imports.ImportHandler, [])
     ]
 
     opts = [strategy: :one_for_one, name: HaStore.Supervisor]

@@ -19,5 +19,9 @@ defmodule HaServer.Router do
     resources "/jobs", JobController
     resources "/queries", QueryController
     resources "/users", UserController
+
+    resources "/tables", TableController, only: [] do
+      resources "/records", RecordController, only: [:index]
+    end
   end
 end

@@ -7,10 +7,12 @@ defmodule HaCore.Schema do
   defmacro __using__(_opts) do
     quote do
       use Ecto.Schema
-      alias Ecto.Changeset
       import Ecto.Changeset
+
       import HaCore.Validations
       import HaCore.Changeset
+
+      alias Ecto.Changeset
 
       @primary_key {:id, :binary_id, autogenerate: true}
       @foreign_key_type :binary_id

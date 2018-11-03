@@ -12,7 +12,7 @@ defmodule HaCore.Queries.Query do
     field :destination_id, :string
     field :name, :string
     field :status, :string, default: "idle"
-    field :query, :map
+    field :primary_key, :string
     field :steps, {:array, :map}
     field :schedule, :string
     field :last_job_id, :string
@@ -42,7 +42,7 @@ defmodule HaCore.Queries.Query do
   """
   @spec run_changeset(HaCore.user, t) :: Changeset.t
   def run_changeset(user, attrs \\ %{}) do
-    required = ~w(name user_id destination_id steps)a
+    required = ~w(name user_id destination_id primary_key steps)a
     optional = ~w()a
 
     %__MODULE__{}

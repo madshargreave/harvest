@@ -8,27 +8,22 @@ defmodule HaCore.Tables.Table do
   alias HaCore.Tables.Events.{TableCreated, TableDeleted}
 
   schema "tables" do
-    field :user_id, :string
     field :name, :string
     field :size, :integer, default: 0
-
-    field :deleted_at, :naive_datetime
-    field :deleted_by, :map, virtual: true
-
+    field :primary_key, :string
     timestamps()
   end
 
   @doc """
   Creates a new query
   """
-  @spec create_changeset(HaCore.user, map) :: Changeset.t
-  def create_changeset(user, attrs \\ %{}) do
-    required = ~w(user_id name)a
+  @spec create_changeset(map) :: Changeset.t
+  def create_changeset(attrs \\ %{}) do
+    required = ~w(name primary_key)a
     optional = ~w(size)a
 
     %__MODULE__{}
     |> cast(attrs, optional ++ required)
-    |> put_change(:user_id, user.id)
     |> validate_required(required)
     |> register_event(TableCreated)
   end

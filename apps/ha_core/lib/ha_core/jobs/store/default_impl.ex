@@ -1,6 +1,6 @@
 defmodule HaCore.Jobs.Store.DefaultImpl do
   @moduledoc false
-  use HaCore.Jobs.Store
+  use HaCore.Jobs.JobStore
 
   alias HaCore.Repo
   alias HaCore.Jobs.Job
@@ -22,14 +22,7 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
 
   @impl true
   def save(changeset) do
-    transaction_result =
-      Repo.transaction(fn ->
-        job = Repo.insert_or_update(changeset)
-        for dispatch <- Map.get(changeset, :__register_event__, []), do: dispatch.(job)
-        job
-      end)
-
-    with {:ok, job} <- transaction_result, do: job
+    Repo.save(changeset)
   end
 
 end

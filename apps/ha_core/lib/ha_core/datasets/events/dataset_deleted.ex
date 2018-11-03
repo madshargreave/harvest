@@ -1,6 +1,6 @@
 defmodule HaCore.Datasets.Events.DatasetDeleted do
   @moduledoc false
-  alias HaCore.DomainEvent
+  alias HaSupport.DomainEvent
 
   defstruct dataset_id: nil,
             user_id: nil

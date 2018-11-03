@@ -1,4 +1,4 @@
-defmodule HaCore.Jobs.Store do
+defmodule HaCore.Jobs.JobStore do
   @moduledoc """
   Account store
   """

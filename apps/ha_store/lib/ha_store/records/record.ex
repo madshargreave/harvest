@@ -18,12 +18,11 @@ defmodule HaStore.Records.Record do
 
   @spec save_changeset(map) :: Ecto.Changeset.t
   def save_changeset(attrs \\ %{}) do
-    required = ~w(table_id query_id data)a
+    required = ~w(table_id query_id unique_id data)a
     optional = ~w(unique_id)a
 
     %__MODULE__{}
     |> cast(attrs, optional ++ required)
-    |> put_change(:unique_id, Ecto.UUID.generate)
     |> put_change(:inserted_at, NaiveDateTime.utc_now)
     |> put_change(:updated_at, NaiveDateTime.utc_now)
     |> validate_required(required)

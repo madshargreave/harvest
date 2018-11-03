@@ -20,16 +20,6 @@ defmodule HaCore.Jobs.Service do
   end
 
   @doc """
-  Deletes an existing job
-  """
-  @spec delete(HaCore.user, Jobs.job_id) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
-  def delete(user, job_id) do
-    job = @store.get!(user, job_id)
-    changeset = Job.delete_changeset(user, job)
-    @store.save(changeset)
-  end
-
-  @doc """
   Cancels a running job
   """
   @spec cancel(HaCore.user, Jobs.job_id) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}

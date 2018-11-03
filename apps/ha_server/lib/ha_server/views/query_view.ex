@@ -13,11 +13,7 @@ defmodule HaServer.QueryView do
   def render("query.json", %{query: query}) do
     %{
       id: query.id,
-      user_id: query.user_id,
-      name: query.name,
-      status: query.status,
-      steps: query.steps,
-      inserted_at: query.inserted_at
+      timestamp: query.inserted_at
     }
   end
 end

@@ -10,5 +10,7 @@ defmodule HaCore.Repo.EctoImpl.Migrations.CreateRecords do
       add :data, :map
       timestamps()
     end
+
+    create unique_index(:records, [:table_id, :unique_id])
   end
 end

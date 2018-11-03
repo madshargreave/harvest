@@ -8,6 +8,7 @@ defmodule HaCore.Repo.EctoImpl.Migrations.CreateQueries do
       add :destination_id, :binary, null: false
       add :status, :string, null: false
       add :name, :string, null: false
+      add :primary_key, :string, null: false
       add :steps, {:array, :map}, null: false
       add :deleted_at, :naive_datetime
 

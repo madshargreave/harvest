@@ -1,6 +1,6 @@
 defmodule HaCore.Datasets.Events.DatasetCreated do
   @moduledoc false
-  alias HaCore.DomainEvent
+  alias HaSupport.DomainEvent
 
   defstruct id: nil,
             name: nil,
