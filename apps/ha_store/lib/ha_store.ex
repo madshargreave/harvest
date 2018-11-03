@@ -1,4 +1,4 @@
-defmodule HaCore.Application do
+defmodule HaStore do
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
@@ -8,12 +8,12 @@ defmodule HaCore.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
-      supervisor(HaCore.Repo.EctoImpl, [])
+      {HaStore.Repo, []},
+      {Redix, [[], [name: :redix_store]]},
+      worker(HaStore.Records.RecordHandler, [])
     ]
 
-    # See https://hexdocs.pm/elixir/Supervisor.html
-    # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: HaCore.Supervisor]
+    opts = [strategy: :one_for_one, name: HaStore.Supervisor]
     Supervisor.start_link(children, opts)
   end
 

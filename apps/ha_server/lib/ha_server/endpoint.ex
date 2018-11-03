@@ -1,4 +1,4 @@
-defmodule HAServerWeb.Endpoint do
+defmodule HaServer.Endpoint do
   use Phoenix.Endpoint, otp_app: :ha_server
 
   # Serve at "/" the static files from "priv/static" directory.
@@ -35,7 +35,7 @@ defmodule HAServerWeb.Endpoint do
     key: "_server_key",
     signing_salt: "lAc4Hp8r"
 
-  plug HAServerWeb.Router
+  plug HaServer.Router
 
   @doc """
   Callback invoked for dynamically configuring the endpoint.

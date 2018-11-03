@@ -2,7 +2,7 @@ version: '2'
 
 services:
   redis:
-    image: bitnami/redis:latest
+    image: bitnami/redis:5.0
     ports:
       - 6379:6379
     environment:

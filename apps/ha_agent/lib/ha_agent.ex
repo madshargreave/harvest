@@ -8,7 +8,8 @@ defmodule HaAgent do
 
     # Define workers and child supervisors to be supervised
     children = [
-      worker(HaAgent.Subscriber, [])
+      {Redix, [[], [name: :redix_agent]]},
+      worker(HaAgent.Queries.QueryHandler, [])
     ]
 
     opts = [strategy: :one_for_one, name: HaAgent.Supervisor]

@@ -1,5 +1,5 @@
-defmodule HAServerWeb.ErrorView do
-  use HAServerWeb, :view
+defmodule HaServer.ErrorView do
+  use HaServer, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

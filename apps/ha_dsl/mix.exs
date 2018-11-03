@@ -35,7 +35,8 @@ defmodule HAShared.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:exd, path: "../../../exd"}
+      {:exd, path: "../../../exd"},
+      {:exd_html, path: "../../../exd_html"}
     ]
   end
 

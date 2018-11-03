@@ -1,3 +1,3 @@
-defmodule HAServerWeb.PageViewTest do
-  use HAServerWeb.ConnCase, async: true
+defmodule HaServer.PageViewTest do
+  use HaServer.ConnCase, async: true
 end

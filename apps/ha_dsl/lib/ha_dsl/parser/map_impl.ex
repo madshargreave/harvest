@@ -22,7 +22,7 @@ defmodule HaDSL.Parser.MapImpl do
     }
   }) do
     %Exd.Query{
-      from: {:r, {type, args}}
+      from: {:r, {String.to_atom(type), args}}
     }
   end
 
@@ -57,6 +57,7 @@ defmodule HaDSL.Parser.MapImpl do
   defp parse_step(query, %{
     unnest: field
   }) do
+    field = if is_binary(field), do: String.to_atom(field), else: field
     expr = Map.fetch!(query.select, field)
     unnested = {:unnest, [expr]}
     select = Map.put(query.select, field, unnested)
@@ -82,17 +83,24 @@ defmodule HaDSL.Parser.MapImpl do
   defp parse_step(query, _), do: query
 
   defp parse_step_transform(expr, key, %{
-    type: type = :field,
+    type: type = "field",
     args: [binding]
   }) do
-    {:binding, [:r, binding]}
+    {:binding, [:r, String.to_atom(binding)]}
+  end
+
+  defp parse_step_transform(expr, key, %{
+    type: "cast",
+    args: args
+  }) do
+    {:cast, [expr | Enum.map(args, &String.to_atom/1)]}
   end
 
   defp parse_step_transform(expr, key, %{
     type: type,
     args: args
   }) do
-    {type, [expr | args]}
+    {String.to_atom(type), [expr | args]}
   end
 
   # defp parse_from(%{

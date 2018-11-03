@@ -1,6 +1,6 @@
-defmodule HAServerWeb.UserView do
-  use HAServerWeb, :view
-  alias HAServerWeb.UserView
+defmodule HaServer.UserView do
+  use HaServer, :view
+  alias HaServer.UserView
 
   def render("index.json", %{users: users}) do
     %{data: render_many(users, UserView, "user.json")}

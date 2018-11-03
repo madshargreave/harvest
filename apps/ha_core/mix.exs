@@ -35,6 +35,7 @@ defmodule HaCore.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:ha_support, in_umbrella: true},
       {:ecto, "~> 2.2.11"},
       {:postgrex, ">= 0.0.0"},
       {:event_bus, "~> 1.6.0"},

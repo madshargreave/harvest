@@ -1,5 +1,5 @@
-defmodule HAServerWeb.Router do
-  use HAServerWeb, :router
+defmodule HaServer.Router do
+  use HaServer, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,9 +14,10 @@ defmodule HAServerWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  scope "/api", HAServerWeb do
+  scope "/api", HaServer do
     pipe_through :api
     resources "/jobs", JobController
+    resources "/queries", QueryController
     resources "/users", UserController
   end
 end

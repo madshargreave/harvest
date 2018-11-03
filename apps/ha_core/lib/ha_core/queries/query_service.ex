@@ -1,4 +1,4 @@
-defmodule HaCore.Queries.Service do
+defmodule HaCore.Queries.QueryService do
   @moduledoc """
   Jobs service
   """
@@ -23,10 +23,9 @@ defmodule HaCore.Queries.Service do
   @doc """
   Runs a saved query
   """
-  @spec run(HaCore.user, Queries.id) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
-  def run(user, query_id) do
-    query = @store.get!(user, query_id)
-    changeset = Query.run_changeset(query)
+  @spec run(HaCore.user, map) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
+  def run(user, attrs \\ %{}) do
+    changeset = Query.run_changeset(user, attrs)
     @store.save(changeset)
   end
 

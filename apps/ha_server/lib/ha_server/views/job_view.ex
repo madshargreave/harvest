@@ -1,6 +1,6 @@
-defmodule HAServerWeb.JobView do
-  use HAServerWeb, :view
-  alias HAServerWeb.JobView
+defmodule HaServer.JobView do
+  use HaServer, :view
+  alias HaServer.JobView
 
   def render("index.json", %{jobs: jobs}) do
     %{data: render_many(jobs, JobView, "job.json")}

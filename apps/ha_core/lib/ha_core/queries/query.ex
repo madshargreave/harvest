@@ -5,13 +5,15 @@ defmodule HaCore.Queries.Query do
   use HaCore.Schema
 
   alias HaCore.Queries.Query
-  alias HaCore.Queries.Events.{QuerySaved, QueryRunScheduled, QueryDeleted}
+  alias HaCore.Queries.Events.{QuerySaved, QueryCreated, QueryDeleted}
 
   schema "queries" do
     field :user_id, :string
+    field :destination_id, :string
     field :name, :string
     field :status, :string, default: "idle"
     field :query, :map
+    field :steps, {:array, :map}
     field :schedule, :string
     field :last_job_id, :string
     field :deleted_at, :naive_datetime
@@ -25,7 +27,7 @@ defmodule HaCore.Queries.Query do
   """
   @spec save_changeset(HaCore.user, map) :: Changeset.t
   def save_changeset(user, attrs \\ %{}) do
-    required = ~w(user_id query)a
+    required = ~w(user_id steps)a
     optional = ~w(schedule)a
 
     %__MODULE__{}
@@ -39,12 +41,15 @@ defmodule HaCore.Queries.Query do
   Creates a new query
   """
   @spec run_changeset(HaCore.user, t) :: Changeset.t
-  def run_changeset(user, query) do
-    query
-    |> change
-    |> put_change(:status, "running")
-    |> validate_status_is_not("running", message: "Query is already running")
-    |> register_event(QueryRunScheduled)
+  def run_changeset(user, attrs \\ %{}) do
+    required = ~w(name user_id destination_id steps)a
+    optional = ~w()a
+
+    %__MODULE__{}
+    |> cast(attrs, optional ++ required)
+    |> put_change(:user_id, user.id)
+    |> validate_required(required)
+    |> register_event(QueryCreated)
   end
 
   @doc """

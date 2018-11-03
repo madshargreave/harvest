@@ -1,7 +1,7 @@
-defmodule HAServerWeb.JobController do
-  use HAServerWeb, :controller
+defmodule HaServer.JobController do
+  use HaServer, :controller
 
-  action_fallback HAServerWeb.FallbackController
+  action_fallback HaServer.FallbackController
 
   def index(conn, _params) do
     jobs = Jobs.list_jobs()

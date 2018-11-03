@@ -9,7 +9,7 @@ defmodule HaDSL.Parser.MapImplTest do
         steps: [
           %{
             from: %{
-              type: :fetch,
+              type: "fetch",
               args: ["https://coinmarketcap.com"]
             }
           },
@@ -17,11 +17,11 @@ defmodule HaDSL.Parser.MapImplTest do
             map: %{
               row: [
                 %{
-                  type: :field,
-                  args: [:body],
+                  type: "field",
+                  args: ["body"],
                 },
                 %{
-                  type: :html_parse_list,
+                  type: "html_parse_list",
                   args: [".list"]
                 }
               ]
@@ -34,31 +34,31 @@ defmodule HaDSL.Parser.MapImplTest do
             map: %{
               name: [
                 %{
-                  type: :field,
-                  args: [:row]
+                  type: "field",
+                  args: ["row"]
                 },
                 %{
-                  type: :html_parse_text,
+                  type: "html_parse_text",
                   args: [".coin-name"]
                 }
               ],
               symbol: [
                 %{
-                  type: :field,
-                  args: [:row]
+                  type: "field",
+                  args: ["row"]
                 },
                 %{
-                  type: :html_parse_text,
+                  type: "html_parse_text",
                   args: [".coin-symbol"]
                 }
               ],
               price: [
                 %{
-                  type: :field,
-                  args: [:row]
+                  type: "field",
+                  args: ["row"]
                 },
                 %{
-                  type: :html_parse_text,
+                  type: "html_parse_text",
                   args: [".coin-price"]
                 }
               ]
@@ -79,15 +79,15 @@ defmodule HaDSL.Parser.MapImplTest do
           # merge: %{
           #   website: [
           #     %{
-          #       type: :fetch,
+          #       type: "fetch",
           #       args: ["https://coinmarketcap.com/currencies/?", "symbol"]
           #     },
           #     %{
-          #       type: :field,
+          #       type: "field",
           #       args: ["body"],
           #     },
           #     %{
-          #       type: :html_parse_text,
+          #       type: "html_parse_text",
           #       args: [".website"]
           #     }
           #   ]

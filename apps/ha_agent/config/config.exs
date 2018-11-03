@@ -29,6 +29,13 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
+config :exd,
+  plugins: [
+    Exd.Plugin.HTMLParseList,
+    Exd.Plugin.HTMLParseText,
+    Exd.Plugin.HTMLParseAttr
+  ]
+
 # config :exq,
 #   host: "127.0.0.1",
 #   port: 6379,
