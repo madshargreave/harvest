@@ -7,7 +7,7 @@ defmodule HaCore.Jobs.JobService do
   alias HaCore.Jobs.Store.DefaultImpl
   alias HaCore.Jobs.{Job, Store}
 
-  @store Application.get_env(:ha_server, :job_store_impl) || DefaultImpl
+  @store Application.get_env(:ha_core, :job_store_impl) || DefaultImpl
 
   @doc """
   List all user jobs
