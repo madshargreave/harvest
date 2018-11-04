@@ -6,89 +6,34 @@ defmodule HaCore.Jobs.Job do
 
   alias HaCore.Constants
   alias HaCore.Tables.Table
-  alias HaCore.Jobs.Job
-  alias HaCore.Jobs.Events.{JobCanceled, JobCreated}
+  alias HaCore.Jobs.{Job, JobQuery, JobConfiguration, JobStatistics}
+  alias HaCore.Jobs.Events.{JobCanceled, JobCreated, JobCompleted}
 
   @statuses ~w(created done)
-  @create_dispositions ~w(create_if_needed never)
-  @write_dispositions ~w(write_truncate write_append write_empty)
-  @priorities ~w(standard)
 
   schema "jobs" do
     field :status, :string, default: "created"
-
-    field :params, :map, default: %{}
-    field :steps, {:array, :map}
-
     field :canceled_at, :naive_datetime
     field :canceled_by, :map, virtual: true
-
-    field :create_disposition, :string, default: "create_if_needed"
-    field :write_disposition, :string, default: "write_truncate"
-
-    field :priority, :string, default: "standard"
-    field :use_source_cache, :boolean, default: false
-
-    field :max_bad_records, :integer
-    field :dry_run, :boolean, default: false
-
-    field :schema, :map, virtual: true
-    belongs_to :destination, Table
-
+    field :steps, {:array, :map}
+    has_one :configuration, JobConfiguration
+    has_one :statistics, JobStatistics
     timestamps()
   end
 
-  @doc """
-  Creates a new job
-  """
   @spec create_changeset(Jobs.user, map) :: Changeset.t
   def create_changeset(user, attrs \\ %{}) do
     required = ~w(steps)a
-    optional = ~w(
-      create_disposition
-      write_disposition
-      priority
-      use_source_cache
-      max_bad_records
-      dry_run
-      schema
-    )a
+    optional = ~w()a
 
     %__MODULE__{}
     |> cast(attrs, optional ++ required)
-    |> cast_assoc(:destination, required: false)
-    |> create_table_maybe
+    |> cast_assoc(:configuration, required: true, with: &JobConfiguration.create_changeset/2)
     |> validate_inclusion(:status, @statuses)
-    |> validate_inclusion(:create_disposition, @create_dispositions)
-    |> validate_inclusion(:write_disposition, @write_dispositions)
-    |> validate_inclusion(:priority, @priorities)
     |> validate_required(required)
     |> register_event(JobCreated)
   end
-  defp create_table_maybe(changeset) do
-    if should_create_table?(changeset) do
-      schema = get_field(changeset, :schema, %{}) |> AtomicMap.convert
-      table_changeset = Table.create_changeset(%{
-        name: "destination-table-1",
-        primary_key: schema.primary_key
-      })
-      put_assoc(changeset, :destination, table_changeset)
-    else
-      changeset
-    end
-  end
-  defp create_table_maybe(changeset), do: changeset
 
-  defp destination_specified?(changeset),
-    do: !!get_field(changeset, :destination)
-  defp write_disposition_create?(changeset),
-    do: get_field(changeset, :write_disposition) == "create_if_needed"
-  defp should_create_table?(changeset), do:
-    !destination_specified?(changeset) || write_disposition_create?(changeset)
-
-  @doc """
-  Cancels the job
-  """
   @spec cancel_changeset(Jobs.user, Job.t) :: Changeset.t
   def cancel_changeset(user, job) do
     job
@@ -98,6 +43,17 @@ defmodule HaCore.Jobs.Job do
     |> put_change(:status, "canceled")
     |> validate_status_is("in_progress", message: "Job can only be canceled if already running")
     |> register_event(JobCanceled)
+  end
+
+  @spec complete_changeset(Job.t, JobStatistics.t) :: Changeset.t
+  def complete_changeset(job, statistics) do
+    job
+    |> change
+    |> put_change(:status, "complete")
+    |> put_assoc(:statistics, statistics)
+    |> cast_assoc(:statistics, required: true, with: &JobConfiguration.create_changeset/2)
+    |> validate_status_is("created", message: "Cannot mark job as done as it is not running")
+    |> register_event(JobCompleted)
   end
 
   defp validate_status_is(changeset, status, opts) do

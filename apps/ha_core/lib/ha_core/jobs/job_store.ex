@@ -20,7 +20,12 @@ defmodule HaCore.Jobs.JobStore do
   @doc """
   Gets a single job.
   """
-  @callback get!(HaCore.user, Jobs.id) :: Job.t
+  @callback get_job!(Jobs.id) :: Job.t
+
+  @doc """
+  Gets a single job.
+  """
+  @callback get_user_job!(HaCore.user, Jobs.id) :: Job.t
 
   @doc """
   Saves a job changeset

@@ -8,8 +8,11 @@ defmodule HaCore do
     Jobs,
     Queries,
     Records,
-    Tables
+    Tables,
+    Context
   }
+
+  @type context :: Context.t
 
   defdelegate count_queries(user), to: Queries
   defdelegate list_queries(user), to: Queries

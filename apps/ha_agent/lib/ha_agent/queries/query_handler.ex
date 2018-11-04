@@ -1,15 +1,17 @@
 defmodule HaAgent.Queries.QueryHandler do
   @moduledoc false
   use HaSupport.Consumer,
+    types: ["job_created"],
     adapter: {HaSupport.Consumer.RedisAdapter, stream: "domain-events", name: :redix_agent}
 
   alias Exd.{Repo, Query}
+  alias HaSupport.DomainEvent
   alias HaAgent.{QueryResult, Dispatcher}
   alias HaAgent.Queries.QueryService
 
   @impl true
   def handle_events(events) do
-    query_results =
+    events =
       for event <- events,
           {:ok, query} = parse_query(event),
           started_at = NaiveDateTime.utc_now,
@@ -24,16 +26,20 @@ defmodule HaAgent.Queries.QueryHandler do
               data: document
             }
           end
-        %QueryResult{
-          query_id: event.data.id,
-          table_id: event.data.destination_id,
-          started_at: started_at,
-          completed_at: completed_at,
-          size: length(documents),
-          documents: documents
-        }
+        DomainEvent.make(
+          event,
+          :query_results,
+          %QueryResult{
+            job_id: event.data.id,
+            table_id: event.data.destination_id,
+            started_at: started_at,
+            completed_at: completed_at,
+            size: length(documents),
+            documents: documents
+          }
+        )
       end
-    Dispatcher.dispatch(query_results)
+    Dispatcher.dispatch(events)
     :ok
   end
 

@@ -2,7 +2,6 @@ defmodule HaStore.Imports.ImportService do
   @moduledoc """
   Imports service
   """
-  alias HaStore.Dispatcher
   alias HaStore.Imports
   alias HaStore.Imports.Store.DefaultImpl
   alias HaStore.Imports.{

@@ -4,6 +4,7 @@ defmodule HaSupport.Consumer.RedisAdapter do
   """
   use HaSupport.Consumer.Adapter
   use GenServer
+  alias HaSupport.DomainEvent
 
   @poll_period :timer.minutes(10)
 
@@ -14,10 +15,11 @@ defmodule HaSupport.Consumer.RedisAdapter do
   @impl true
   def init(opts) do
     name = Keyword.fetch!(opts, :name)
+    types = Keyword.get(opts, :types, [])
     stream = Keyword.fetch!(opts, :stream)
     callback = Keyword.fetch!(opts, :callback)
     Process.send_after self(), :block, 1000
-    state = %{callback: callback, last_id: "$", name: name, stream: stream}
+    state = %{callback: callback, last_id: "$", types: types, name: name, stream: stream}
     {:ok, state}
   end
 
@@ -39,8 +41,13 @@ defmodule HaSupport.Consumer.RedisAdapter do
         {id, _} = List.last(events)
         Process.send_after self(), :block, 0
         state = %{state | last_id: id}
-        events = for {id, event} <- events, do: event
-        :ok = state.callback.(events)
+        events =
+          for {id, data} <- events,
+              event = struct(DomainEvent, data),
+              # IO.inspect(event),
+              event.type in state.types,
+              do: event
+        state.callback.(events)
         {:noreply, state, :infinity}
       _ ->
         Process.send_after self(), :block, 0

@@ -10,11 +10,13 @@ defmodule HaSupport.Consumer do
 
   @doc false
   defmacro __using__(opts) do
+    types = Keyword.fetch!(opts, :types)
     {adapter_module, adapter_opts} = Keyword.fetch!(opts, :adapter)
 
     quote do
       @behaviour HaSupport.Consumer
 
+      def types, do: unquote(types)
       def adapter_module, do: unquote(adapter_module)
       def adapter_opts, do: unquote(adapter_opts)
 
@@ -26,6 +28,7 @@ defmodule HaSupport.Consumer do
         opts =
           opts
           |> Keyword.merge(adapter_opts())
+          |> Keyword.put(:types, types())
           |> Keyword.put(:callback, &__MODULE__.handle_events/1)
 
         apply(

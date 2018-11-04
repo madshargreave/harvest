@@ -31,4 +31,9 @@ defmodule HaCore.Accounts.User do
     user.admin
   end
 
+  defimpl HaSupport.Context do
+    def correlation_id(_user), do: nil
+    def actor_id(user), do: user.id
+  end
+
 end

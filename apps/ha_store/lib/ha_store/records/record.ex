@@ -10,7 +10,7 @@ defmodule HaStore.Records.Record do
 
   schema "records" do
     field :table_id, Ecto.UUID
-    field :query_id, Ecto.UUID
+    field :job_id, Ecto.UUID
     field :unique_id, Ecto.UUID
     field :data, :map
     timestamps()
@@ -18,7 +18,7 @@ defmodule HaStore.Records.Record do
 
   @spec save_changeset(map) :: Ecto.Changeset.t
   def save_changeset(attrs \\ %{}) do
-    required = ~w(table_id query_id unique_id data)a
+    required = ~w(table_id job_id unique_id data)a
     optional = ~w(unique_id)a
 
     %__MODULE__{}

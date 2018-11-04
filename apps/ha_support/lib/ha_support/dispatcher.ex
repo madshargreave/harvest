@@ -8,6 +8,7 @@ defmodule HaSupport.Dispatcher do
     {adapter_module, adapter_opts} = Keyword.fetch!(opts, :adapter)
     quote do
 
+      def dispatch([]), do: :ok
       def dispatch(events) do
         apply(
           unquote(adapter_module),

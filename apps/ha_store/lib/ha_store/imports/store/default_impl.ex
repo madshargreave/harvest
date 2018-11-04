@@ -15,7 +15,7 @@ defmodule HaStore.Imports.Store.DefaultImpl do
       for record <- record_import.documents do
         %{
           table_id: record_import.table_id,
-          query_id: record_import.query_id,
+          job_id: record_import.job_id,
           unique_id: record.id,
           data: record.data,
           inserted_at: now,
@@ -27,9 +27,16 @@ defmodule HaStore.Imports.Store.DefaultImpl do
       on_conflict: :replace_all,
       conflict_target: [:table_id, :unique_id]
     ]
-    with {count, _} <- Repo.insert_all(Record, records, opts) do
-      {:ok, count}
-    end
+    {count, _} = Repo.insert_all(Record, records, opts)
+    {
+      :ok,
+      %{
+        table_id: record_import.table_id,
+        job_id: record_import.job_id,
+        size: count,
+        inserted_at: now
+      }
+    }
   end
 
 end

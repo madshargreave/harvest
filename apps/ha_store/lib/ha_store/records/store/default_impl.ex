@@ -6,7 +6,7 @@ defmodule HaStore.Records.Store.DefaultImpl do
   alias HaStore.Repo
   alias HaStore.Records.Record
 
-  @attrs ~w(table_id query_id unique_id data inserted_at updated_at)a
+  @attrs ~w(table_id job_id unique_id data inserted_at updated_at)a
 
   @impl true
   def count(table_id) do

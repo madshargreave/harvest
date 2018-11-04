@@ -1,22 +1,31 @@
 defmodule HaStore.Imports.ImportHandler do
   @moduledoc false
   use HaSupport.Consumer,
+    types: ["query_results"],
     adapter: {HaSupport.Consumer.RedisAdapter, stream: "documents", name: :redix_store}
 
+  alias HaSupport.DomainEvent
+  alias HaStore.Dispatcher
   alias HaStore.Imports.ImportService
 
   @impl true
   def handle_events(events) do
     for event <- events,
         import_attrs = %{
-          table_id: event.table_id,
-          query_id: event.query_id,
-          documents: event.documents
+          table_id: event.data.table_id,
+          job_id: event.data.job_id,
+          documents: event.data.documents
         } do
-      {:ok, count} = ImportService.create(import_attrs)
-      IO.inspect "Persisted #{count} Imports"
+      {:ok, imported} = ImportService.create(import_attrs)
+
+      DomainEvent.make(
+        event,
+        :import_created,
+        imported
+      )
+      |> List.wrap
+      |> Dispatcher.dispatch
     end
-    :ok
   end
 
 end

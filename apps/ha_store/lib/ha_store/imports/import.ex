@@ -7,13 +7,14 @@ defmodule HaStore.Imports.Import do
 
   schema "imports" do
     field :table_id, :string
-    field :query_id, :string
+    field :job_id, :string
     field :documents, {:array, :map}
+    timestamps()
   end
 
   @spec create_changeset(map) :: Ecto.Changeset.t
   def create_changeset(attrs \\ %{}) do
-    required = ~w(table_id query_id documents)a
+    required = ~w(table_id job_id documents)a
 
     %__MODULE__{}
     |> cast(attrs, required)

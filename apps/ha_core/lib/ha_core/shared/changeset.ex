@@ -15,8 +15,8 @@ defmodule HaCore.Changeset do
   @spec register_event(Changeset.t, term) :: Changeset.t
   def register_event(changeset, event_module) do
     current_dispatches = Map.get(changeset, :__register_event__, [])
-    dispatch = fn aggregate ->
-      event = event_module.make(aggregate)
+    dispatch = fn context, aggregate ->
+      event = event_module.make(context, aggregate)
       @dispatcher.dispatch([event])
     end
 

@@ -10,14 +10,15 @@ defmodule HaCore.Jobs.Events.JobCreated do
             steps: nil,
             inserted_at: nil
 
-  def make(job) do
+  def make(context, job) do
     DomainEvent.make(
+      context,
       :job_created,
       %__MODULE__{
         id: job.id,
-        destination_id: job.destination_id,
+        destination_id: job.configuration.destination_id,
         status: job.status,
-        primary_key: job.destination.primary_key,
+        primary_key: job.configuration.destination.primary_key,
         steps: job.steps,
         inserted_at: job.inserted_at
       }
