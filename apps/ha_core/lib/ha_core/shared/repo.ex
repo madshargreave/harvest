@@ -14,6 +14,7 @@ defmodule HaCore.Repo do
   defdelegate get!(module, id), to: @repo
   defdelegate one!(queryable), to: @repo
   defdelegate all(module), to: @repo
+  defdelegate paginate(module, opts), to: @repo
   defdelegate preload(queryable, preloads), to: @repo
 
   def save(context, changeset) do

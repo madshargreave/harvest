@@ -40,6 +40,7 @@ defmodule HaCore.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:event_bus, "~> 1.6.0"},
       {:ecto_enum, "~> 1.0"},
+      {:paginator, "~> 0.5"},
       {:mox, "~> 0.4", only: :test}
     ]
   end

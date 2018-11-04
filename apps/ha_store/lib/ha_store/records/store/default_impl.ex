@@ -14,8 +14,14 @@ defmodule HaStore.Records.Store.DefaultImpl do
   end
 
   @impl true
-  def list(table_id) do
+  def get_by_table(table_id) do
     query = from r in Record, where: r.table_id == ^table_id
+    Repo.all(query)
+  end
+
+  @impl true
+  def get_by_job(job_id) do
+    query = from r in Record, where: r.job_id == ^job_id
     Repo.all(query)
   end
 

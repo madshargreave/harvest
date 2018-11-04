@@ -2,8 +2,6 @@ defmodule HaCore.Jobs.JobService do
   @moduledoc """
   Jobs service
   """
-  import Ecto
-
   alias ExCore.DTO.JobDTO
   alias HaCore.Jobs
   alias HaCore.Jobs.Store.DefaultImpl
@@ -14,10 +12,11 @@ defmodule HaCore.Jobs.JobService do
   @doc """
   Creates a new job and enqueues it processing
   """
-  @spec list(HaCore.user) :: [JobDTO.t]
-  def list(user) do
-    jobs = @store.list(user)
-    dto(jobs)
+  @spec list(HaCore.user, map) :: [JobDTO.t]
+  def list(user, pagination) do
+    with %{entries: jobs, metadata: meta} = page <- @store.list(user, pagination) do
+      %{page | entries: dto(jobs)}
+    end
   end
 
   @doc """
@@ -37,8 +36,8 @@ defmodule HaCore.Jobs.JobService do
   def cancel(user, job_id) do
     job = @store.get_user_job!(user, job_id)
     changeset = Job.cancel_changeset(user, job)
-    job = @store.save(user, changeset)
-    dto(job)
+    updated = @store.save(user, changeset)
+    dto(updated)
   end
 
   @doc """
@@ -48,8 +47,8 @@ defmodule HaCore.Jobs.JobService do
   def complete(context, statistics) do
     job = @store.get_job!(statistics.job_id)
     changeset = Job.complete_changeset(job, statistics)
-    job = @store.save(context, changeset)
-    dto(job)
+    updated = @store.save(context, changeset)
+    dto(updated)
   end
 
   defp dto(jobs) when is_list(jobs), do: JobDTO.from(jobs)

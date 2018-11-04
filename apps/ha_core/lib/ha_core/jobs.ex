@@ -19,7 +19,7 @@ defmodule HaCore.Jobs do
   @type id :: binary
 
   defdelegate count_jobs(user), to: @store_impl, as: :count
-  defdelegate list_jobs(user), to: JobService, as: :list
+  defdelegate list_jobs(user, pagination), to: JobService, as: :list
   defdelegate get_job!(user, id), to: JobService, as: :get!
   defdelegate create_job(user, attrs), to: JobService, as: :create
   defdelegate cancel_job(user, job), to: JobService, as: :cancel

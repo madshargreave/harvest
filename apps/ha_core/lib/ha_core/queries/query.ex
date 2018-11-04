@@ -15,23 +15,12 @@ defmodule HaCore.Queries.Query do
     field :params, :map, default: %{}
     field :schedule, :string
     field :last_job_id, :string
+    field :saved, :boolean
     field :deleted_at, :naive_datetime
     field :deleted_by, :map, virtual: true
     has_one :job, Job
     has_many :jobs, Job
     timestamps()
-  end
-
-  @spec save_changeset(HaCore.user, map) :: Changeset.t
-  def save_changeset(user, attrs \\ %{}) do
-    required = ~w(user_id steps)a
-    optional = ~w(schedule)a
-
-    %__MODULE__{}
-    |> cast(attrs, optional ++ required)
-    |> put_change(:user_id, user.id)
-    |> validate_required(required)
-    |> register_event(QuerySaved)
   end
 
   @spec run_changeset(HaCore.user, t) :: Changeset.t
@@ -45,6 +34,14 @@ defmodule HaCore.Queries.Query do
     |> put_change(:user_id, user.id)
     |> validate_required(required)
     |> register_event(QueryCreated)
+  end
+
+  @spec save_changeset(HaCore.user, map) :: Changeset.t
+  def save_changeset(user, query) do
+    query
+    |> change
+    |> put_change(:saved, true)
+    |> register_event(QuerySaved)
   end
 
   @spec delete_changeset(HaCore.user, t) :: Changeset.t

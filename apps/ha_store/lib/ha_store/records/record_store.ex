@@ -15,7 +15,12 @@ defmodule HaStore.Records.RecordStore do
   @doc """
   Returns the list of queries.
   """
-  @callback list(Records.table_id) :: {:ok, [Record.t]}
+  @callback get_by_table(Records.table_id) :: {:ok, [Record.t]}
+
+  @doc """
+  Returns the list of queries.
+  """
+  @callback get_by_job(Records.job_id) :: {:ok, [Record.t]}
 
   @doc """
   Saves a job changeset

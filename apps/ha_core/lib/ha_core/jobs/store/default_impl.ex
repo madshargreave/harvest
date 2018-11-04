@@ -12,7 +12,7 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   end
 
   @impl true
-  def list(user) do
+  def list(user, pagination) do
     query =
       from j in Job,
       left_join: s in assoc(j, :statistics),
@@ -20,7 +20,7 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
       order_by: [desc: j.inserted_at],
       select: merge(j, %{statistics: s})
 
-    Repo.all(query)
+    Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
   end
 
   @impl true

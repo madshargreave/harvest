@@ -13,21 +13,22 @@ defmodule HaCore.Queries.QueryService do
   @store Application.get_env(:ha_core, :query_store_impl) || DefaultImpl
 
   @doc """
-  Saves query
-  """
-  @spec save(HaCore.user, map) :: {:ok, QueryDTO.t} | {:error, InvalidChangesetError.t}
-  def save(user, attrs \\ %{}) do
-    changeset = Query.save_changeset(user, attrs)
-    result = @store.save(user, changeset)
-    dto(result)
-  end
-
-  @doc """
   Runs a saved query
   """
   @spec run(HaCore.user, map) :: {:ok, QueryDTO.t} | {:error, InvalidChangesetError.t}
   def run(user, attrs \\ %{}) do
     changeset = Query.run_changeset(user, attrs)
+    result = @store.save(user, changeset)
+    dto(result)
+  end
+
+  @doc """
+  Saves query
+  """
+  @spec save(HaCore.user, Queries.id) :: {:ok, QueryDTO.t} | {:error, InvalidChangesetError.t}
+  def save(user, query_id) do
+    query = @store.get!(user, query_id)
+    changeset = Query.save_changeset(user, query)
     result = @store.save(user, changeset)
     dto(result)
   end
