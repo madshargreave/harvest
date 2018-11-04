@@ -10,7 +10,7 @@ defmodule HaCore.Jobs.JobService do
   @store Application.get_env(:ha_server, :job_store_impl) || DefaultImpl
 
   @doc """
-  Creates a new job and enqueues it processing
+  List all user jobs
   """
   @spec list(HaCore.user, HaCore.pagination) :: [JobDTO.t]
   def list(user, pagination) do
