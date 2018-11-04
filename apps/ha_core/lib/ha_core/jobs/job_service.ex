@@ -15,7 +15,7 @@ defmodule HaCore.Jobs.JobService do
   @spec list(HaCore.user, HaCore.pagination) :: [JobDTO.t]
   def list(user, pagination) do
     page = @store.list(user, pagination)
-    %{page | entries: dto(page.entries)}
+    dto(page)
   end
 
   @doc """
@@ -50,6 +50,7 @@ defmodule HaCore.Jobs.JobService do
     dto(updated)
   end
 
+  defp dto(%{entries: entries} = page), do: %{page | entries: dto(entries)}
   defp dto(jobs) when is_list(jobs), do: JobDTO.from(jobs)
   defp dto({:ok, job}), do: {:ok, JobDTO.from(job)}
   defp dto(other), do: other
