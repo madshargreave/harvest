@@ -15,6 +15,9 @@ defmodule HaCore do
   @typedoc "The context of a domain request"
   @type context :: Acconts.User.t | HaSupport.DomainEvent.t
 
+  @typedoc "Datastructure used when paginating list-based responses"
+  @type pagination :: map
+
   defdelegate count_queries(user), to: Queries
   defdelegate list_queries(user), to: Queries
   defdelegate get_query!(user, id), to: Queries

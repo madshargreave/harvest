@@ -12,11 +12,10 @@ defmodule HaCore.Jobs.JobService do
   @doc """
   Creates a new job and enqueues it processing
   """
-  @spec list(HaCore.user, map) :: [JobDTO.t]
+  @spec list(HaCore.user, HaCore.pagination) :: [JobDTO.t]
   def list(user, pagination) do
-    with %{entries: jobs, metadata: meta} = page <- @store.list(user, pagination) do
-      %{page | entries: dto(jobs)}
-    end
+    page = @store.list(user, pagination)
+    %{page | entries: dto(page.entries)}
   end
 
   @doc """
