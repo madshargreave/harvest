@@ -2,8 +2,8 @@ defmodule HaServer.QueryView do
   use HaServer, :view
   alias HaServer.QueryView
 
-  def render("index.json", %{querys: querys}) do
-    %{data: render_many(querys, QueryView, "query.json")}
+  def render("index.json", %{queries: queries}) do
+    %{data: render_many(queries, QueryView, "query.json")}
   end
 
   def render("show.json", %{query: query}) do
@@ -11,9 +11,7 @@ defmodule HaServer.QueryView do
   end
 
   def render("query.json", %{query: query}) do
-    %{
-      id: query.id,
-      timestamp: query.inserted_at
-    }
+    query
   end
+
 end

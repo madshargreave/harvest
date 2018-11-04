@@ -6,6 +6,7 @@ defmodule HaCore.Jobs.Job do
 
   alias HaCore.Constants
   alias HaCore.Tables.Table
+  alias HaCore.Queries.Query
   alias HaCore.Jobs.{Job, JobQuery, JobConfiguration, JobStatistics}
   alias HaCore.Jobs.Events.{JobCanceled, JobCreated, JobCompleted}
 
@@ -15,19 +16,19 @@ defmodule HaCore.Jobs.Job do
     field :status, :string, default: "created"
     field :canceled_at, :naive_datetime
     field :canceled_by, :map, virtual: true
-    field :steps, {:array, :map}
     has_one :configuration, JobConfiguration
     has_one :statistics, JobStatistics
+    belongs_to :query, Query
     timestamps()
   end
 
   @spec create_changeset(Jobs.user, map) :: Changeset.t
   def create_changeset(user, attrs \\ %{}) do
-    required = ~w(steps)a
+    required = ~w()a
     optional = ~w()a
-
     %__MODULE__{}
     |> cast(attrs, optional ++ required)
+    |> cast_assoc(:query)
     |> cast_assoc(:configuration, required: true, with: &JobConfiguration.create_changeset/2)
     |> validate_inclusion(:status, @statuses)
     |> validate_required(required)

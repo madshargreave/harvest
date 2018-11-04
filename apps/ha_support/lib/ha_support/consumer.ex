@@ -8,6 +8,13 @@ defmodule HaSupport.Consumer do
   """
   @callback handle_events([map]) :: :ok | :error
 
+  @doc """
+  Handles a list of events
+  """
+  @callback handle_event(map) :: :ok | :error
+
+  @optional_callbacks handle_event: 1, handle_events: 1
+
   @doc false
   defmacro __using__(opts) do
     types = Keyword.fetch!(opts, :types)
@@ -21,6 +28,11 @@ defmodule HaSupport.Consumer do
       def adapter_opts, do: unquote(adapter_opts)
 
       def handle_events(events) do
+        for event <- events, do: :ok = handle_event(event)
+        :ok
+      end
+
+      def handle_event(event) do
         :ok
       end
 
@@ -38,7 +50,7 @@ defmodule HaSupport.Consumer do
         )
       end
 
-      defoverridable handle_events: 1
+      defoverridable handle_events: 1, handle_event: 1
 
     end
   end

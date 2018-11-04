@@ -12,7 +12,8 @@ defmodule HaCore do
     Context
   }
 
-  @type context :: Context.t
+  @typedoc "The context of a domain request"
+  @type context :: Acconts.User.t | HaSupport.DomainEvent.t
 
   defdelegate count_queries(user), to: Queries
   defdelegate list_queries(user), to: Queries

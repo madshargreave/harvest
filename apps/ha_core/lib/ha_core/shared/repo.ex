@@ -28,16 +28,4 @@ defmodule HaCore.Repo do
     with {:ok, query} <- transaction_result, do: query
   end
 
-  def save(changeset) do
-    transaction_result =
-      @repo.transaction(fn ->
-        with {:ok, result} <- @repo.insert_or_update(changeset) do
-          for dispatch <- Map.get(changeset, :__register_event__, []), do: dispatch.(result)
-          {:ok, result}
-        end
-      end)
-
-    with {:ok, query} <- transaction_result, do: query
-  end
-
 end

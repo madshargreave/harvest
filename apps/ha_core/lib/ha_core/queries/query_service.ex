@@ -2,6 +2,7 @@ defmodule HaCore.Queries.QueryService do
   @moduledoc """
   Jobs service
   """
+  alias ExCore.DTO.QueryDTO
   alias HaCore.Queries
   alias HaCore.Queries.Store.DefaultImpl
   alias HaCore.Queries.{
@@ -14,29 +15,36 @@ defmodule HaCore.Queries.QueryService do
   @doc """
   Saves query
   """
-  @spec save(HaCore.user, map) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
+  @spec save(HaCore.user, map) :: {:ok, QueryDTO.t} | {:error, InvalidChangesetError.t}
   def save(user, attrs \\ %{}) do
     changeset = Query.save_changeset(user, attrs)
-    @store.save(changeset)
+    result = @store.save(user, changeset)
+    dto(result)
   end
 
   @doc """
   Runs a saved query
   """
-  @spec run(HaCore.user, map) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
+  @spec run(HaCore.user, map) :: {:ok, QueryDTO.t} | {:error, InvalidChangesetError.t}
   def run(user, attrs \\ %{}) do
     changeset = Query.run_changeset(user, attrs)
-    @store.save(changeset)
+    result = @store.save(user, changeset)
+    dto(result)
   end
 
   @doc """
   Deletes a saved query
   """
-  @spec delete(HaCore.user, Queries.id) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
+  @spec delete(HaCore.user, Queries.id) :: {:ok, QueryDTO.t} | {:error, InvalidChangesetError.t}
   def delete(user, query_id) do
     query = @store.get!(user, query_id)
     changeset = Query.delete_changeset(user, query)
-    @store.save(changeset)
+    result = @store.save(user, changeset)
+    dto(result)
   end
+
+  defp dto(queries) when is_list(queries), do: QueryDTO.from(queries)
+  defp dto({:ok, query}), do: {:ok, QueryDTO.from(query)}
+  defp dto(other), do: other
 
 end

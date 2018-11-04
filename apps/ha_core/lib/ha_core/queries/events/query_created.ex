@@ -3,25 +3,30 @@ defmodule HaCore.Queries.Events.QueryCreated do
   alias HaSupport.DomainEvent
 
   defstruct id: nil,
-            destination_id: nil,
             name: nil,
-            status: nil,
-            primary_key: nil,
             steps: nil,
+            params: nil,
+            job: nil,
             user_id: nil,
             inserted_at: nil
 
-  def make(query) do
+  def make(context, query) do
     DomainEvent.make(
+      context,
       :query_created,
       %__MODULE__{
         id: query.id,
-        destination_id: query.destination_id,
-        name: query.name,
-        status: query.status,
-        primary_key: query.primary_key,
-        steps: query.steps,
         user_id: query.user_id,
+        name: query.name,
+        steps: query.steps,
+        params: query.params,
+        job: %{
+          id: query.job.id,
+          destination_id: query.job.configuration.destination_id,
+          status: query.job.status,
+          primary_key: query.job.configuration.destination.primary_key,
+          inserted_at: query.job.inserted_at
+        },
         inserted_at: query.inserted_at
       }
     )

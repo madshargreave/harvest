@@ -21,8 +21,10 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   end
 
   @impl true
-  def save(changeset) do
-    Repo.save(changeset)
+  def save(context, changeset) do
+    with {:ok, entity} = Repo.save(context, changeset) do
+      {:ok, Repo.preload(entity, [job: [:configuration, :statistics]])}
+    end
   end
 
 end

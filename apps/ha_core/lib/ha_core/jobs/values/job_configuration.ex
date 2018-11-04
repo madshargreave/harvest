@@ -5,6 +5,7 @@ defmodule HaCore.Jobs.JobConfiguration do
   use HaCore.Schema
 
   alias HaCore.Tables.Table
+  alias HaCore.Queries.Query
   alias HaCore.Jobs.Job
 
   @create_dispositions ~w(create_if_needed never)
@@ -20,8 +21,8 @@ defmodule HaCore.Jobs.JobConfiguration do
     field :use_source_cache, :boolean, default: false
     field :max_bad_records, :integer
     field :dry_run, :boolean, default: false
-    field :query_params, :map, default: %{}
     field :schema, :map, virtual: true
+
     belongs_to :destination, Table
   end
 
@@ -36,7 +37,6 @@ defmodule HaCore.Jobs.JobConfiguration do
       use_source_cache
       max_bad_records
       dry_run
-      query_params
       schema
     )a
 

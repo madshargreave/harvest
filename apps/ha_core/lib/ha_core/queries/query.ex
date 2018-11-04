@@ -4,27 +4,24 @@ defmodule HaCore.Queries.Query do
   """
   use HaCore.Schema
 
+  alias HaCore.Jobs.Job
   alias HaCore.Queries.Query
   alias HaCore.Queries.Events.{QuerySaved, QueryCreated, QueryDeleted}
 
   schema "queries" do
-    field :user_id, :string
-    field :destination_id, :string
+    field :user_id, :binary_id
     field :name, :string
-    field :status, :string, default: "idle"
-    field :primary_key, :string
     field :steps, {:array, :map}
+    field :params, :map, default: %{}
     field :schedule, :string
     field :last_job_id, :string
     field :deleted_at, :naive_datetime
     field :deleted_by, :map, virtual: true
-
+    has_one :job, Job
+    has_many :jobs, Job
     timestamps()
   end
 
-  @doc """
-  Creates a new query
-  """
   @spec save_changeset(HaCore.user, map) :: Changeset.t
   def save_changeset(user, attrs \\ %{}) do
     required = ~w(user_id steps)a
@@ -37,24 +34,19 @@ defmodule HaCore.Queries.Query do
     |> register_event(QuerySaved)
   end
 
-  @doc """
-  Creates a new query
-  """
   @spec run_changeset(HaCore.user, t) :: Changeset.t
   def run_changeset(user, attrs \\ %{}) do
-    required = ~w(name user_id destination_id primary_key steps)a
-    optional = ~w()a
+    required = ~w(user_id steps)a
+    optional = ~w(name params)a
 
     %__MODULE__{}
     |> cast(attrs, optional ++ required)
+    |> cast_assoc(:job, required: true, with: &Job.create_changeset/2)
     |> put_change(:user_id, user.id)
     |> validate_required(required)
     |> register_event(QueryCreated)
   end
 
-  @doc """
-  Deletes query
-  """
   @spec delete_changeset(HaCore.user, t) :: Changeset.t
   def delete_changeset(user, query) do
     query
@@ -62,14 +54,6 @@ defmodule HaCore.Queries.Query do
     |> put_change(:deleted_at, NaiveDateTime.utc_now)
     |> put_change(:deleted_by, user)
     |> register_event(QueryDeleted)
-  end
-
-  defp validate_status_is(changeset, status, opts) do
-    validate_is(changeset, :status, status, opts)
-  end
-
-  defp validate_status_is_not(changeset, status, opts) do
-    validate_is_not(changeset, :status, status, opts)
   end
 
 end

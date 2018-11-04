@@ -4,17 +4,14 @@ defmodule HaCore.Jobs.JobHandler do
     types: ["import_created"],
     adapter: {HaSupport.Consumer.RedisAdapter, stream: "records", name: :redix_core_records}
 
-  alias HaSupport.DomainEvent
   alias HaStore.Imports.Import
   alias HaCore.Jobs.{JobService, JobStatistics}
 
   @impl true
-  def handle_events(events) do
-    for event <- events do
-      imported = struct(Import, event.data)
-      statistics = create_statistics(imported)
-      JobService.complete(event, statistics)
-    end
+  def handle_event(event) do
+    imported = struct(Import, event.data)
+    statistics = create_statistics(imported)
+    JobService.complete(event, statistics)
     :ok
   end
 
