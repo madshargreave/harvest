@@ -38,6 +38,7 @@ defmodule HAServer.Mixfile do
   defp deps do
     [
       {:ha_core, in_umbrella: true},
+      {:cors_plug, "~> 1.5"},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},

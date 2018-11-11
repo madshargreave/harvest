@@ -2,8 +2,11 @@ defmodule HaServer.RecordView do
   use HaServer, :view
   alias HaServer.RecordView
 
-  def render("index.json", %{records: records}) do
-    %{data: render_many(records, RecordView, "record.json")}
+  def render("index.json", %{records: records, paging: paging}) do
+    %{
+      data: render_many(records, RecordView, "record.json"),
+      paging: paging
+    }
   end
 
   def render("show.json", %{record: record}) do

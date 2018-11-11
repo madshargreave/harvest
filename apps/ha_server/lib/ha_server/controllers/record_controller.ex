@@ -10,8 +10,8 @@ defmodule HaServer.RecordController do
   end
 
   def index(conn, %{"job_id" => job_id}) do
-    records = Records.list_job_records(job_id)
-    render(conn, "index.json", records: records)
+    page = Records.list_job_records(job_id, conn.assigns.pagination)
+    render(conn, "index.json", records: page.entries, paging: page.metadata)
   end
 
 end

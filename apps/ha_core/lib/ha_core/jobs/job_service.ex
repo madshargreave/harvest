@@ -19,6 +19,15 @@ defmodule HaCore.Jobs.JobService do
   end
 
   @doc """
+  Get a single job
+  """
+  @spec get!(HaCore.user, Jobs.job_id) :: JobDTO.t
+  def get!(user, job_id) do
+    job = @store.get_job!(job_id)
+    dto(job)
+  end
+
+  @doc """
   Creates a new job and enqueues it processing
   """
   @spec create(HaCore.user, map) :: {:ok, JobDTO.t} | {:error, InvalidChangesetError.t}
@@ -52,7 +61,7 @@ defmodule HaCore.Jobs.JobService do
 
   defp dto(%{entries: entries} = page), do: %{page | entries: dto(entries)}
   defp dto(jobs) when is_list(jobs), do: JobDTO.from(jobs)
+  defp dto(%Job{} = job), do: JobDTO.from(job)
   defp dto({:ok, job}), do: {:ok, JobDTO.from(job)}
-  defp dto(other), do: other
 
 end

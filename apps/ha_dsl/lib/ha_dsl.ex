@@ -4,7 +4,7 @@ defmodule HaDSL do
   """
   alias Exd.Query
 
-  @parser HaDSL.Parser.MapImpl
+  @parser HaDSL.Parser.SQLImpl
 
   defdelegate parse(map), to: @parser
 

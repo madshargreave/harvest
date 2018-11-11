@@ -7,7 +7,7 @@ defmodule HaCore.Jobs.Events.JobCreated do
             name: nil,
             status: nil,
             primary_key: nil,
-            steps: nil,
+            query: nil,
             inserted_at: nil
 
   def make(context, job) do
@@ -19,7 +19,7 @@ defmodule HaCore.Jobs.Events.JobCreated do
         destination_id: job.configuration.destination_id,
         status: job.status,
         primary_key: job.configuration.destination.primary_key,
-        steps: job.steps,
+        query: job.query,
         inserted_at: job.inserted_at
       }
     )

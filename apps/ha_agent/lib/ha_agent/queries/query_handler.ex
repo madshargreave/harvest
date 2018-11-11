@@ -11,6 +11,7 @@ defmodule HaAgent.Queries.QueryHandler do
 
   @impl true
   def handle_events(events) do
+    :timer.sleep(5000)
     events =
       for event <- events,
           {:ok, query} = parse_query(event),
@@ -45,7 +46,7 @@ defmodule HaAgent.Queries.QueryHandler do
   end
 
   defp parse_query(event) do
-    HaDSL.parse(event.data.steps)
+    HaDSL.parse(event.data.query)
   end
 
   defp run_query(query) do

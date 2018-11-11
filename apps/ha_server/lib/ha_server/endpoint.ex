@@ -35,6 +35,7 @@ defmodule HaServer.Endpoint do
     key: "_server_key",
     signing_salt: "lAc4Hp8r"
 
+  plug CORSPlug
   plug HaServer.Router
 
   @doc """

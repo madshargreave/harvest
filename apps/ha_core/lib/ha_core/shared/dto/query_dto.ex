@@ -5,6 +5,7 @@ defmodule ExCore.DTO.QueryDTO do
   defstruct type: nil,
             id: nil,
             name: nil,
+            query: nil,
             job: nil
 
   def from(query) do
@@ -12,6 +13,7 @@ defmodule ExCore.DTO.QueryDTO do
       type: "query",
       id: query.id,
       name: query.name,
+      query: query.query,
       job: JobReferenceDTO.from(query.job)
     }
   end

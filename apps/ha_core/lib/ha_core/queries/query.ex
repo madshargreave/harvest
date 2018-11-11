@@ -11,7 +11,7 @@ defmodule HaCore.Queries.Query do
   schema "queries" do
     field :user_id, :binary_id
     field :name, :string
-    field :steps, {:array, :map}
+    field :query, :string
     field :params, :map, default: %{}
     field :schedule, :string
     field :last_job_id, :string
@@ -25,7 +25,7 @@ defmodule HaCore.Queries.Query do
 
   @spec run_changeset(HaCore.user, t) :: Changeset.t
   def run_changeset(user, attrs \\ %{}) do
-    required = ~w(user_id steps)a
+    required = ~w(user_id query)a
     optional = ~w(name params)a
 
     %__MODULE__{}

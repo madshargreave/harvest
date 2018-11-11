@@ -4,7 +4,7 @@ defmodule HaCore.Queries.Events.QueryCreated do
 
   defstruct id: nil,
             name: nil,
-            steps: nil,
+            query: nil,
             params: nil,
             job: nil,
             user_id: nil,
@@ -18,7 +18,7 @@ defmodule HaCore.Queries.Events.QueryCreated do
         id: query.id,
         user_id: query.user_id,
         name: query.name,
-        steps: query.steps,
+        query: query.query,
         params: query.params,
         job: %{
           id: query.job.id,

@@ -16,7 +16,7 @@ defmodule HaStore.Records do
 
   defdelegate count_records(table_id), to: @store_impl, as: :count
   defdelegate list_table_records(table_id), to: @store_impl, as: :get_by_table
-  defdelegate list_job_records(job_id), to: @store_impl, as: :get_by_job
+  defdelegate list_job_records(job_id, pagination), to: @store_impl, as: :get_by_job
   defdelegate save_records(table_id, records), to: RecordService, as: :save
 
 end

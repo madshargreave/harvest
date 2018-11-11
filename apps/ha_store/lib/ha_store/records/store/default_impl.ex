@@ -20,9 +20,13 @@ defmodule HaStore.Records.Store.DefaultImpl do
   end
 
   @impl true
-  def get_by_job(job_id) do
-    query = from r in Record, where: r.job_id == ^job_id
-    Repo.all(query)
+  def get_by_job(job_id, pagination) do
+    query =
+      from r in Record,
+      where: r.job_id == ^job_id,
+      order_by: [desc: r.inserted_at]
+
+    Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
   end
 
   @impl true
