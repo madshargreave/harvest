@@ -25,6 +25,7 @@ defmodule ExCore.DTO.JobDTO do
 
   def from("configuration.json", %{job: job}) do
     %{
+      query: job.configuration.query,
       write_disposition: job.configuration.write_disposition,
       create_disposition: job.configuration.create_disposition,
       priority: job.configuration.priority,

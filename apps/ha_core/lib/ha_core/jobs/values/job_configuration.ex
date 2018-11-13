@@ -15,6 +15,7 @@ defmodule HaCore.Jobs.JobConfiguration do
   @primary_key {:job_id, :binary_id, autogenerate: false}
 
   schema "job_configurations" do
+    field :query, :string
     field :create_disposition, :string, default: "create_if_needed"
     field :write_disposition, :string, default: "write_truncate"
     field :priority, :string, default: "standard"
@@ -28,7 +29,7 @@ defmodule HaCore.Jobs.JobConfiguration do
 
   @spec create_changeset(t, map) :: Changeset.t
   def create_changeset(struct, attrs \\ %{}) do
-    required = ~w()a
+    required = ~w(query)a
     optional = ~w(
       job_id
       create_disposition

@@ -5,6 +5,7 @@ defmodule HaCore.Repo.EctoImpl.Migrations.CreateJobConfigurations do
     create table(:job_configurations, primary_key: false) do
       add :job_id, references(:jobs, type: :uuid), primary_key: true
       add :query_params, :map
+      add :query, :text, null: false
       add :create_disposition, :string, null: false
       add :write_disposition, :string, null: false
       add :priority, :string, null: false

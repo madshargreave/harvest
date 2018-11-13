@@ -3,7 +3,6 @@ defmodule HaServer.JobController do
   alias HaCore.Jobs
 
   def index(conn, params) do
-    :timer.sleep(200)
     page = Jobs.list_jobs(conn.assigns.user, conn.assigns.pagination)
     render(conn, "index.json", jobs: page.entries, paging: page.metadata)
   end
