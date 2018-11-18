@@ -8,10 +8,12 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :ha_server, HaServer.Endpoint,
   http: [port: 4000],
+  render_errors: [view: HaServer.ErrorView, accepts: ~w(html json)],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: []
+  watchers: [],
+  server: true
 
 # ## SSL Support
 #
@@ -30,15 +32,15 @@ config :ha_server, HaServer.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :ha_server, HaServer.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-      ~r{priv/gettext/.*(po)$},
-      ~r{lib/server_web/views/.*(ex)$},
-      ~r{lib/server_web/templates/.*(eex)$}
-    ]
-  ]
+# config :ha_server, HaServer.Endpoint,
+#   live_reload: [
+#     patterns: [
+#       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+#       ~r{priv/gettext/.*(po)$},
+#       ~r{lib/server_web/views/.*(ex)$},
+#       ~r{lib/server_web/templates/.*(eex)$}
+#     ]
+#   ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console,

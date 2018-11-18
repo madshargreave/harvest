@@ -1,8 +1,12 @@
 defmodule HaCore.Jobs.JobHandler do
   @moduledoc false
   use HaSupport.Consumer,
-    types: ["import_created"],
-    adapter: {HaSupport.Consumer.RedisAdapter, stream: "records", name: :redix_core_records}
+    topics: ["import_created"],
+    adapter: {
+      HaSupport.Consumer.RedisAdapter,
+        stream: "records",
+        redix: :redix_core_records
+    }
 
   alias HaStore.Imports.Import
   alias HaCore.Jobs.{JobService, JobStatistics}

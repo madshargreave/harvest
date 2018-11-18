@@ -7,7 +7,7 @@ defmodule HaCore.TestUtils do
   }
 
   def create_dispatcher_mock do
-    expect(DispatcherMock, :dispatch, fn event -> send self(), {:event, event} end)
+    expect(DispatcherMock, :dispatch, fn [event] -> send self(), {:event, event} end)
   end
 
   def create_repo_mock do

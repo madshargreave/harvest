@@ -17,7 +17,7 @@ defmodule HaCore.Datasets.DatasetService do
   @spec create(HaCore.user, map) :: {:ok, Dataset.t} | {:error, InvalidChangesetError.t}
   def create(user, attrs \\ %{}) do
     changeset = Dataset.create_changeset(user, attrs)
-    @store.save(changeset)
+    @store.save(user, changeset)
   end
 
   @doc """
@@ -27,7 +27,7 @@ defmodule HaCore.Datasets.DatasetService do
   def delete(user, dataset_id) do
     dataset = @store.get!(user, dataset_id)
     changeset = Dataset.delete_changeset(user, dataset)
-    @store.save(changeset)
+    @store.save(user, changeset)
   end
 
 end

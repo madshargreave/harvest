@@ -10,6 +10,7 @@ defmodule HaCore.Schema do
       import Ecto.Changeset
 
       import HaCore.Validations
+      import HaCore.Casters
       import HaCore.Changeset
 
       alias Ecto.Changeset

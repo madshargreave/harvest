@@ -21,8 +21,8 @@ defmodule HaCore.Datasets.Store.DefaultImpl do
   end
 
   @impl true
-  def save(changeset) do
-    Repo.save(changeset)
+  def save(context, changeset) do
+    Repo.save(context, changeset)
   end
 
 end

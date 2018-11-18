@@ -3,5 +3,9 @@ defmodule HaAgent.Dispatcher do
   Dispatcher for domain events
   """
   use HaSupport.Dispatcher,
-    adapter: {HaSupport.Dispatcher.StreamImpl, stream: "documents", name: :redix_agent}
+    adapter: {
+      HaSupport.Dispatcher.StreamImpl,
+        topic: "documents",
+        name: :redix_agent
+    }
 end

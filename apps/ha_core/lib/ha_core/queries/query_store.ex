@@ -18,6 +18,11 @@ defmodule HaCore.Queries.QueryStore do
   @callback list(HaCore.user) :: {:ok, [Query.t]}
 
   @doc """
+  Returns the list of queries.
+  """
+  @callback list_saved(HaCore.user) :: {:ok, [Query.t]}
+
+  @doc """
   Gets a single query.
   """
   @callback get!(HaCore.user, Queries.id) :: Query.t

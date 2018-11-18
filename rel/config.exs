@@ -36,12 +36,14 @@ environment :dev do
   set dev_mode: true
   set include_erts: false
   set cookie: :"W{Y]Qfj5Vm<43<4REX[p8R_PVE?)pm(lKvv?$b_xh8K3&TryuG5:/}esm~AfKqNp"
+  set vm_args: "rel/vm.args"
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
   set cookie: :"g!a6:7|6Afv1!X3@:GN:!l~TcIU|Vs>~UyLNXqdCQ5|AV9xkV;8@U%PgH:r93TZL"
+  set vm_args: "rel/vm.args"
 end
 
 # You may define one or more releases in this file.
@@ -53,8 +55,8 @@ release :server do
   set version: "0.0.1"
   set applications: [
     :runtime_tools,
-    :common,
-    :server
+    :ha_core,
+    :ha_server
   ]
   set config_providers: [
     {Mix.Releases.Config.Providers.Elixir, ["${RELEASE_ROOT_DIR}/etc/config.exs"]}
@@ -67,11 +69,10 @@ release :server do
   ]
 end
 
-release :ha_agent do
+release :agent do
   set version: "0.0.1"
   set applications: [
     :runtime_tools,
-    :common,
     :ha_agent
   ]
 end

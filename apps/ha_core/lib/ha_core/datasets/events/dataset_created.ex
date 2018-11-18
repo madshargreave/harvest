@@ -7,8 +7,9 @@ defmodule HaCore.Datasets.Events.DatasetCreated do
             user_id: nil,
             inserted_at: nil
 
-  def make(dataset) do
+  def make(context, dataset) do
     DomainEvent.make(
+      context,
       :dataset_created,
       %__MODULE__{
         id: dataset.id,

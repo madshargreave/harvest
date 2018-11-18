@@ -6,16 +6,16 @@ defmodule HaCore.Queries.Query do
 
   alias HaCore.Jobs.Job
   alias HaCore.Queries.Query
-  alias HaCore.Queries.Events.{QuerySaved, QueryCreated, QueryDeleted}
+  alias HaCore.Queries.Events
 
   schema "queries" do
     field :user_id, :binary_id
     field :name, :string
+    field :status, :string
     field :query, :string
     field :params, :map, default: %{}
-    field :schedule, :string
-    field :last_job_id, :string
     field :saved, :boolean
+    field :live, :boolean
     field :deleted_at, :naive_datetime
     field :deleted_by, :map, virtual: true
     has_one :job, Job
@@ -32,8 +32,9 @@ defmodule HaCore.Queries.Query do
     |> cast(attrs, optional ++ required)
     |> cast_assoc(:job, required: true, with: &Job.create_changeset/2)
     |> put_change(:user_id, user.id)
+    |> put_change(:status, "active")
     |> validate_required(required)
-    |> register_event(QueryCreated)
+    |> register_event(Events.QueryCreated)
   end
 
   @spec save_changeset(HaCore.user, map) :: Changeset.t
@@ -41,7 +42,7 @@ defmodule HaCore.Queries.Query do
     query
     |> change
     |> put_change(:saved, true)
-    |> register_event(QuerySaved)
+    |> register_event(Events.QuerySaved)
   end
 
   @spec delete_changeset(HaCore.user, t) :: Changeset.t
@@ -50,7 +51,7 @@ defmodule HaCore.Queries.Query do
     |> change
     |> put_change(:deleted_at, NaiveDateTime.utc_now)
     |> put_change(:deleted_by, user)
-    |> register_event(QueryDeleted)
+    |> register_event(Events.QueryDeleted)
   end
 
 end

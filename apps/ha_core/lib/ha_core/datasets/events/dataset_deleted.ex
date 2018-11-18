@@ -5,8 +5,9 @@ defmodule HaCore.Datasets.Events.DatasetDeleted do
   defstruct dataset_id: nil,
             user_id: nil
 
-  def make(dataset) do
+  def make(context, dataset) do
     DomainEvent.make(
+      context,
       :dataset_deleted,
       %__MODULE__{
         user_id: dataset.deleted_by.id,

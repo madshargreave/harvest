@@ -8,6 +8,7 @@ defmodule HaSupport.Consumer.Adapter do
   """
   @callback start_link(keyword) :: GenServer.on_start
 
+  @doc false
   defmacro __using__(opts) do
     quote do
       @behaviour HaSupport.Consumer.Adapter

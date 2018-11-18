@@ -13,8 +13,10 @@ defmodule HaStore.Records do
   @type record :: Record.t
   @type id :: binary
   @type table_id :: binary
+  @type query_id :: binary
 
   defdelegate count_records(table_id), to: @store_impl, as: :count
+  defdelegate list_query_records(query_id, limit), to: @store_impl, as: :get_by_query
   defdelegate list_table_records(table_id), to: @store_impl, as: :get_by_table
   defdelegate list_job_records(job_id, pagination), to: @store_impl, as: :get_by_job
   defdelegate save_records(table_id, records), to: RecordService, as: :save

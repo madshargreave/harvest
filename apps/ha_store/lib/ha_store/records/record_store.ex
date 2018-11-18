@@ -15,6 +15,11 @@ defmodule HaStore.Records.RecordStore do
   @doc """
   Returns the list of queries.
   """
+  @callback get_by_query(Records.query_id, integer) :: {:ok, [Record.t]}
+
+  @doc """
+  Returns the list of queries.
+  """
   @callback get_by_table(Records.table_id) :: {:ok, [Record.t]}
 
   @doc """

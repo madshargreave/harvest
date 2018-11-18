@@ -14,6 +14,17 @@ defmodule HaStore.Records.Store.DefaultImpl do
   end
 
   @impl true
+  def get_by_query(query_id, pagination) do
+    stream = "queries:#{query_id}"
+    command = ["XREVRANGE", stream, "+", "-", "COUNT", pagination.limit]
+    for [id, ["value", value]] <- Redix.command!(:redix_store, command) do
+      value = Poison.decode!(value)
+      %Record{unique_id: id, data: %{"_f1" => value}}
+    end
+    |> IO.inspect
+  end
+
+  @impl true
   def get_by_table(table_id) do
     query = from r in Record, where: r.table_id == ^table_id
     Repo.all(query)
