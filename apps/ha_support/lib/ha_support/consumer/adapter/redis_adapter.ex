@@ -24,12 +24,17 @@ defmodule HaSupport.Consumer.RedisAdapter do
 
     if group do
       for stream <- topics do
-        command = ["XINFO", "GROUPS", stream]
-        exists? =
-          Redix.command!(redix, command)
-          |> Enum.any?(fn [_, existing, _, _, _, _, _, _] -> existing == group end)
-        command = ["XGROUP", "CREATE", stream, group, "$"]
-        !exists? && Redix.command!(redix, command)
+        try do
+          command = ["XINFO", "GROUPS", stream]
+          exists? =
+            Redix.command!(redix, command)
+            |> Enum.any?(fn [_, existing, _, _, _, _, _, _] -> existing == group end)
+          command = ["XGROUP", "CREATE", stream, group, "$"]
+          !exists? && Redix.command!(redix, command)
+        rescue
+          exception ->
+            nil
+        end
       end
     end
 
@@ -56,13 +61,13 @@ defmodule HaSupport.Consumer.RedisAdapter do
         ["XREAD", "BLOCK", 0, "COUNT", 10, "STREAMS", streams, state.last_id]
       end
 
-    case Redix.command!(state.redix, command, timeout: :infinity) do
-      [
+    case Redix.command(state.redix, command, timeout: :infinity) do
+      {:ok, [
         [
           _stream,
           events
         ]
-      ] ->
+      ]} ->
         events =
           for [id, ["value", value]] <- events,
               {:ok, event} = state.serdes.deserialise(value) do

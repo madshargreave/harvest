@@ -1,11 +1,11 @@
-defmodule HaCore.LiveQueriesTest do
+defmodule HaCore.StreamsTest do
   use ExUnit.Case
   import Mox
 
   alias HaCore.{TestUtils, RepoMock, DispatcherMock}
   alias HaCore.Accounts.User
-  alias HaCore.LiveQueries
-  alias HaCore.LiveQueries.LiveQuery
+  alias HaCore.Streams
+  alias HaCore.Streams.Stream
 
   setup do
     TestUtils.create_dispatcher_mock()
@@ -38,16 +38,16 @@ defmodule HaCore.LiveQueriesTest do
   describe "when registering a live query with valid params" do
     setup [:current_user, :valid_params, :verify_on_exit!]
 
-    test "it creates and returns live_query", context do
-      assert {:ok, live_query} = LiveQueries.register_query(context.user, context.params)
-      assert live_query.user_id == context.user.id
-      assert live_query.name == context.params.name
+    test "it creates and returns stream", context do
+      assert {:ok, stream} = Streams.register_query(context.user, context.params)
+      assert stream.user_id == context.user.id
+      assert stream.name == context.params.name
     end
 
     test "it emits a domain event", context do
-      assert {:ok, live_query} = LiveQueries.register_query(context.user, context.params)
+      assert {:ok, stream} = Streams.register_query(context.user, context.params)
       assert_receive {:event, event}
-      assert event.type == :live_query_registered
+      assert event.type == :stream_registered
       assert event.data.name == context.params.name
     end
   end
@@ -56,12 +56,12 @@ defmodule HaCore.LiveQueriesTest do
     setup [:current_user, :invalid_params]
 
     test "it returns a changeset with errors", context do
-      assert {:error, changeset} = LiveQueries.register_query(context.user, context.params)
+      assert {:error, changeset} = Streams.register_query(context.user, context.params)
       assert length(changeset.errors) > 0
     end
 
     test "it does not emit a domain event", context do
-      assert {:error, changeset} = LiveQueries.register_query(context.user, context.params)
+      assert {:error, changeset} = Streams.register_query(context.user, context.params)
       refute_receive {:event, _}
     end
   end
@@ -74,14 +74,14 @@ defmodule HaCore.LiveQueriesTest do
     end
 
     test "it updates fields", context do
-      assert {:ok, live_query} = LiveQueries.pause_query(context.user, 1)
-      assert live_query.status == "paused"
+      assert {:ok, stream} = Streams.pause_query(context.user, 1)
+      assert stream.status == "paused"
     end
 
     test "it emits a domain event", context do
-      assert {:ok, live_query} = LiveQueries.pause_query(context.user, 1)
+      assert {:ok, stream} = Streams.pause_query(context.user, 1)
       assert_receive {:event, event}
-      assert event.type == :live_query_paused
+      assert event.type == :stream_paused
       assert event.data.id == 1
     end
   end
@@ -94,14 +94,14 @@ defmodule HaCore.LiveQueriesTest do
     end
 
     test "it updates fields", context do
-      assert {:ok, live_query} = LiveQueries.resume_query(context.user, 1)
-      assert live_query.status == "active"
+      assert {:ok, stream} = Streams.resume_query(context.user, 1)
+      assert stream.status == "active"
     end
 
     test "it emits a domain event", context do
-      assert {:ok, live_query} = LiveQueries.resume_query(context.user, 1)
+      assert {:ok, stream} = Streams.resume_query(context.user, 1)
       assert_receive {:event, event}
-      assert event.type == :live_query_resumed
+      assert event.type == :stream_resumed
       assert event.data.id == 1
     end
   end
@@ -114,14 +114,14 @@ defmodule HaCore.LiveQueriesTest do
     end
 
     test "it updates fields", context do
-      assert {:ok, live_query} = LiveQueries.delete_query(context.user, 1)
-      assert %NaiveDateTime{} = live_query.deleted_at
+      assert {:ok, stream} = Streams.delete_query(context.user, 1)
+      assert %NaiveDateTime{} = stream.deleted_at
     end
 
     test "it emits a domain event", context do
-      assert {:ok, live_query} = LiveQueries.delete_query(context.user, 1)
+      assert {:ok, stream} = Streams.delete_query(context.user, 1)
       assert_receive {:event, event}
-      assert event.type == :live_query_deleted
+      assert event.type == :stream_deleted
       assert event.data.id == 1
     end
   end

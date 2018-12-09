@@ -4,10 +4,10 @@ defmodule HaAgent.Handlers.QueryHandler do
   """
   use HaSupport.Consumer,
     topics: [
-      "live_query_created",
-      "live_query_resumed",
-      "live_query_paused",
-      "live_query_deleted"
+      "stream_registered"
+      # "stream_resumed",
+      # "stream_paused",
+      # "stream_deleted"
     ],
     adapter: {
       HaSupport.Consumer.RedisAdapter,
@@ -18,11 +18,11 @@ defmodule HaAgent.Handlers.QueryHandler do
       ]
     }
 
-  alias HaCore.LiveQueries.Events.{
-    LiveQueryRegistered,
-    LiveQueryResumed,
-    LiveQueryPaused,
-    LiveQueryDeleted
+  alias HaCore.Streams.Events.{
+    StreamRegistered,
+    StreamResumed,
+    StreamPaused,
+    StreamDeleted
   }
 
   alias HaCore.Queries.Events.{
@@ -40,22 +40,22 @@ defmodule HaAgent.Handlers.QueryHandler do
   }
 
   @impl true
-  def handle_event(%{data: %LiveQueryRegistered{}} = event) do
+  def handle_event(%{data: %StreamRegistered{}} = event) do
     request = %Request{scope: event.actor_id, id: event.data.name, query: event.data.query}
     {:ok, _} = Scheduler.start(request)
     :ok
   end
 
   @impl true
-  def handle_event(%{data: %LiveQueryResumed{}} = event) do
+  def handle_event(%{data: %StreamResumed{}} = event) do
     request = %Request{id: event.data.id, query: event.data.query}
     Scheduler.start(request)
   end
 
   @impl true
-  def handle_event(%{data: %LiveQueryPaused{}} = event),
+  def handle_event(%{data: %StreamPaused{}} = event),
     do: Scheduler.stop(event.data.id)
-  def handle_event(%{data: %LiveQueryDeleted{}} = event),
+  def handle_event(%{data: %StreamDeleted{}} = event),
     do: Scheduler.stop(event.data.id)
 
   @impl true

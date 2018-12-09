@@ -1,19 +1,19 @@
-defmodule HaCore.LiveQueries.Store.DefaultImpl do
+defmodule HaCore.Streams.Store.DefaultImpl do
   @moduledoc false
-  use HaCore.LiveQueries.LiveQueryStore
+  use HaCore.Streams.StreamStore
   import Ecto.Query
   alias HaCore.Repo
-  alias HaCore.LiveQueries.LiveQuery
+  alias HaCore.Streams.Stream
 
   @impl true
   def count(user) do
-    Repo.count(LiveQuery)
+    Repo.count(Stream)
   end
 
   @impl true
   def list(user, pagination) do
     query =
-      from l in LiveQuery,
+      from l in Stream,
       order_by: [desc: l.inserted_at]
 
     Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
@@ -21,7 +21,7 @@ defmodule HaCore.LiveQueries.Store.DefaultImpl do
 
   @impl true
   def get!(user, id) do
-    Repo.get!(LiveQuery, id)
+    Repo.get!(Stream, id)
   end
 
   @impl true

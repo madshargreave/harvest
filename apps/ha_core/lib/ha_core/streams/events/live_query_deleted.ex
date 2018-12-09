@@ -1,4 +1,4 @@
-defmodule HaCore.LiveQueries.Events.LiveQueryDeleted do
+defmodule HaCore.Streams.Events.StreamDeleted do
   @moduledoc false
   alias HaSupport.DomainEvent
 
@@ -8,7 +8,7 @@ defmodule HaCore.LiveQueries.Events.LiveQueryDeleted do
   def make(context, query) do
     DomainEvent.make(
       context,
-      :live_query_deleted,
+      :stream_deleted,
       %__MODULE__{
         id: query.id,
         deleted_at: query.deleted_at

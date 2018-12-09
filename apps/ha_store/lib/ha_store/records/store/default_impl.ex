@@ -21,7 +21,6 @@ defmodule HaStore.Records.Store.DefaultImpl do
       value = Poison.decode!(value)
       %Record{unique_id: id, data: %{"_f1" => value}}
     end
-    |> IO.inspect
   end
 
   @impl true

@@ -1,4 +1,4 @@
-defmodule HaCore.Queries.Events.LiveQueryPaused do
+defmodule HaCore.Queries.Events.StreamPaused do
   @moduledoc false
   alias HaSupport.DomainEvent
 
@@ -12,7 +12,7 @@ defmodule HaCore.Queries.Events.LiveQueryPaused do
   def make(context, query) do
     DomainEvent.make(
       context,
-      :live_query_created,
+      :stream_created,
       %__MODULE__{
         id: query.id,
         user_id: query.user_id,

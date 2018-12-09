@@ -1,4 +1,4 @@
-defmodule HaCore.LiveQueries.Events.LiveQueryResumed do
+defmodule HaCore.Streams.Events.StreamRegistered do
   @moduledoc false
   alias HaSupport.DomainEvent
 
@@ -12,7 +12,7 @@ defmodule HaCore.LiveQueries.Events.LiveQueryResumed do
   def make(context, query) do
     DomainEvent.make(
       context,
-      :live_query_resumed,
+      :stream_registered,
       %__MODULE__{
         id: query.id,
         user_id: query.user_id,

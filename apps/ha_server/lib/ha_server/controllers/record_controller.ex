@@ -16,8 +16,8 @@ defmodule HaServer.RecordController do
     render(conn, "index.json", records: page.entries, paging: page.metadata)
   end
 
-  def index(conn, %{"live_query_id" => live_query_id}) do
-    query = Queries.get_query!(conn.assigns.user, live_query_id)
+  def index(conn, %{"stream_id" => stream_id}) do
+    query = Queries.get_query!(conn.assigns.user, stream_id)
     records = Records.list_query_records(query.name, conn.assigns.pagination)
     render(conn, "index.json", records: records, paging: %{})
   end
