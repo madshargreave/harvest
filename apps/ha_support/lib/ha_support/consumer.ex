@@ -2,6 +2,7 @@ defmodule HaSupport.Consumer do
   @moduledoc """
   Behaviour module for queue consumers
   """
+  alias HaSupport.Serdes.Adapter.ETFSerdes
 
   @doc """
   Handles a list of events
@@ -17,13 +18,18 @@ defmodule HaSupport.Consumer do
 
   @doc false
   defmacro __using__(opts) do
-    types = Keyword.fetch!(opts, :types)
+    topics = Keyword.fetch!(opts, :topics)
+    serdes = Keyword.get(opts, :serdes, ETFSerdes)
     {adapter_module, adapter_opts} = Keyword.fetch!(opts, :adapter)
 
     quote do
-      @behaviour HaSupport.Consumer
+      use GenServer
 
-      def types, do: unquote(types)
+      @behaviour HaSupport.Consumer
+      @before_compile HaSupport.Consumer
+
+      def topics, do: unquote(topics)
+      def serdes, do: unquote(serdes)
       def adapter_module, do: unquote(adapter_module)
       def adapter_opts, do: unquote(adapter_opts)
 
@@ -40,8 +46,9 @@ defmodule HaSupport.Consumer do
         opts =
           opts
           |> Keyword.merge(adapter_opts())
-          |> Keyword.put(:types, types())
-          |> Keyword.put(:callback, &__MODULE__.handle_events/1)
+          |> Keyword.put(:serdes, serdes())
+          |> Keyword.put(:topics, topics())
+          |> Keyword.put(:callback, &__MODULE__.handle_event/1)
 
         apply(
           adapter_module(),
@@ -51,6 +58,23 @@ defmodule HaSupport.Consumer do
       end
 
       defoverridable handle_events: 1, handle_event: 1
+
+    end
+  end
+
+  @doc false
+  defmacro __before_compile__(_env) do
+    quote do
+
+      def child_spec(opts) do
+        %{
+          id: __MODULE__,
+          start: {__MODULE__, :start_link, [opts]},
+          type: :worker,
+          restart: :permanent,
+          shutdown: 500
+        }
+      end
 
     end
   end

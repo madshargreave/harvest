@@ -5,7 +5,13 @@ defmodule HaDSL do
   alias Exd.Query
 
   @parser HaDSL.Parser.SQLImpl
+  @resolver HaDSL.Resolver
 
-  defdelegate parse(map), to: @parser
+  def parse(id, query) do
+    with {:ok, parsed} <- @parser.parse(query),
+         {:ok, resolved} <- @resolver.resolve(id, parsed) do
+      {:ok, resolved}
+    end
+  end
 
 end

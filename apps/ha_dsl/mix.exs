@@ -37,6 +37,7 @@ defmodule HAShared.Mixfile do
     [
       {:exd, path: "../../../exd"},
       {:exd_html, path: "../../../exd_html"},
+      {:exd_redis, path: "../../../exd_redis"},
       {:exd_parser_sql, path: "../../../exd_parser_sql"}
     ]
   end

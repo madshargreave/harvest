@@ -7,21 +7,17 @@ defmodule HaSupport.Dispatcher.StreamImpl do
 
   @impl true
   def dispatch(events, opts \\ []) do
+    serdes = Keyword.fetch!(opts, :serdes)
     name = Keyword.fetch!(opts, :name)
-    stream = Keyword.fetch!(opts, :stream)
+    topic = Keyword.get(opts, :topic)
+
     commands =
       for event <- events do
-        Logger.info fn -> "Dispatching domain event: #{event.type}:#{event.correlation_id}" end
-        value = Poison.encode!(event)
-        ["XADD", stream, "*", "value", value]
+        {:ok, value} = serdes.serialise(event)
+        ["XADD", topic || "#{event.type}", "*", "value", value]
       end
 
-    case Redix.pipeline(name, commands) do
-      {:ok, [%Redix.Error{} = error]} ->
-        Logger.warn(error.message)
-      _ ->
-        :ok
-    end
+    Redix.pipeline!(name, commands)
   end
 
 end

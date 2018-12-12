@@ -29,11 +29,15 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
+config :exd, Exd.Plugin.RedisStream,
+  host: "localhost"
+
 config :exd,
   plugins: [
     Exd.Plugin.HTMLParseList,
     Exd.Plugin.HTMLParseText,
-    Exd.Plugin.HTMLParseAttr
+    Exd.Plugin.HTMLParseAttr,
+    Exd.Plugin.RedisStream
   ]
 
 # config :exq,

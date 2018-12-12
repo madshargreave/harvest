@@ -35,7 +35,11 @@ defmodule HASupport.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:redix, ">= 0.0.0"}
+      {:redix, ">= 0.0.0"},
+      {:redix_stream, "~> 0.1.3"},
+      {:poison, "~> 3.1.0"},
+      {:atomic_map, "~> 0.8"},
+      {:uuid, "~> 1.1.8"}
     ]
   end
 

@@ -1,8 +1,14 @@
 defmodule HaStore.Imports.ImportHandler do
   @moduledoc false
   use HaSupport.Consumer,
-    types: ["query_results"],
-    adapter: {HaSupport.Consumer.RedisAdapter, stream: "documents", name: :redix_store}
+    topics: [
+      "query_results"
+    ],
+    adapter: {
+      HaSupport.Consumer.RedisAdapter,
+        stream: "documents",
+        redix: :redix_store
+    }
 
   alias HaSupport.DomainEvent
   alias HaStore.Dispatcher

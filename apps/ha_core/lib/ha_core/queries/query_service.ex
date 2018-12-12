@@ -13,7 +13,7 @@ defmodule HaCore.Queries.QueryService do
   @store Application.get_env(:ha_core, :query_store_impl) || DefaultImpl
 
   @doc """
-  Runs a saved query
+  Registers a live query
   """
   @spec run(HaCore.user, map) :: {:ok, QueryDTO.t} | {:error, InvalidChangesetError.t}
   def run(user, attrs \\ %{}) do

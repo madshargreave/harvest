@@ -4,6 +4,7 @@ defmodule HaSupport.Consumer.RedisAdapter do
   """
   use HaSupport.Consumer.Adapter
   use GenServer
+
   alias HaSupport.DomainEvent
 
   @poll_period :timer.minutes(10)
@@ -14,40 +15,68 @@ defmodule HaSupport.Consumer.RedisAdapter do
 
   @impl true
   def init(opts) do
-    name = Keyword.fetch!(opts, :name)
-    types = Keyword.get(opts, :types, [])
-    stream = Keyword.fetch!(opts, :stream)
+    serdes = Keyword.fetch!(opts, :serdes)
+    redix = Keyword.fetch!(opts, :redix)
+    topics = Keyword.get(opts, :topics, [])
+    group = Keyword.get(opts, :group)
+    consumer = Keyword.get(opts, :consumer, "default-consumer")
+    consumer = if is_function(consumer), do: consumer.(), else: consumer
+
+    if group do
+      for stream <- topics do
+        try do
+          command = ["XINFO", "GROUPS", stream]
+          exists? =
+            Redix.command!(redix, command)
+            |> Enum.any?(fn [_, existing, _, _, _, _, _, _] -> existing == group end)
+          command = ["XGROUP", "CREATE", stream, group, "$"]
+          !exists? && Redix.command!(redix, command)
+        rescue
+          exception ->
+            nil
+        end
+      end
+    end
+
     callback = Keyword.fetch!(opts, :callback)
     Process.send_after self(), :block, 1000
-    state = %{callback: callback, last_id: "$", types: types, name: name, stream: stream}
+    state = %{
+      callback: callback,
+      last_id: "$",
+      topics: topics,
+      redix: redix,
+      serdes: serdes,
+      group: group,
+      consumer: consumer
+    }
     {:ok, state}
   end
 
   def handle_info(:block, state) do
-    command = ["XREAD", "BLOCK", 0, "COUNT", 10, "STREAMS", state.stream, state.last_id]
-    case Redix.command!(state.name, command, timeout: :infinity) do
-      [
+    streams = Enum.join(state.topics, ", ")
+    command =
+      if state.group do
+        ["XREADGROUP", "GROUP", state.group, state.consumer, "BLOCK", 0, "COUNT", 10, "STREAMS", streams, ">"]
+      else
+        ["XREAD", "BLOCK", 0, "COUNT", 10, "STREAMS", streams, state.last_id]
+      end
+
+    case Redix.command(state.redix, command, timeout: :infinity) do
+      {:ok, [
         [
           _stream,
           events
         ]
-      ] ->
+      ]} ->
         events =
           for [id, ["value", value]] <- events,
-              event = Poison.decode!(value),
-              event = AtomicMap.convert(event, %{safe: false}), into: [] do
+              {:ok, event} = state.serdes.deserialise(value) do
             {id, event}
           end
         {id, _} = List.last(events)
         Process.send_after self(), :block, 0
         state = %{state | last_id: id}
-        events =
-          for {id, data} <- events,
-              event = struct(DomainEvent, data),
-              # IO.inspect(event),
-              event.type in state.types,
-              do: event
-        state.callback.(events)
+        events = for {id, event} <- events, do: state.callback.(event)
         {:noreply, state, :infinity}
       _ ->
         Process.send_after self(), :block, 0

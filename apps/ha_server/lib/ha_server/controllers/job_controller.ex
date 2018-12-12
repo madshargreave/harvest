@@ -7,6 +7,11 @@ defmodule HaServer.JobController do
     render(conn, "index.json", jobs: page.entries, paging: page.metadata)
   end
 
+  def show(conn, %{"id" => id}) do
+    job = Jobs.get_job!(conn.assigns.user, id)
+    render(conn, "show.json", job: job)
+  end
+
   def create(conn, %{"data" => job_params}) do
     with {:ok, job} <- Jobs.create_job(conn.assigns.user, job_params) do
       conn
@@ -14,11 +19,6 @@ defmodule HaServer.JobController do
       |> put_resp_header("location", job_path(conn, :show, job))
       |> render("show.json", job: job)
     end
-  end
-
-  def show(conn, %{"id" => id}) do
-    job = Jobs.get_job!(conn.assigns.user, id) |> IO.inspect
-    render(conn, "show.json", job: job)
   end
 
 end

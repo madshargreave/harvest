@@ -1,6 +1,7 @@
 defmodule HaCore.Queries.Store.DefaultImpl do
   @moduledoc false
   use HaCore.Queries.QueryStore
+  import Ecto.Query
 
   alias HaCore.Repo
   alias HaCore.Queries.Query
@@ -13,6 +14,15 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   @impl true
   def list(user) do
     Repo.all(Query)
+  end
+
+  @impl true
+  def list_saved(user, pagination) do
+    query =
+      from q in Query,
+      where: q.live
+
+    Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
   end
 
   @impl true
