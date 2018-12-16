@@ -36,7 +36,7 @@ defmodule HaCore.Mixfile do
   defp deps do
     [
       {:ha_support, in_umbrella: true},
-      {:ecto, "~> 2.2.11"},
+      {:exd_streams, path: "../../../exd_streams"},
       {:postgrex, ">= 0.0.0"},
       {:event_bus, "~> 1.6.0"},
       {:ecto_enum, "~> 1.0"},

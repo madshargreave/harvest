@@ -23,6 +23,14 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:user_id]
 
+config :ha_server, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      router: HaServer.Router,     # phoenix routes will be converted to swagger paths
+      endpoint: HaServer.Endpoint  # (optional) endpoint config used to set host, port and https schemes.
+    ]
+  }
+
 # config :exq,
 #   host: "127.0.0.1",
 #   port: 6379,

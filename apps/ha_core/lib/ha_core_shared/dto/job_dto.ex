@@ -2,7 +2,7 @@ defmodule ExCore.DTO.JobDTO do
   @moduledoc false
   defstruct type: nil,
             id: nil,
-            query_id: nil,
+            # query_id: nil,
             status: nil,
             statistics: nil,
             configuration: nil,
@@ -14,7 +14,7 @@ defmodule ExCore.DTO.JobDTO do
     %__MODULE__{
       type: "job",
       id: job.id,
-      query_id: job.query_id,
+      # query_id: job.query_id,
       status: job.status,
       statistics: from("statistics.json", %{job: job}),
       configuration: from("configuration.json", %{job: job}),
@@ -26,13 +26,13 @@ defmodule ExCore.DTO.JobDTO do
   def from("configuration.json", %{job: job}) do
     %{
       query: job.configuration.query,
-      write_disposition: job.configuration.write_disposition,
-      create_disposition: job.configuration.create_disposition,
-      priority: job.configuration.priority,
-      max_bad_records: job.configuration.max_bad_records,
-      destination: %{
-        table_id: job.configuration.destination_id
-      }
+      # write_disposition: job.configuration.write_disposition,
+      # create_disposition: job.configuration.create_disposition,
+      # priority: job.configuration.priority,
+      # max_bad_records: job.configuration.max_bad_records,
+      # destination: %{
+      #   table_id: job.configuration.destination_id
+      # }
     }
   end
 

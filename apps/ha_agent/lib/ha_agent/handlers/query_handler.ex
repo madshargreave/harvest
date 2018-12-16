@@ -64,9 +64,9 @@ defmodule HaAgent.Handlers.QueryHandler do
     Runner.run(request)
   end
 
-  @impl true
-  def handle_event(%{data: %JobCanceled{}} = event) do
-    Runner.cancel(event.data.id)
-  end
+  # @impl true
+  # def handle_event(%{data: %JobCanceled{}} = event) do
+  #   Runner.cancel(event.data.id)
+  # end
 
 end

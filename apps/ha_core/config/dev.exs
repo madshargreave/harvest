@@ -14,3 +14,12 @@ config :ha_core, HaCore.Repo.EctoImpl,
   database: "harvest_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Configure your database
+config :exd_streams, ExdStreams.Store.RelationalStore.RecordRepo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "harvest_dev",
+  hostname: "localhost",
+  pool_size: 10

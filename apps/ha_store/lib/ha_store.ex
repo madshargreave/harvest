@@ -8,7 +8,7 @@ defmodule HaStore do
 
     # Define workers and child supervisors to be supervised
     children = [
-      {HaStore.Repo, []},
+      supervisor(HaStore.Repo, []),
       {Redix, [[], [name: :redix_store]]},
       worker(HaStore.Imports.ImportHandler, [])
     ]

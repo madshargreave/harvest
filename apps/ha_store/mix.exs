@@ -36,7 +36,7 @@ defmodule HAStore.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:ecto, "~> 2.2.11"},
+      {:ha_support, in_umbrella: true},
       {:postgrex, ">= 0.0.0"}
     ]
   end

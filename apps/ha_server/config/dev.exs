@@ -32,15 +32,16 @@ config :ha_server, HaServer.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-# config :ha_server, HaServer.Endpoint,
-#   live_reload: [
-#     patterns: [
-#       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-#       ~r{priv/gettext/.*(po)$},
-#       ~r{lib/server_web/views/.*(ex)$},
-#       ~r{lib/server_web/templates/.*(eex)$}
-#     ]
-#   ]
+config :ha_server, HaServer.Endpoint,
+  live_reload: [
+    patterns: [
+      ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
+      ~r{priv/gettext/.*(po)$},
+      ~r{lib/server_web/views/.*(ex)$},
+      :phoenix_swagger
+    ]
+  ],
+  reloadable_compilers: [:gettext, :phoenix, :elixir, :phoenix_swagger]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console,

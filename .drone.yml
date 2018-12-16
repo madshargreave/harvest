@@ -6,9 +6,9 @@ pipeline:
       - mix local.rebar --force
       - export RELEASE=$DRONE_BUILD_NUMBER-$DRONE_COMMIT_SHA:0:8
       - export MIN_ENV=prod
-      - mix do deps.get
-      - mix release --name=agent
-      - mix release --name=server
+      # - mix do deps.get
+      # - mix release --name=agent
+      # - mix release --name=server
     environment:
       - REPLACE_OS_VARS=true
       - MIX_ENV=prod

@@ -33,6 +33,9 @@ config :ha_core,
     HaCore.Repo.EctoImpl
   ]
 
+config :ha_core, HaCore.Repo.EctoImpl,
+  adapter: Ecto.Adapters.Postgres
+
 config :ha_core,
   repo_impl: HaCore.Repo.EctoImpl,
   dispatcher_impl: HaCore.Dispatcher
