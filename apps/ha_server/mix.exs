@@ -11,7 +11,7 @@ defmodule HAServer.Mixfile do
       lockfile: "../../mix.lock",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
+      compilers: [:phoenix, :gettext, :phoenix_swagger] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps()
@@ -38,10 +38,12 @@ defmodule HAServer.Mixfile do
   defp deps do
     [
       {:ha_core, in_umbrella: true},
+      {:ex_json_schema, "~> 0.5"},
       {:cors_plug, "~> 1.5"},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
+      {:phoenix_swagger, "~> 0.8"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},

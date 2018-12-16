@@ -29,7 +29,7 @@ defmodule HaAgent.MixProject do
       {:ha_core, in_umbrella: true},
       {:ha_dsl, in_umbrella: true},
       {:ha_support, in_umbrella: true},
-      {:horde, "~> 0.2.0"},
+      {:horde, "~> 0.3.0"},
       {:poolboy, "~> 1.5.1"},
       {:libcluster, "~> 3.0.1"},
       {:elixir_uuid, "~> 1.2"}

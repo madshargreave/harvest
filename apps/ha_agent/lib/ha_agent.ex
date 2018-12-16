@@ -5,9 +5,9 @@ defmodule HaAgent do
     import Supervisor.Spec
 
     children = [
-      cluster_supervisor(),
-      horde_registry(),
-      horde_supervisor(),
+      # cluster_supervisor(),
+      # horde_registry(),
+      # horde_supervisor(),
       scheduler_supervisor(),
       consumer_supervisor(),
       %{
@@ -18,7 +18,7 @@ defmodule HaAgent do
         id: {Redix, 2},
         start: {Redix, :start_link, [[], [name: :agent_dispatcher_redix]]}
       },
-      {HaAgent.Handlers.QueryHandler, []}
+      # {HaAgent.Handlers.QueryHandler, []}
     ]
 
     opts = [strategy: :one_for_one, name: HaAgent.Supervisor]

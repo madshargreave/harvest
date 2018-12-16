@@ -1,9 +1,9 @@
-defmodule HaDSL.Mixfile do
+defmodule HAPlugins.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :ha_dsl,
+      app: :ha_plugins,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -11,7 +11,6 @@ defmodule HaDSL.Mixfile do
       lockfile: "../../mix.lock",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       deps: deps()
     ]
@@ -22,7 +21,6 @@ defmodule HaDSL.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {HaDSL.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -36,11 +34,7 @@ defmodule HaDSL.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:exd, path: "../../../exd"},
-      {:exd_html, path: "../../../exd_plugin_html"},
-      {:exd_redis, path: "../../../exd_plugin_redis"},
-      # {:exd_parser_sql, path: "../../../exd_parser_sql"},
-      {:nodejs, "~> 0.1.0"}
+
     ]
   end
 

@@ -21,18 +21,34 @@ defmodule HaServer.Router do
 
   # Other scopes may use custom stacks.
   scope "/api", HaServer do
-    pipe_through :api
-    resources "/jobs", JobController do
-      resources "/records", RecordController, only: [:index]
-    end
-    resources "/queries", QueryController
-    resources "/streams", StreamController do
-      resources "/records", RecordController, only: [:index]
-    end
-    resources "/users", UserController
+    scope "/v1" do
+      pipe_through :api
+      resources "/jobs", JobController do
+        resources "/records", RecordController, only: [:index]
+      end
+      resources "/queries", QueryController
+      resources "/streams", StreamController do
+        resources "/records", RecordController, only: [:index]
+      end
+      # resources "/users", UserController
 
-    resources "/tables", TableController, only: [] do
-      resources "/records", RecordController, only: [:index]
+      resources "/tables", TableController, only: [] do
+        resources "/records", RecordController, only: [:index]
+      end
     end
   end
+
+  def swagger_info do
+    %{
+      info: %{
+        version: "1.0",
+        title: "Harvest API"
+      },
+      schemes: ["http"],
+      consumes: "application/json",
+      produces: "application/json",
+      basePath: "/api/v1"
+    }
+  end
+
 end

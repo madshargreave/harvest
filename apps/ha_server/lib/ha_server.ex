@@ -23,6 +23,7 @@ defmodule HaServer do
       import Plug.Conn
       import HaServer.Router.Helpers
       import HaServer.Gettext
+      use PhoenixSwagger
     end
   end
 

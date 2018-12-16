@@ -8,10 +8,9 @@ defmodule HaCore.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
-      {HaCore.Repo.EctoImpl, []},
+      supervisor(HaCore.Repo.EctoImpl, []),
       Supervisor.child_spec({Redix, [[], [name: :redix_core]]}, id: {Redix, 1}),
-      Supervisor.child_spec({Redix, [[], [name: :redix_core_records]]}, id: {Redix, 2}),
-      worker(HaCore.Jobs.JobHandler, [])
+      Supervisor.child_spec({Redix, [[], [name: :redix_core_records]]}, id: {Redix, 2})
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -1,0 +1,187 @@
+{
+  "swagger": "2.0",
+  "schemes": [
+    "http"
+  ],
+  "produces": "application/json",
+  "paths": {
+    "/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "",
+        "responses": {
+          "404": {
+            "description": "Not found"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Job"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "string",
+            "required": true,
+            "name": "job_id",
+            "in": "path",
+            "description": "Job ID"
+          }
+        ],
+        "operationId": "get_job",
+        "description": "Get job"
+      }
+    },
+    "/jobs": {
+      "post": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "",
+        "responses": {
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/Job"
+            },
+            "description": "Invalid parameters"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Job"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/JobParams"
+            },
+            "required": false,
+            "name": "job",
+            "in": "body",
+            "description": "Job attributes"
+          }
+        ],
+        "operationId": "create_job",
+        "description": "Create a new job"
+      },
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Jobs"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page_size",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of elements per page"
+          },
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of the page"
+          }
+        ],
+        "operationId": "list_jobs",
+        "description": "List jobs"
+      }
+    }
+  },
+  "info": {
+    "version": "1.0",
+    "title": "Harvest API"
+  },
+  "host": "localhost:4000",
+  "definitions": {
+    "Jobs": {
+      "type": "array",
+      "title": "Jobs",
+      "items": {
+        "$ref": "#/definitions/Job"
+      },
+      "description": "A collection of Jobs"
+    },
+    "JobParams": {
+      "type": "object",
+      "title": "Job",
+      "required": [
+        "configuration"
+      ],
+      "properties": {
+        "configuration": {
+          "description": "Job configuration options",
+          "$ref": "#/definitions/JobConfiguration"
+        }
+      },
+      "description": "A job"
+    },
+    "JobConfiguration": {
+      "type": "object",
+      "title": "JobConfiguration",
+      "required": [
+        "query"
+      ],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The query string to execute"
+        }
+      },
+      "description": "Runtime configuration options for a job"
+    },
+    "Job": {
+      "type": "object",
+      "title": "Job",
+      "required": [
+        "configuration",
+        "status",
+        "name",
+        "id"
+      ],
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "The status of the job"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the job"
+        },
+        "id": {
+          "type": "string",
+          "description": "The ID of the job"
+        },
+        "configuration": {
+          "description": "Job configuration options",
+          "$ref": "#/definitions/JobConfiguration"
+        }
+      },
+      "example": {
+        "status": "in_progress",
+        "name": "my-job",
+        "id": "123"
+      },
+      "description": "A job"
+    }
+  },
+  "consumes": "application/json",
+  "basePath": "/api/v1"
+}
