@@ -11,8 +11,10 @@ defmodule HaServer.Plugs.CurrentUserPlug do
   end
 
   def call(conn, _default) do
+    [request_id] = Plug.Conn.get_resp_header(conn, "x-request-id")
+    user = %{@user | session_id: request_id}
     conn
-    |> assign(:user, @user)
+    |> assign(:user, user)
   end
 
 end

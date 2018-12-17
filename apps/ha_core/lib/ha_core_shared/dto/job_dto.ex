@@ -1,5 +1,7 @@
 defmodule ExCore.DTO.JobDTO do
   @moduledoc false
+  alias HaCore.Jobs.{JobStatistics, JobConfiguration}
+
   defstruct type: nil,
             id: nil,
             # query_id: nil,
@@ -37,10 +39,8 @@ defmodule ExCore.DTO.JobDTO do
   end
 
   def from("statistics.json", %{
-    job: %{statistics: statistics} = _job
-  })
-    when not is_nil(statistics)
-  do
+    job: %{statistics: %JobStatistics{} = statistics}
+  }) do
     %{
       started_at: statistics.started_at,
       ended_at: statistics.ended_at

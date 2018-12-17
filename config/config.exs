@@ -16,8 +16,11 @@ config :exd_streams, ExdStreams.Core.Repo,
 config :exd_streams, ExdStreams.Store.RelationalStore.RecordRepo,
   adapter: Ecto.Adapters.Postgres
 
+config :exd_streams, ExdStreams.Core.Dispatcher,
+  adapter: GenDispatcher.RedisDispatcher
+
 config :exd_streams, ExdStreams.Plugins.Dispatcher,
-  adapter: GenDispatcher.LocalDispatcher
+  adapter: GenDispatcher.RedisDispatcher
 
 config :logger,
   level: :info

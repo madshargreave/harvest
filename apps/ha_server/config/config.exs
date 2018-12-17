@@ -21,7 +21,9 @@ config :ha_server, HaServer.Endpoint,
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:user_id]
+  metadata: [:user_id, :request_id]
+
+config :logster, :allowed_headers, ["x-request-id"]
 
 config :ha_server, :phoenix_swagger,
   swagger_files: %{

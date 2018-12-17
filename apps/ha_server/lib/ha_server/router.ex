@@ -27,9 +27,9 @@ defmodule HaServer.Router do
         resources "/records", RecordController, only: [:index]
       end
       resources "/queries", QueryController
-      resources "/streams", StreamController do
-        resources "/records", RecordController, only: [:index]
-      end
+      # resources "/streams", StreamController do
+      #   resources "/records", RecordController, only: [:index]
+      # end
       # resources "/users", UserController
 
       resources "/tables", TableController, only: [] do

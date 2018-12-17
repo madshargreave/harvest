@@ -40,6 +40,7 @@ defmodule HAServer.Mixfile do
       {:ha_core, in_umbrella: true},
       {:ex_json_schema, "~> 0.5"},
       {:cors_plug, "~> 1.5"},
+      {:logster, "~> 0.10"},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},

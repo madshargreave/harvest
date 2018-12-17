@@ -40,4 +40,15 @@ config :ha_core,
   repo_impl: HaCore.Repo.EctoImpl,
   dispatcher_impl: HaCore.Dispatcher
 
+config :ha_core, HaCore.Jobs.JobHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "core",
+      consumer: "core"
+  }
+
+config :ha_core, HaCore.Dispatcher,
+  adapter: GenDispatcher.RedisDispatcher
+
 import_config "#{Mix.env}.exs"

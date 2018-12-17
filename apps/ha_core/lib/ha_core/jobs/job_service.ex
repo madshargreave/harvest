@@ -41,6 +41,17 @@ defmodule HaCore.Jobs.JobService do
     dto(result)
   end
 
+  @doc """
+  Creates a new job
+  """
+  @spec complete(any, Jobs.id, map) :: {:ok, JobDTO.t} | {:error, InvalidChangesetError.t}
+  def complete(context, job_id, attrs \\ %{}) do
+    job = @store.get!(job_id)
+    changeset = Job.complete_changeset(job, attrs)
+    result = @store.save(context, changeset)
+    dto(result)
+  end
+
   defp dto(%{entries: entries} = page), do: %{page | entries: dto(entries)}
   defp dto(queries) when is_list(queries), do: JobDTO.from(queries)
   defp dto(%Job{} = job), do: JobDTO.from(job)

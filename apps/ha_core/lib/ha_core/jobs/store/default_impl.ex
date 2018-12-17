@@ -22,20 +22,34 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   end
 
   @impl true
-  def get!(user, id) do
-    Repo.get!(Job, id)
+  def get_by_user!(user, id) do
+    Job
+    |> Repo.get!(id)
+    |> Repo.preload([:statistics, :configuration])
+  end
+
+  @impl true
+  def get!(id) do
+    Job
+    |> Repo.get!(id)
+    |> Repo.preload([:statistics, :configuration])
   end
 
   @impl true
   def save(context, changeset) do
-    with {:ok, entity} <- Repo.save(context, changeset) do
-      {:ok, query} = HaDSL.parse(entity.configuration.query)
-
-      meta = %{job_id: entity.id}
-      command = %ExdStreams.Api.Commands.SelectCommand{query: query, meta: meta}
-      ExdStreams.connect(context)
-      results = ExdStreams.run(context, command)
-      ExdStreams.close(context)
+    with {:ok, entity} <- Repo.save(context, changeset),
+         {:ok, query} = HaDSL.parse(entity.configuration.query) do
+      if entity.status == "created" do
+        meta = %{
+          job_id: entity.id,
+          actor_id: HaSupport.Context.actor_id(context),
+          correlation_id: HaSupport.Context.correlation_id(context)
+        }
+        command = %ExdStreams.Api.Commands.SelectCommand{query: query, meta: meta}
+        ExdStreams.connect(context)
+        results = ExdStreams.run(context, command)
+        ExdStreams.close(context)
+      end
       {:ok, entity}
     end
   end

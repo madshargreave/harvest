@@ -8,6 +8,7 @@ defmodule HaCore.Accounts.User do
     field :admin, :boolean, default: false
     field :email, :string
     field :name, :string
+    field :session_id, :string, virtual: true
 
     timestamps()
   end
@@ -32,7 +33,7 @@ defmodule HaCore.Accounts.User do
   end
 
   defimpl HaSupport.Context do
-    def correlation_id(_user), do: nil
+    def correlation_id(user), do: user.session_id
     def actor_id(user), do: user.id
   end
 

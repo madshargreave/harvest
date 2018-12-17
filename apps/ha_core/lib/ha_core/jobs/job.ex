@@ -4,14 +4,14 @@ defmodule HaCore.Jobs.Job do
   """
   use HaCore.Schema
 
-  alias HaCore.Jobs.JobConfiguration
+  alias HaCore.Jobs.{JobStatistics, JobConfiguration}
   alias HaCore.Jobs.Events
 
   schema "jobs" do
     field :status, :string, default: "created"
-    field :statistics, :map
     field :canceled_at, :naive_datetime
     has_one :configuration, JobConfiguration
+    has_one :statistics, JobStatistics
     timestamps()
   end
 
@@ -23,8 +23,18 @@ defmodule HaCore.Jobs.Job do
     %__MODULE__{}
     |> cast(attrs, optional ++ required)
     |> cast_assoc(:configuration, required: true)
+    |> cast_assoc(:statistics)
     |> validate_required(required)
     |> register_event(Events.JobCreated)
+  end
+
+  @spec complete_changeset(t, map) :: Changeset.t
+  def complete_changeset(job, attrs \\ %{}) do
+    job
+    |> cast(attrs, [])
+    |> cast_assoc(:statistics, required: true)
+    |> put_change(:status, "completed")
+    |> register_event(Events.JobCompleted)
   end
 
 end

@@ -1,11 +1,11 @@
-defmodule HaCore.Jobs.Events.JobCreated do
+defmodule HaCore.Jobs.Events.JobCompleted do
   @moduledoc false
   alias HaSupport.DomainEvent
 
   def make(context, job) do
     DomainEvent.make(
       context,
-      :job_created,
+      :job_completed,
       ExCore.DTO.JobDTO.from(job)
     )
   end
