@@ -38,6 +38,7 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   @impl true
   def save(context, changeset) do
     with {:ok, entity} <- Repo.save(context, changeset),
+         entity = Repo.preload(entity, [:statistics, :configuration]),
          {:ok, query} = HaDSL.parse(entity.configuration.query) do
       if entity.status == "created" do
         meta = %{

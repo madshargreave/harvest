@@ -7,16 +7,16 @@ defmodule HaCore.Jobs.JobConfiguration do
 
   @primary_key {:job_id, :binary_id, autogenerate: true}
 
-  schema "job_configurations" do
+  model "job_configurations" do
     field :query, :string
   end
 
-  @spec changeset(HaCore.user, map) :: Changeset.t
-  def changeset(user, attrs \\ %{}) do
+  @spec changeset(map) :: Changeset.t
+  def changeset(struct, attrs \\ %{}) do
     required = ~w(query)a
     optional = ~w()a
 
-    %__MODULE__{}
+    struct
     |> cast(attrs, optional ++ required)
     |> validate_required(required)
   end

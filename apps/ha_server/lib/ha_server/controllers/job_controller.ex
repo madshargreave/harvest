@@ -1,6 +1,8 @@
 defmodule HaServer.JobController do
   use HaServer, :controller
+
   alias HaCore.Jobs
+  alias HaCore.Commands.CreateJobCommand
 
   action_fallback HaServer.FallbackController
 
@@ -40,7 +42,7 @@ defmodule HaServer.JobController do
     description "Create a new job"
     tag "Jobs"
     parameters do
-      job :body, Schema.ref(:JobParams), "Job attributes"
+      job :body, Schema.ref(:CreateJobCommand), "Job attributes"
     end
     operation_id "create_job"
     response 200, "Success", Schema.ref(:Job)
@@ -48,6 +50,7 @@ defmodule HaServer.JobController do
   end
 
   def create(conn, params) do
+    params = struct(CreateJobCommand, params)
     with {:ok, job} <- Jobs.create_job(conn.assigns.user, params) do
       conn
       |> put_status(:created)
@@ -58,41 +61,11 @@ defmodule HaServer.JobController do
 
   def swagger_definitions do
     %{
-      JobParams: swagger_schema do
-        title "Job"
-        description "A job"
-        properties do
-          configuration Schema.ref(:JobConfiguration), "Job configuration options", required: true
-        end
-      end,
-      Job: swagger_schema do
-        title "Job"
-        description "A job"
-        properties do
-          id :string, "The ID of the job", required: true
-          name :string, "The name of the job", required: true
-          status :string, "The status of the job", required: true
-          configuration Schema.ref(:JobConfiguration), "Job configuration options", required: true
-        end
-        example %{
-          id: "123",
-          name: "my-job",
-          status: "in_progress"
-        }
-      end,
-      JobConfiguration: swagger_schema do
-        title "JobConfiguration"
-        description "Runtime configuration options for a job"
-        properties do
-          query :string, "The query string to execute", required: true
-        end
-      end,
-      Jobs: swagger_schema do
-        title "Jobs"
-        description "A collection of Jobs"
-        type :array
-        items Schema.ref(:Job)
-      end
+      CreateJobCommand: CreateJobCommand.schema,
+      Job: Jobs.Job.schema,
+      JobConfiguration: Jobs.JobConfiguration.schema,
+      JobStatistics: Jobs.JobStatistics.schema,
+      Jobs: Jobs.Job.schema_list
     }
   end
 

@@ -4,10 +4,11 @@ defmodule HaCore.Jobs.Job do
   """
   use HaCore.Schema
 
+  alias HaCore.Commands.CreateJobCommand
   alias HaCore.Jobs.{JobStatistics, JobConfiguration}
   alias HaCore.Jobs.Events
 
-  schema "jobs" do
+  model "jobs" do
     field :status, :string, default: "created"
     field :canceled_at, :naive_datetime
     has_one :configuration, JobConfiguration
@@ -15,25 +16,36 @@ defmodule HaCore.Jobs.Job do
     timestamps()
   end
 
-  @spec create_changeset(HaCore.user, map) :: Changeset.t
-  def create_changeset(user, attrs \\ %{}) do
+  @spec create_changeset(HaCore.user, CreateJobCommand.t) :: Changeset.t
+  def create_changeset(user, command) do
     required = ~w()a
     optional = ~w()a
 
     %__MODULE__{}
-    |> cast(attrs, optional ++ required)
+    |> cast(%{
+      configuration: %{
+        query: command.query
+      }
+    }, optional ++ required)
     |> cast_assoc(:configuration, required: true)
-    |> cast_assoc(:statistics)
     |> validate_required(required)
     |> register_event(Events.JobCreated)
   end
 
-  @spec complete_changeset(t, map) :: Changeset.t
-  def complete_changeset(job, attrs \\ %{}) do
+  @spec complete_changeset(t, CompleteJobCommand.t) :: Changeset.t
+  def complete_changeset(job, command) do
+    required = ~w(status)a
+    optional = ~w()a
+
     job
-    |> cast(attrs, [])
+    |> cast(%{
+      status: "completed",
+      statistics: %{
+        started_at: command.started_at,
+        ended_at: command.ended_at
+      }
+    }, optional ++ required)
     |> cast_assoc(:statistics, required: true)
-    |> put_change(:status, "completed")
     |> register_event(Events.JobCompleted)
   end
 

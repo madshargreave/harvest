@@ -13,7 +13,7 @@ config :ha_server,
 config :ha_server, HaServer.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "imPGtAEbpbZRQ3Xef9ZwCaaLEGtqmGC2Pwt0CoYS3SeFexuTqhaBpE40wymJ2Hkk",
-  render_errors: [view: HaServer.ErrorView, accepts: ~w(html json)],
+  render_errors: [view: HaServer.ErrorView, accepts: ~w(json)],
   pubsub: [name: HAServer.PubSub,
            adapter: Phoenix.PubSub.PG2],
   server: true

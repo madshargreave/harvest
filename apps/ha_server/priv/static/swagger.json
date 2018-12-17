@@ -58,7 +58,7 @@
         "parameters": [
           {
             "schema": {
-              "$ref": "#/definitions/JobParams"
+              "$ref": "#/definitions/CreateJobCommand"
             },
             "required": false,
             "name": "job",
@@ -113,25 +113,26 @@
   "definitions": {
     "Jobs": {
       "type": "array",
-      "title": "Jobs",
+      "title": "A collection of Job",
       "items": {
-        "$ref": "#/definitions/Job"
-      },
-      "description": "A collection of Jobs"
+        "$ref": "Job"
+      }
     },
-    "JobParams": {
+    "JobStatistics": {
       "type": "object",
-      "title": "Job",
+      "title": "JobStatistics",
       "required": [
-        "configuration"
+        "started_at",
+        "ended_at"
       ],
       "properties": {
-        "configuration": {
-          "description": "Job configuration options",
-          "$ref": "#/definitions/JobConfiguration"
+        "started_at": {
+          "type": "naive_datetime"
+        },
+        "ended_at": {
+          "type": "naive_datetime"
         }
-      },
-      "description": "A job"
+      }
     },
     "JobConfiguration": {
       "type": "object",
@@ -141,45 +142,45 @@
       ],
       "properties": {
         "query": {
-          "type": "string",
-          "description": "The query string to execute"
+          "type": "string"
         }
-      },
-      "description": "Runtime configuration options for a job"
+      }
     },
     "Job": {
       "type": "object",
       "title": "Job",
       "required": [
+        "canceled_at",
         "configuration",
-        "status",
-        "name",
-        "id"
+        "statistics"
       ],
       "properties": {
         "status": {
           "type": "string",
-          "description": "The status of the job"
+          "default": "created"
         },
-        "name": {
-          "type": "string",
-          "description": "The name of the job"
-        },
-        "id": {
-          "type": "string",
-          "description": "The ID of the job"
+        "statistics": {
+          "$ref": "JobStatistics"
         },
         "configuration": {
-          "description": "Job configuration options",
-          "$ref": "#/definitions/JobConfiguration"
+          "$ref": "JobConfiguration"
+        },
+        "canceled_at": {
+          "type": "naive_datetime"
         }
-      },
-      "example": {
-        "status": "in_progress",
-        "name": "my-job",
-        "id": "123"
-      },
-      "description": "A job"
+      }
+    },
+    "CreateJobCommand": {
+      "type": "object",
+      "title": "CreateJobCommand",
+      "required": [
+        "query"
+      ],
+      "properties": {
+        "query": {
+          "type": "string"
+        }
+      }
     }
   },
   "consumes": "application/json",

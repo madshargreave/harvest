@@ -7,11 +7,12 @@ defmodule HaCore.Schema do
   defmacro __using__(_opts) do
     quote do
       use Ecto.Schema
-      import Ecto.Changeset
+      use Swagger.ModelEcto
 
       import HaCore.Validations
       import HaCore.Casters
       import HaCore.Changeset
+      import Ecto.Changeset
 
       alias Ecto.Changeset
 

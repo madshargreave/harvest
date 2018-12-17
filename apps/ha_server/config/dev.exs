@@ -8,8 +8,8 @@ use Mix.Config
 # with brunch.io to recompile .js and .css sources.
 config :ha_server, HaServer.Endpoint,
   http: [port: 4000],
-  render_errors: [view: HaServer.ErrorView, accepts: ~w(html json)],
-  debug_errors: true,
+  render_errors: [view: HaServer.ErrorView, accepts: ~w(json)],
+  debug_errors: false,
   code_reloader: true,
   check_origin: false,
   watchers: [],

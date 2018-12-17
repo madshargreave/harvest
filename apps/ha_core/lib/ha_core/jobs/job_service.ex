@@ -3,12 +3,18 @@ defmodule HaCore.Jobs.JobService do
   Jobs service
   """
   alias ExCore.DTO.JobDTO
+
   alias HaCore.Jobs
   alias HaCore.Jobs.Store.DefaultImpl
   alias HaCore.Jobs.{
     Job,
     JobService,
     JobServiceStore
+  }
+  alias HaCore.Models
+  alias HaCore.Commands.{
+    CreateJobCommand,
+    CompleteJobCommand
   }
 
   @store Application.get_env(:ha_core, :job_store_impl) || DefaultImpl
@@ -18,8 +24,7 @@ defmodule HaCore.Jobs.JobService do
   """
   @spec list(HaCore.user, HaCore.pagination) :: [JobDTO.t]
   def list(user, pagination) do
-    page = @store.list(user, pagination)
-    dto(page)
+    @store.list(user, pagination)
   end
 
   @doc """
@@ -27,35 +32,26 @@ defmodule HaCore.Jobs.JobService do
   """
   @spec get!(HaCore.user, Jobs.id) :: JobDTO.t
   def get!(user, job_id) do
-    job = @store.get!(user, job_id)
-    dto(job)
+    @store.get!(user, job_id)
   end
 
   @doc """
   Creates a new job
   """
-  @spec create(HaCore.user, map) :: {:ok, JobDTO.t} | {:error, InvalidChangesetError.t}
-  def create(user, attrs \\ %{}) do
-    changeset = Job.create_changeset(user, attrs)
-    result = @store.save(user, changeset)
-    dto(result)
+  @spec create(HaCore.user, CreateJobCommand.t) :: {:ok, JobDTO.t} | {:error, InvalidChangesetError.t}
+  def create(user, command) do
+    changeset = Job.create_changeset(user, command)
+    @store.save(user, changeset)
   end
 
   @doc """
   Creates a new job
   """
-  @spec complete(any, Jobs.id, map) :: {:ok, JobDTO.t} | {:error, InvalidChangesetError.t}
-  def complete(context, job_id, attrs \\ %{}) do
-    job = @store.get!(job_id)
-    changeset = Job.complete_changeset(job, attrs)
-    result = @store.save(context, changeset)
-    dto(result)
+  @spec complete(any, Jobs.id, CompleteJobCommand.t) :: {:ok, JobDTO.t} | {:error, InvalidChangesetError.t}
+  def complete(context, job_id, command) do
+    job = @store.get!(command.id)
+    changeset = Job.complete_changeset(job, command)
+    @store.save(context, changeset)
   end
-
-  defp dto(%{entries: entries} = page), do: %{page | entries: dto(entries)}
-  defp dto(queries) when is_list(queries), do: JobDTO.from(queries)
-  defp dto(%Job{} = job), do: JobDTO.from(job)
-  defp dto({:ok, job}), do: {:ok, JobDTO.from(job)}
-  defp dto({:error, changeset} = other), do: other
 
 end
