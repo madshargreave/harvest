@@ -4,6 +4,7 @@ defmodule HaCore.Jobs.Job do
   """
   use HaCore.Schema
 
+  alias HaCore.Tables.Table
   alias HaCore.Commands.CreateJobCommand
   alias HaCore.Jobs.{JobStatistics, JobConfiguration}
   alias HaCore.Jobs.Events
@@ -13,16 +14,23 @@ defmodule HaCore.Jobs.Job do
     field :canceled_at, :naive_datetime
     has_one :configuration, JobConfiguration
     has_one :statistics, JobStatistics
+    belongs_to :destination, Table
     timestamps()
   end
 
   @spec create_changeset(HaCore.user, map) :: Changeset.t
-  def create_changeset(user, attrs \\ %{}) do
+  def create_changeset(user, %{destination_id: nil} = command) do
     required = ~w()a
     optional = ~w()a
 
     %__MODULE__{}
-    |> cast(attrs, optional ++ required)
+    |> cast(%{
+      destination: %{},
+      configuration: %{
+        query: command.query
+      }
+    }, optional ++ required)
+    |> cast_assoc(:destination, required: true)
     |> cast_assoc(:configuration, required: true)
     |> validate_required(required)
     |> register_event(Events.JobCreated)

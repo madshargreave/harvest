@@ -17,7 +17,7 @@
           },
           "200": {
             "schema": {
-              "$ref": "#/definitions/Job"
+              "$ref": "#/definitions/JobSingleResponse"
             },
             "description": "Success"
           }
@@ -50,7 +50,7 @@
           },
           "200": {
             "schema": {
-              "$ref": "#/definitions/Job"
+              "$ref": "#/definitions/JobSingleResponse"
             },
             "description": "Success"
           }
@@ -77,7 +77,7 @@
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/Jobs"
+              "$ref": "#/definitions/JobListResponse"
             },
             "description": "Success"
           }
@@ -111,6 +111,60 @@
   },
   "host": "localhost:4000",
   "definitions": {
+    "Table": {
+      "title": "Table",
+      "required": [
+        "id",
+        "name",
+        "favorited",
+        "size",
+        "inserted_at",
+        "updated_at"
+      ],
+      "properties": {
+        "updated_at": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "inserted_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "favorited": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Paging": {
+      "type": "object",
+      "title": "Pagination",
+      "required": [
+        "total_count_cap_exceeded",
+        "total_count",
+        "limit"
+      ],
+      "properties": {
+        "total_count_cap_exceeded": {
+          "type": "integer",
+          "description": ""
+        },
+        "total_count": {
+          "type": "integer",
+          "description": ""
+        },
+        "limit": {
+          "type": "integer",
+          "description": ""
+        }
+      }
+    },
     "Jobs": {
       "type": "array",
       "title": "Jobs",
@@ -137,6 +191,35 @@
         }
       }
     },
+    "JobSingleResponse": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/Job"
+        }
+      }
+    },
+    "JobListResponse": {
+      "type": "object",
+      "required": [
+        "paging",
+        "data"
+      ],
+      "properties": {
+        "paging": {
+          "description": "",
+          "$ref": "#/definitions/Paging"
+        },
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/Jobs"
+        }
+      }
+    },
     "JobConfiguration": {
       "title": "JobConfiguration",
       "required": [
@@ -160,6 +243,7 @@
         "canceled_at",
         "configuration",
         "statistics",
+        "destination",
         "inserted_at",
         "updated_at"
       ],
@@ -179,6 +263,9 @@
         "id": {
           "type": "string"
         },
+        "destination": {
+          "$ref": "#/definitions/Table"
+        },
         "configuration": {
           "$ref": "#/definitions/JobConfiguration"
         },
@@ -194,6 +281,9 @@
       ],
       "properties": {
         "query": {
+          "type": "string"
+        },
+        "destination_id": {
           "type": "string"
         }
       }

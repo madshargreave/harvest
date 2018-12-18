@@ -25,9 +25,7 @@ defmodule HaServer.Router do
   scope "/api", HaServer do
     scope "/v1" do
       pipe_through :api
-      resources "/jobs", JobController do
-        resources "/records", RecordController, only: [:index]
-      end
+      resources "/jobs", JobController
       resources "/queries", QueryController
       resources "/tables", TableController, only: [] do
         resources "/records", RecordController, only: [:index]

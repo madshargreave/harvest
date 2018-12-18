@@ -21,12 +21,7 @@ defmodule HaCore.Jobs.JobService do
   """
   @spec create(HaCore.context, CreateJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def create(user, command) do
-    changeset =
-      Job.create_changeset(user, %{
-        configuration: %{
-          query: command.query
-        }
-      })
+    changeset = Job.create_changeset(user, command)
     @store.save(user, changeset)
   end
 

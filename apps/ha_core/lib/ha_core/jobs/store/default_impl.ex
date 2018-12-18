@@ -7,6 +7,8 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   alias HaCore.Repo
   alias HaCore.Jobs.Job
 
+  @preloaded [:statistics, :configuration, :destination]
+
   @impl true
   def count(user) do
     Repo.count(Job)
@@ -17,7 +19,7 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
     query =
       from l in Job,
       order_by: [desc: l.inserted_at],
-      preload: [:statistics, :configuration]
+      preload: ^@preloaded
 
     Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
   end
@@ -26,20 +28,20 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   def get_by_user!(user, id) do
     Job
     |> Repo.get!(id)
-    |> Repo.preload([:statistics, :configuration])
+    |> Repo.preload(@preloaded)
   end
 
   @impl true
   def get!(id) do
     Job
     |> Repo.get!(id)
-    |> Repo.preload([:statistics, :configuration])
+    |> Repo.preload(@preloaded)
   end
 
   @impl true
   def save(context, changeset) do
     with {:ok, entity} <- Repo.save(context, changeset),
-         entity = Repo.preload(entity, [:statistics, :configuration]),
+         entity = Repo.preload(entity, @preloaded),
          {:ok, query} = HaDSL.parse(entity.configuration.query) do
       if entity.status == "created" do
         meta = %{

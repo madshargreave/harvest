@@ -88,6 +88,7 @@ defmodule HaServer.JobController do
       Jobs: Jobs.Job.__swagger__(:list),
       JobConfiguration: Jobs.JobConfiguration.__swagger__(:single),
       JobStatistics: Jobs.JobStatistics.__swagger__(:single),
+      Table: HaCore.Tables.Table.__swagger__(:single),
     }
   end
 
