@@ -12,7 +12,7 @@ defmodule HaServer.JobController do
     tag "Jobs"
     paging
     operation_id "list_jobs"
-    response 200, "Success", Schema.ref(:Jobs)
+    response 200, "Success", Schema.ref(:JobListResponse)
   end
 
   def index(conn, params) do
@@ -28,7 +28,7 @@ defmodule HaServer.JobController do
       job_id :path, :string, "Job ID", required: true
     end
     operation_id "get_job"
-    response 200, "Success", Schema.ref(:Job)
+    response 200, "Success", Schema.ref(:JobSingleResponse)
     response 404, "Not found"
   end
 
@@ -45,7 +45,7 @@ defmodule HaServer.JobController do
       job :body, Schema.ref(:CreateJobCommand), "Job attributes"
     end
     operation_id "create_job"
-    response 200, "Success", Schema.ref(:Job)
+    response 200, "Success", Schema.ref(:JobSingleResponse)
     response 422, "Invalid parameters", Schema.ref(:Job)
   end
 
@@ -61,6 +61,28 @@ defmodule HaServer.JobController do
 
   def swagger_definitions do
     %{
+      Paging: swagger_schema do
+        title "Pagination"
+        type :object
+        properties do
+          limit :integer, "", required: true
+          total_count :integer, "", required: true
+          total_count_cap_exceeded :integer, "", required: true
+        end
+      end,
+      JobSingleResponse: swagger_schema do
+        type :object
+        properties do
+          data Schema.ref(:Job), "", required: true
+        end
+      end,
+      JobListResponse: swagger_schema do
+        type :object
+        properties do
+          data Schema.ref(:Jobs), "", required: true
+          paging Schema.ref(:Paging), "", required: true
+        end
+      end,
       CreateJobCommand: CreateJobCommand.__swagger__(:single),
       Job: Jobs.Job.__swagger__(:single),
       Jobs: Jobs.Job.__swagger__(:list),

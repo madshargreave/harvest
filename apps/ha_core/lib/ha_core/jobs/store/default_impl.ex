@@ -16,7 +16,8 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   def list(user, pagination) do
     query =
       from l in Job,
-      order_by: [desc: l.inserted_at]
+      order_by: [desc: l.inserted_at],
+      preload: [:statistics, :configuration]
 
     Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
   end
