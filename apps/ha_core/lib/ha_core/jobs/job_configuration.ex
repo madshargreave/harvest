@@ -5,9 +5,10 @@ defmodule HaCore.Jobs.JobConfiguration do
   use HaCore.Schema
   alias HaCore.Jobs.{Job, Events}
 
+  @derive {Poison.Encoder, except: [:__meta__, :job_id]}
   @primary_key {:job_id, :binary_id, autogenerate: true}
 
-  model "job_configurations" do
+  swagger_schema "job_configurations" do
     field :query, :string
   end
 

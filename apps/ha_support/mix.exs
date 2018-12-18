@@ -37,12 +37,13 @@ defmodule HASupport.Mixfile do
     [
       {:gen_dispatcher, ">= 0.0.0"},
       {:gen_consumer, ">= 0.0.0"},
+      {:swagger_ecto, "~> 0.2.0"},
       {:ecto, "~> 2.1.6"},
       {:redix, ">= 0.0.0"},
       {:redix_stream, "~> 0.1.3"},
       {:poison, "~> 3.1.0"},
       {:atomic_map, "~> 0.8"},
-      {:uuid, "~> 1.1.8"}
+      {:uuid, "~> 1.1"}
     ]
   end
 

@@ -7,7 +7,7 @@ defmodule HaCore.Jobs.JobStatistics do
 
   @primary_key {:job_id, :binary_id, autogenerate: true}
 
-  model "job_statistics" do
+  swagger_schema "job_statistics" do
     field :started_at, :naive_datetime
     field :ended_at, :naive_datetime
   end

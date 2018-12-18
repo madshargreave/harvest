@@ -6,7 +6,7 @@ defmodule HaCore.Jobs.Events.JobCreated do
     DomainEvent.make(
       context,
       :job_created,
-      ExCore.DTO.JobDTO.from(job)
+      job
     )
   end
 

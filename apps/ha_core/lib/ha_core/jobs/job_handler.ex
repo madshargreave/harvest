@@ -22,7 +22,7 @@ defmodule HaCore.Jobs.JobHandler do
       started_at: started_at,
       ended_at: ended_at
     }
-    JobService.complete(event, job_id, command)
+    JobService.complete(event, command)
     :ok
   end
 

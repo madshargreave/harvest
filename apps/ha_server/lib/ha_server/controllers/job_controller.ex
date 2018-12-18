@@ -61,11 +61,11 @@ defmodule HaServer.JobController do
 
   def swagger_definitions do
     %{
-      CreateJobCommand: CreateJobCommand.schema,
-      Job: Jobs.Job.schema,
-      JobConfiguration: Jobs.JobConfiguration.schema,
-      JobStatistics: Jobs.JobStatistics.schema,
-      Jobs: Jobs.Job.schema_list
+      CreateJobCommand: CreateJobCommand.__swagger__(:single),
+      Job: Jobs.Job.__swagger__(:single),
+      Jobs: Jobs.Job.__swagger__(:list),
+      JobConfiguration: Jobs.JobConfiguration.__swagger__(:single),
+      JobStatistics: Jobs.JobStatistics.__swagger__(:single),
     }
   end
 

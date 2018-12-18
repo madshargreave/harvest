@@ -38,6 +38,7 @@ defmodule HAServer.Mixfile do
   defp deps do
     [
       {:ha_core, in_umbrella: true},
+      {:ha_support, in_umbrella: true},
       {:ex_json_schema, "~> 0.5"},
       {:cors_plug, "~> 1.5"},
       {:logster, "~> 0.10"},

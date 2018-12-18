@@ -3,16 +3,16 @@ defmodule HaCore.Commands do
 
   defmodule CreateJobCommand do
     @moduledoc false
-    use Swagger.ModelEcto
-    model "command" do
+    use SwaggerEcto.Schema
+    swagger_embedded_schema "create_job_command" do
       field :query, :string, required: true
     end
   end
 
   defmodule CompleteJobCommand do
     @moduledoc false
-    use Swagger.ModelEcto
-    model "command" do
+    use SwaggerEcto.Schema
+    swagger_embedded_schema "complete_job_command" do
       field :started_at, :string, format: "date-time", required: true
       field :ended_at, :string, format: "date-time", required: true
     end

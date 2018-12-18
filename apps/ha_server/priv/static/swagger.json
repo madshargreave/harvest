@@ -113,15 +113,15 @@
   "definitions": {
     "Jobs": {
       "type": "array",
-      "title": "A collection of Job",
+      "title": "Jobs",
       "items": {
-        "$ref": "Job"
+        "$ref": "#/definitions/Job"
       }
     },
     "JobStatistics": {
-      "type": "object",
-      "title": "JobStatistics",
+      "title": "JobStatistic",
       "required": [
+        "job_id",
         "started_at",
         "ended_at"
       ],
@@ -129,41 +129,58 @@
         "started_at": {
           "type": "naive_datetime"
         },
+        "job_id": {
+          "type": "string"
+        },
         "ended_at": {
           "type": "naive_datetime"
         }
       }
     },
     "JobConfiguration": {
-      "type": "object",
       "title": "JobConfiguration",
       "required": [
+        "job_id",
         "query"
       ],
       "properties": {
         "query": {
           "type": "string"
+        },
+        "job_id": {
+          "type": "string"
         }
       }
     },
     "Job": {
-      "type": "object",
       "title": "Job",
       "required": [
+        "id",
+        "status",
         "canceled_at",
         "configuration",
-        "statistics"
+        "statistics",
+        "inserted_at",
+        "updated_at"
       ],
       "properties": {
+        "updated_at": {
+          "type": "string"
+        },
         "status": {
-          "type": "string",
-          "default": "created"
+          "type": "string"
         },
         "statistics": {
-          "$ref": "JobStatistics"
+          "$ref": "#/definitions/JobStatistics"
+        },
+        "inserted_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
         },
         "configuration": {
-          "$ref": "JobConfiguration"
+          "$ref": "#/definitions/JobConfiguration"
         },
         "canceled_at": {
           "type": "naive_datetime"
@@ -171,7 +188,6 @@
       }
     },
     "CreateJobCommand": {
-      "type": "object",
       "title": "CreateJobCommand",
       "required": [
         "query"

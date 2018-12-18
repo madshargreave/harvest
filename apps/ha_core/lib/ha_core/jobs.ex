@@ -3,9 +3,12 @@ defmodule HaCore.Jobs do
   The Accounts context.
   """
   alias HaCore.Jobs.JobService
+  alias HaCore.Jobs.Store.DefaultImpl
 
-  defdelegate list_jobs(user), to: JobService, as: :list
-  defdelegate get_job!(user, id), to: JobService, as: :get!
+  @store Application.get_env(:ha_core, :job_store_impl) || DefaultImpl
+
+  defdelegate list_jobs(user), to: @store, as: :list
+  defdelegate get_job!(user, id), to: @store, as: :get!
   defdelegate create_job(user, command), to: JobService, as: :create
 
 end

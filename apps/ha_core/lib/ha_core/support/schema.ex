@@ -6,8 +6,7 @@ defmodule HaCore.Schema do
   @doc false
   defmacro __using__(_opts) do
     quote do
-      use Ecto.Schema
-      use Swagger.ModelEcto
+      use SwaggerEcto.Schema
 
       import HaCore.Validations
       import HaCore.Casters
@@ -18,6 +17,7 @@ defmodule HaCore.Schema do
 
       @primary_key {:id, :binary_id, autogenerate: true}
       @foreign_key_type :binary_id
+      @derive {Poison.Encoder, except: [:__meta__]}
 
       @before_compile HaCore.Schema
     end
