@@ -44,8 +44,16 @@ config :ha_core, HaCore.Jobs.JobHandler,
   adapter: {
     GenConsumer.RedisConsumer,
       topics: ["event:core"],
-      group: "core",
-      consumer: "core"
+      group: "jobs",
+      consumer: "jobs"
+  }
+
+config :ha_core, HaCore.Logs.LogHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "logs",
+      consumer: "logs"
   }
 
 config :ha_core, HaCore.Dispatcher,

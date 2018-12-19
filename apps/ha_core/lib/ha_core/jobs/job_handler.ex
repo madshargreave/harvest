@@ -1,7 +1,9 @@
 defmodule HaCore.Jobs.JobHandler do
   @moduledoc false
+  require Logger
   use GenConsumer, otp_app: :ha_core
 
+  alias HaSupport.DomainEvent
   alias HaCore.Jobs.JobService
   alias HaCore.Commands.CompleteJobCommand
 

@@ -12,7 +12,8 @@ defmodule HaCore.Application do
       supervisor(HaCore.Dispatcher, []),
       Supervisor.child_spec({Redix, [[], [name: :redix_core]]}, id: {Redix, 1}),
       Supervisor.child_spec({Redix, [[], [name: :redix_core_records]]}, id: {Redix, 2}),
-      HaCore.Jobs.JobHandler
+      HaCore.Jobs.JobHandler,
+      HaCore.Logs.LogHandler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

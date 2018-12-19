@@ -16,6 +16,7 @@ defmodule HaCore.Repo do
   defdelegate all(module), to: @repo
   defdelegate paginate(module, opts), to: @repo
   defdelegate preload(queryable, preloads), to: @repo
+  defdelegate insert_all(queryable, entities, opts), to: @repo
 
   def save(context, changeset) do
     transaction_result =

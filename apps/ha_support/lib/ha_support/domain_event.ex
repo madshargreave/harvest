@@ -8,7 +8,8 @@ defmodule HaSupport.DomainEvent do
             type: nil,
             correlation_id: nil,
             actor_id: nil,
-            data: nil
+            data: nil,
+            timestamp: nil
 
   @type t :: %__MODULE__{}
 
@@ -22,7 +23,8 @@ defmodule HaSupport.DomainEvent do
       id: id,
       type: type,
       correlation_id: id,
-      data: data
+      data: data,
+      timestamp: NaiveDateTime.utc_now()
     }
   end
 
@@ -37,7 +39,8 @@ defmodule HaSupport.DomainEvent do
       type: type,
       correlation_id: Context.correlation_id(context) || id,
       actor_id: Context.actor_id(context),
-      data: data
+      data: data,
+      timestamp: NaiveDateTime.utc_now()
     }
   end
 
