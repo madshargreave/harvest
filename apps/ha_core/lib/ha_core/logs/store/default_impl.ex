@@ -24,18 +24,10 @@ defmodule HaCore.Logs.Store.DefaultImpl do
   end
 
   @impl true
-  def get_by_user!(user, id) do
-    Log
-    |> Repo.get!(id)
-    |> Repo.preload(@preloaded)
-  end
-
-  @impl true
   def save_all(logs) do
     logs = for log <- logs, do: Map.take(log, [:job_id, :type, :data, :timestamp])
     opts = []
-    IO.inspect logs
-    Repo.insert_all(Log, logs, opts) |> IO.inspect
+    Repo.insert_all(Log, logs, opts)
   end
 
 end
