@@ -12,11 +12,9 @@ defmodule HaCore.Jobs.JobHandler do
     end_at: ended_at,
     meta: %{
       job_id: job_id,
-      actor_id: actor_id,
-      correlation_id: correlation_id
+      event: event
     }
-  } = event) do
-    event = %HaSupport.DomainEvent{actor_id: actor_id, correlation_id: correlation_id, data: event}
+  }) do
     command = %CompleteJobCommand{
       id: job_id,
       started_at: started_at,
