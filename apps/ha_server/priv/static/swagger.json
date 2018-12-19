@@ -181,13 +181,13 @@
       ],
       "properties": {
         "started_at": {
-          "type": "naive_datetime"
+          "type": "string"
         },
         "job_id": {
           "type": "string"
         },
         "ended_at": {
-          "type": "naive_datetime"
+          "type": "string"
         }
       }
     },
@@ -270,7 +270,7 @@
           "$ref": "#/definitions/JobConfiguration"
         },
         "canceled_at": {
-          "type": "naive_datetime"
+          "type": "string"
         }
       }
     },

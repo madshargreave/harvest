@@ -5,7 +5,7 @@ defmodule HaCore.Jobs.Job do
   use HaCore.Schema
 
   alias HaCore.Tables.Table
-  alias HaCore.Commands.CreateJobCommand
+  alias HaCore.Commands.{CreateJobCommand, CompleteJobCommand}
   alias HaCore.Jobs.{JobStatistics, JobConfiguration}
   alias HaCore.Jobs.Events
 
@@ -18,7 +18,7 @@ defmodule HaCore.Jobs.Job do
     timestamps()
   end
 
-  @spec create_changeset(HaCore.user, map) :: Changeset.t
+  @spec create_changeset(HaCore.user, CreateJobCommand.t) :: Changeset.t
   def create_changeset(user, %{destination_id: nil} = command) do
     required = ~w()a
     optional = ~w()a
@@ -36,10 +36,15 @@ defmodule HaCore.Jobs.Job do
     |> register_event(Events.JobCreated)
   end
 
-  @spec complete_changeset(t, map) :: Changeset.t
-  def complete_changeset(job, attrs \\ %{}) do
+  @spec complete_changeset(t, CompleteJobCommand.t) :: Changeset.t
+  def complete_changeset(job, command) do
     job
-    |> cast(attrs, [])
+    |> cast(%{
+      statistics: %{
+        started_at: command.started_at,
+        ended_at: command.ended_at
+      }
+    }, [])
     |> cast_assoc(:statistics, required: true)
     |> put_change(:status, "completed")
     |> register_event(Events.JobCompleted)

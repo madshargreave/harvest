@@ -32,7 +32,7 @@ defmodule HaServer.JobController do
     response 404, "Not found"
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{id: id}) do
     job = Jobs.get_job!(conn.assigns.user, id)
     render(conn, "show.json", job: job)
   end

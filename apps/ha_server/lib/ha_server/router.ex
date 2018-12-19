@@ -19,6 +19,7 @@ defmodule HaServer.Router do
     plug :accepts, ["json"]
     plug PaginationPlug
     plug CurrentUserPlug
+    plug PhoenixSwagger.Plug.Validate
     plug AtomifyPlug
   end
 

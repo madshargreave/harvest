@@ -31,13 +31,7 @@ defmodule HaCore.Jobs.JobService do
   @spec complete(HaCore.context, CompleteJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def complete(context, command) do
     job = @store.get!(command.id)
-    changeset =
-      Job.complete_changeset(job, %{
-        statistics: %{
-          started_at: command.started_at,
-          ended_at: command.ended_at
-        }
-      })
+    changeset = Job.complete_changeset(job, command)
     @store.save(context, changeset)
   end
 

@@ -37,7 +37,7 @@ defmodule HASupport.Mixfile do
     [
       {:gen_dispatcher, ">= 0.0.0"},
       {:gen_consumer, ">= 0.0.0"},
-      {:swagger_ecto, "~> 0.2.0"},
+      {:swagger_ecto, "~> 0.2.2"},
       {:ecto, "~> 2.1.6"},
       {:redix, ">= 0.0.0"},
       {:redix_stream, "~> 0.1.3"},
