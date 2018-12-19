@@ -8,7 +8,8 @@ defmodule HaServer.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
-      supervisor(HaServer.Endpoint, [])
+      supervisor(HaServer.Endpoint, []),
+      HaServer.LogConsumer
     ]
 
     load_swagger()

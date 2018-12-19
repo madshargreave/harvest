@@ -33,6 +33,14 @@ config :ha_server, :phoenix_swagger,
     ]
   }
 
+config :ha_server, HaServer.LogConsumer,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "web",
+      consumer: "web"
+  }
+
 # config :exq,
 #   host: "127.0.0.1",
 #   port: 6379,

@@ -10,8 +10,8 @@ defmodule HaCore.Logs.LogHandler do
   def handle_event(%DomainEvent{
     type: :job_created,
     data: job
-  }) do
-    LogService.capture([
+  } = event) do
+    LogService.capture(event, [
       %Log{
         job_id: job.id,
         type: "created",
@@ -33,10 +33,10 @@ defmodule HaCore.Logs.LogHandler do
       event: event
     }
   }) do
-    LogService.capture([
+    LogService.capture(event, [
       %Log{
         job_id: job_id,
-        type: "complete",
+        type: "completed",
         data: %{
           started_at: started_at,
           ended_at: ended_at
