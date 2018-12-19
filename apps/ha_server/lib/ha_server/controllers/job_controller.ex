@@ -21,11 +21,11 @@ defmodule HaServer.JobController do
   end
 
   swagger_path :show do
-    get "/jobs/{job_id}"
+    get "/jobs/{id}"
     description "Get job"
     tag "Jobs"
     parameters do
-      job_id :path, :string, "Job ID", required: true
+      id :path, :string, "Job ID", required: true
     end
     operation_id "get_job"
     response 200, "Success", Schema.ref(:JobSingleResponse)

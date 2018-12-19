@@ -19,22 +19,25 @@ defmodule HaCore.Jobs.Job do
   end
 
   @spec create_changeset(HaCore.user, CreateJobCommand.t) :: Changeset.t
-  def create_changeset(user, %{destination_id: nil} = command) do
+  def create_changeset(user, command) do
     required = ~w()a
     optional = ~w()a
 
     %__MODULE__{}
     |> cast(%{
-      destination: %{},
       configuration: %{
         query: command.query
       }
     }, optional ++ required)
-    |> cast_assoc(:destination, required: true)
     |> cast_assoc(:configuration, required: true)
+    |> put_destination(command)
     |> validate_required(required)
     |> register_event(Events.JobCreated)
   end
+  defp put_destination(changeset, %{destination_id: nil} = command),
+    do: put_assoc(changeset, :destination, Table.changeset(%Table{}))
+  defp put_destination(changeset, %{destination_id: destination_id} = command),
+    do: put_change(changeset, :destination_id, destination_id)
 
   @spec complete_changeset(t, CompleteJobCommand.t) :: Changeset.t
   def complete_changeset(job, command) do

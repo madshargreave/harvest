@@ -1,25 +1,42 @@
 defmodule HaServer.RecordController do
   use HaServer, :controller
-
-  alias HaStore.Records
-  alias HaCore.Queries
+  alias HaCore.Records
 
   action_fallback HaServer.FallbackController
 
-  def index(conn, %{"table_id" => table_id}) do
-    records = Records.list_table_records(table_id)
-    render(conn, "index.json", records: records)
+  swagger_path :index do
+    get "/tables/{table_id}/records"
+    description "List records"
+    tag "Records"
+    parameter :table_id, :path, :string, "Table ID", required: true
+    paging
+    operation_id "list_records"
+    response 200, "Success", Schema.ref(:RecordListResponse)
   end
 
-  def index(conn, %{"job_id" => job_id}) do
-    page = Records.list_job_records(job_id, conn.assigns.pagination)
+  def index(conn, params) do
+    page = Records.list_records(conn.assigns.user, params.table_id, conn.assigns.pagination)
     render(conn, "index.json", records: page.entries, paging: page.metadata)
   end
 
-  def index(conn, %{"stream_id" => stream_id}) do
-    query = Queries.get_query!(conn.assigns.user, stream_id)
-    records = Records.list_query_records(query.name, conn.assigns.pagination)
-    render(conn, "index.json", records: records, paging: %{})
+  def swagger_definitions do
+    %{
+      Record: swagger_schema do
+        title "test"
+      end,
+      Records: swagger_schema do
+        title "test"
+        type :array
+        items Schema.ref(:Record)
+      end,
+      RecordListResponse: swagger_schema do
+        type :object
+        properties do
+          data Schema.ref(:Records), "", required: true
+          paging Schema.ref(:Paging), "", required: true
+        end
+      end,
+    }
   end
 
 end

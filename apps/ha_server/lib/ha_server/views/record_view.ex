@@ -14,10 +14,7 @@ defmodule HaServer.RecordView do
   end
 
   def render("record.json", %{record: record}) do
-    %{
-      id: record.id,
-      data: record.data,
-      inserted_at: record.inserted_at
-    }
+    record
   end
+
 end

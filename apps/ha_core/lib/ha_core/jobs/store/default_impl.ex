@@ -49,7 +49,7 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
           actor_id: HaSupport.Context.actor_id(context),
           correlation_id: HaSupport.Context.correlation_id(context)
         }
-        command = %ExdStreams.Api.Commands.SelectCommand{query: query, meta: meta}
+        command = %ExdStreams.Api.Commands.SelectCommand{table: entity.destination.id, query: query, meta: meta}
         ExdStreams.connect(context)
         results = ExdStreams.run(context, command)
         ExdStreams.close(context)

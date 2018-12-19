@@ -2,13 +2,8 @@ defmodule HaCore.Jobs.JobService do
   @moduledoc """
   Jobs service
   """
-  alias HaCore.Jobs
   alias HaCore.Jobs.Store.DefaultImpl
-  alias HaCore.Jobs.{
-    Job,
-    JobService,
-    JobServiceStore
-  }
+  alias HaCore.Jobs.Job
   alias HaCore.Commands.{
     CreateJobCommand,
     CompleteJobCommand
@@ -26,7 +21,7 @@ defmodule HaCore.Jobs.JobService do
   end
 
   @doc """
-  Creates a new job
+  Sets the status of an existing job as complete
   """
   @spec complete(HaCore.context, CompleteJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def complete(context, command) do

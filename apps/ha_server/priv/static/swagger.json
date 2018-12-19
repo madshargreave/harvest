@@ -5,7 +5,116 @@
   ],
   "produces": "application/json",
   "paths": {
-    "/jobs/{job_id}": {
+    "/tables/{table_id}/records": {
+      "get": {
+        "tags": [
+          "Records"
+        ],
+        "summary": "",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/RecordListResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "string",
+            "required": true,
+            "name": "table_id",
+            "in": "path",
+            "description": "Table ID"
+          },
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page_size",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of elements per page"
+          },
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of the page"
+          }
+        ],
+        "operationId": "list_records",
+        "description": "List records"
+      }
+    },
+    "/tables/{id}": {
+      "get": {
+        "tags": [
+          "Tables"
+        ],
+        "summary": "",
+        "responses": {
+          "404": {
+            "description": "Not found"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TableSingleResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "string",
+            "required": true,
+            "name": "id",
+            "in": "path",
+            "description": "Table ID"
+          }
+        ],
+        "operationId": "get_table",
+        "description": "Get table"
+      }
+    },
+    "/tables": {
+      "get": {
+        "tags": [
+          "Tables"
+        ],
+        "summary": "",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TableListResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page_size",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of elements per page"
+          },
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of the page"
+          }
+        ],
+        "operationId": "list_tables",
+        "description": "List tables"
+      }
+    },
+    "/jobs/{id}": {
       "get": {
         "tags": [
           "Jobs"
@@ -26,7 +135,7 @@
           {
             "type": "string",
             "required": true,
-            "name": "job_id",
+            "name": "id",
             "in": "path",
             "description": "Job ID"
           }
@@ -111,6 +220,42 @@
   },
   "host": "localhost:4000",
   "definitions": {
+    "Tables": {
+      "type": "array",
+      "title": "Tables",
+      "items": {
+        "$ref": "#/definitions/Table"
+      }
+    },
+    "TableSingleResponse": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/Table"
+        }
+      }
+    },
+    "TableListResponse": {
+      "type": "object",
+      "required": [
+        "paging",
+        "data"
+      ],
+      "properties": {
+        "paging": {
+          "description": "",
+          "$ref": "#/definitions/Paging"
+        },
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/Tables"
+        }
+      }
+    },
     "Table": {
       "title": "Table",
       "required": [
@@ -141,6 +286,34 @@
           "type": "boolean"
         }
       }
+    },
+    "Records": {
+      "type": "array",
+      "title": "test",
+      "items": {
+        "$ref": "#/definitions/Record"
+      }
+    },
+    "RecordListResponse": {
+      "type": "object",
+      "required": [
+        "paging",
+        "data"
+      ],
+      "properties": {
+        "paging": {
+          "description": "",
+          "$ref": "#/definitions/Paging"
+        },
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/Records"
+        }
+      }
+    },
+    "Record": {
+      "type": "object",
+      "title": "test"
     },
     "Paging": {
       "type": "object",
