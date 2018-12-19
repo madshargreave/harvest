@@ -14,13 +14,13 @@ defmodule HaCore.Logs.Store.DefaultImpl do
   end
 
   @impl true
-  def list(user, pagination) do
+  def list(job_id, pagination) do
     query =
-      from t in Log,
-      order_by: [desc: t.inserted_at],
-      preload: ^@preloaded
+      from l in Log,
+      where: l.job_id == ^job_id,
+      order_by: [desc: l.timestamp]
 
-    Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
+    Repo.paginate(query, cursor_fields: [:timestamp], limit: pagination.limit)
   end
 
   @impl true
