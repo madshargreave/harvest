@@ -41,6 +41,7 @@ defmodule HAServer.Mixfile do
       {:ha_support, in_umbrella: true},
       {:ex_json_schema, "~> 0.5"},
       {:cors_plug, "~> 1.5"},
+      {:proper_case, "~> 1.0.2"},
       {:logster, "~> 0.10"},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},

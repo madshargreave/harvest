@@ -9,7 +9,7 @@ defmodule HaCore.Logs.Store.DefaultImpl do
   @preloaded []
 
   @impl true
-  def count(user) do
+  def count(_user) do
     Repo.count(Log)
   end
 

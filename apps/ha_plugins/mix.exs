@@ -34,7 +34,7 @@ defmodule HAPlugins.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-
+      {:httpoison, "~> 1.4"}
     ]
   end
 

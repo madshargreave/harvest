@@ -4,7 +4,8 @@ defmodule HaServer.Router do
   alias HaServer.Plugs.{
     PaginationPlug,
     CurrentUserPlug,
-    AtomifyPlug
+    AtomifyPlug,
+    SnakeCasePlug
   }
 
   pipeline :browser do
@@ -17,6 +18,7 @@ defmodule HaServer.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug SnakeCasePlug
     plug PaginationPlug
     plug CurrentUserPlug
     plug PhoenixSwagger.Plug.Validate
@@ -29,7 +31,7 @@ defmodule HaServer.Router do
       resources "/jobs", JobController do
         resources "/logs", LogController, only: []
       end
-      resources "/tables", TableController, only: [:index, :show] do
+      resources "/tables", TableController, only: [:index, :show, :create] do
         resources "/records", RecordController, only: [:index]
       end
     end

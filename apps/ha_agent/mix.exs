@@ -27,6 +27,7 @@ defmodule HaAgent.MixProject do
   defp deps do
     [
       {:ha_core, in_umbrella: true},
+      {:ha_plugins, in_umbrella: true},
       {:ha_dsl, in_umbrella: true},
       {:ha_support, in_umbrella: true},
       {:poolboy, "~> 1.5.1"},

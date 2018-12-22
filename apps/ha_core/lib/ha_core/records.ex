@@ -7,6 +7,6 @@ defmodule HaCore.Records do
 
   @store Application.get_env(:ha_core, :record_store_impl) || DefaultImpl
 
-  defdelegate list_records(user, table_id, pagination), to: @store, as: :list
+  defdelegate list_records(user, table_id, pagination), to: @store, as: :get_user_table_records
 
 end

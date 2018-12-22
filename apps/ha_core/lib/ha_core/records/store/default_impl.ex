@@ -7,7 +7,7 @@ defmodule HaCore.Records.Store.DefaultImpl do
   alias HaCore.Records.Record
 
   @impl true
-  def list(user, table_id, pagination) do
+  def get_user_table_records(_user, table_id, pagination) do
     records =
       ExdStreams.Store.RelationalStore.all(table_id)
       |> Enum.take(50)

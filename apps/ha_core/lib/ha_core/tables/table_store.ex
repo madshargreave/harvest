@@ -8,11 +8,6 @@ defmodule HaCore.Tables.TableStore do
   alias HaCore.Tables.Table
 
   @doc """
-  Returns number of queries.
-  """
-  @callback count(HaCore.user) :: {:ok, integer}
-
-  @doc """
   Returns the list of queries.
   """
   @callback list(HaCore.user) :: {:ok, [Table.t]}
@@ -21,6 +16,11 @@ defmodule HaCore.Tables.TableStore do
   Gets a single query.
   """
   @callback get!(HaCore.user, Jobs.id) :: Table.t
+
+  @doc """
+  Gets a single query.
+  """
+  @callback get_by_job!(HaCore.user, Jobs.id) :: Table.t
 
   @doc """
   Saves a job changeset

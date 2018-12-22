@@ -4,32 +4,27 @@ defmodule HaCore.Tables.Table do
   """
   use HaCore.Schema
 
+  alias HaCore.Tables.Events
+  alias HaCore.Tables.Commands
+
   swagger_schema "tables" do
     field :name, :string
     field :favorited, :boolean, default: false
+    field :saved, :boolean, default: false
     field :size, :integer, default: 0
     timestamps()
   end
 
-  @spec changeset(HaCore.user, map) :: Changeset.t
-  def changeset(struct, attrs \\ %{}) do
-    required = ~w()a
-    optional = ~w(name favorited)a
-
-    struct
-    |> cast(attrs, optional ++ required)
-    |> set_default_name
-    |> validate_required(required)
-  end
-
-  defp set_default_name(changeset) do
-    name = get_change(changeset, :name)
-    if name, do: changeset, else: put_change(changeset, :name, default_name())
-  end
-
-  defp default_name do
-    now = NaiveDateTime.utc_now() |> NaiveDateTime.to_string
-    "table-#{now}"
+  @doc """
+  Saved the table and optionally sets a new name
+  """
+  @spec save_changeset(t, Commands.SaveTableCommand.t) :: Changeset.t
+  def save_changeset(table, command) do
+    table
+    |> change
+    |> put_change_if_present(:name, command.name)
+    |> put_change(:saved, true)
+    |> register_event(Events.TableSaved)
   end
 
 end

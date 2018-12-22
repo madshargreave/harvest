@@ -17,13 +17,14 @@ defmodule HaCore.Jobs.JobHandler do
       event: event
     }
   }) do
-    command = %CompleteJobCommand{
-      id: job_id,
-      started_at: started_at,
-      ended_at: ended_at
-    }
-    JobService.complete(event, command)
-    :ok
+    JobService.complete(
+      event,
+      %CompleteJobCommand{
+        id: job_id,
+        started_at: started_at,
+        ended_at: ended_at
+      }
+    )
   end
 
   def handle_event(event) do

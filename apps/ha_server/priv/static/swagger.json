@@ -79,6 +79,39 @@
       }
     },
     "/tables": {
+      "post": {
+        "tags": [
+          "Tables"
+        ],
+        "summary": "",
+        "responses": {
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/Table"
+            },
+            "description": "Invalid parameters"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TableSingleResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/SaveTableCommand"
+            },
+            "required": false,
+            "name": "table",
+            "in": "body",
+            "description": "Table attributes"
+          }
+        ],
+        "operationId": "save_table",
+        "description": "Create a new table from job results"
+      },
       "get": {
         "tags": [
           "Tables"
@@ -262,6 +295,7 @@
         "id",
         "name",
         "favorited",
+        "saved",
         "size",
         "inserted_at",
         "updated_at"
@@ -272,6 +306,9 @@
         },
         "size": {
           "type": "integer"
+        },
+        "saved": {
+          "type": "boolean"
         },
         "name": {
           "type": "string"
@@ -284,6 +321,20 @@
         },
         "favorited": {
           "type": "boolean"
+        }
+      }
+    },
+    "SaveTableCommand": {
+      "title": "SaveTableCommand",
+      "required": [
+        "job_id"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "job_id": {
+          "type": "string"
         }
       }
     },

@@ -35,9 +35,15 @@ defmodule HaCore.Jobs.Job do
     |> register_event(Events.JobCreated)
   end
   defp put_destination(changeset, %{destination_id: nil} = command),
-    do: put_assoc(changeset, :destination, Table.changeset(%Table{}))
+    do: put_assoc(changeset, :destination, create_destination_changeset())
   defp put_destination(changeset, %{destination_id: destination_id} = command),
     do: put_change(changeset, :destination_id, destination_id)
+
+  defp create_destination_changeset do
+    change(%Table{
+      name: default_name()
+    })
+  end
 
   @spec complete_changeset(t, CompleteJobCommand.t) :: Changeset.t
   def complete_changeset(job, command) do
@@ -51,6 +57,13 @@ defmodule HaCore.Jobs.Job do
     |> cast_assoc(:statistics, required: true)
     |> put_change(:status, "completed")
     |> register_event(Events.JobCompleted)
+  end
+
+  ## Helpers
+
+  defp default_name do
+    now = NaiveDateTime.utc_now() |> NaiveDateTime.to_string
+    "table-#{now}"
   end
 
 end

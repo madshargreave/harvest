@@ -9,5 +9,6 @@ defmodule HaCore.Tables do
 
   defdelegate list_tables(user, pagination), to: @store, as: :list
   defdelegate get_table!(user, id), to: @store, as: :get_by_user!
+  defdelegate save_table(user, command), to: TableService, as: :save
 
 end

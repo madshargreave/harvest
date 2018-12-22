@@ -10,12 +10,12 @@ defmodule HaCore.Records.RecordStore do
   @doc """
   Returns the list of queries.
   """
-  @callback list(HaCore.user) :: {:ok, [Table.t]}
+  @callback get_user_table_records(HaCore.user, binary()) :: [Record.t]
 
   @doc false
   defmacro __using__(_opts) do
     quote do
-      @behaviour HaCore.Tables.TableStore
+      @behaviour HaCore.Record.RecordStore
     end
   end
 

@@ -10,12 +10,12 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   @preloaded [:statistics, :configuration, :destination]
 
   @impl true
-  def count(user) do
+  def count(_user) do
     Repo.count(Job)
   end
 
   @impl true
-  def list(user, pagination) do
+  def list(_user, pagination) do
     query =
       from l in Job,
       order_by: [desc: l.inserted_at],
@@ -25,7 +25,7 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   end
 
   @impl true
-  def get_by_user!(user, id) do
+  def get_by_user!(_user, id) do
     Job
     |> Repo.get!(id)
     |> Repo.preload(@preloaded)
