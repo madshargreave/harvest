@@ -28,7 +28,6 @@ defmodule HaCore.Jobs.JobHandler do
   end
 
   def handle_event(event) do
-    IO.inspect "Received job #{inspect event.type}:#{event.correlation_id}"
     :ok
   end
 

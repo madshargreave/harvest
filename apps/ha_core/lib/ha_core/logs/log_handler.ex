@@ -33,6 +33,7 @@ defmodule HaCore.Logs.LogHandler do
       event: event
     }
   }) do
+    IO.inspect "asdad"
     LogService.capture(event, [
       %Log{
         job_id: job_id,
@@ -46,28 +47,24 @@ defmodule HaCore.Logs.LogHandler do
     ])
   end
 
-  # @impl true
-  # def handle_event(%{
-  #   type: :job_activity,
-  #   timestamp: timestamp,
-  #   meta: %{
-  #     url: url
-  #   }
-  # }) do
-  #   LogService.capture(nil, [
-  #     %Log{
-  #       type: "activity",
-  #       data: %{
-  #         plugin: "fetch",
-  #         url: url
-  #       },
-  #       timestamp: timestamp
-  #     }
-  #   ])
-  # end
+  @impl true
+  def handle_event(%{
+    type: :job_activity,
+    timestamp: timestamp,
+    job_id: job_id,
+    meta: meta
+  } = event) do
+    LogService.capture(nil, [
+      %Log{
+        job_id: job_id,
+        type: "activity",
+        data: meta,
+        timestamp: timestamp
+      }
+    ])
+  end
 
   def handle_event(event) do
-    # IO.inspect event
     :ok
   end
 

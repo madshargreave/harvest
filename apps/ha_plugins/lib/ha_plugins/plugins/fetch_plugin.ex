@@ -11,7 +11,7 @@ defmodule HaPlugins.FetchPlugin do
 
   defmodule State do
     @moduledoc false
-    defstruct [:url, :client]
+    defstruct [:job_id, :url, :client]
   end
 
   @impl true
@@ -20,32 +20,43 @@ defmodule HaPlugins.FetchPlugin do
   end
 
   @impl true
-  def init([url] = opts) do
+  def init(%Exd.Context{env: env, arguments: [url] = opts} = context) do
+    job_id = Keyword.fetch!(env, :job_id)
     client =
       Client.new(
-        concurrency: Keyword.get(opts, :concurrency, @default_concurrency),
-        retries: Keyword.get(opts, :retries, @default_retries),
-        timeout: Keyword.get(opts, :timeout, @default_timeout)
+        concurrency: Keyword.get(env, :concurrency, @default_concurrency),
+        retries: Keyword.get(env, :retries, @default_retries),
+        timeout: Keyword.get(env, :timeout, @default_timeout)
       )
-    state = %State{url: url, client: client}
+    state = %State{job_id: job_id, url: url, client: client}
     {:producer, state}
   end
 
   @impl true
   def handle_demand(demand, state) do
     opts = [max_concurrency: 10]
-    IO.inspect "Fetching: #{state.url}"
     HaPlugins.Dispatcher.dispatch(%{
+      job_id: state.job_id,
       type: :job_activity,
       timestamp: NaiveDateTime.utc_now(),
       meta: %{
-        url: state.url
+        url: state.url,
+        done: false
       }
     })
     {:ok, response} = Client.get(state.client, state.url)
     value = %{"status" => response.status_code, "body" => response.body}
     record = %Exd.Record{key: state.url, value: value}
     GenStage.async_info(self(), :terminate)
+    HaPlugins.Dispatcher.dispatch(%{
+      job_id: state.job_id,
+      type: :job_activity,
+      timestamp: NaiveDateTime.utc_now(),
+      meta: %{
+        url: state.url,
+        done: true
+      }
+    })
     {:noreply, [record], state}
   end
 
