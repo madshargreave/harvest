@@ -12,6 +12,7 @@ defmodule HaCore.Tables.Table do
     field :favorited, :boolean, default: false
     field :saved, :boolean, default: false
     field :size, :integer, default: 0
+    field :deleted_at, :naive_datetime
     timestamps()
   end
 
@@ -25,6 +26,17 @@ defmodule HaCore.Tables.Table do
     |> put_change_if_present(:name, command.name)
     |> put_change(:saved, true)
     |> register_event(Events.TableSaved)
+  end
+
+  @doc """
+  Marks table as deleted
+  """
+  @spec delete_changeset(t, Commands.DeleteTableCommand.t) :: Changeset.t
+  def delete_changeset(table, command) do
+    table
+    |> change
+    |> put_change_now(:deleted_at)
+    |> register_event(Events.TableDeleted)
   end
 
 end

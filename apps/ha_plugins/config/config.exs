@@ -28,35 +28,7 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 
-config :ha_core,
-  ecto_repos: [
-    HaCore.Repo.EctoImpl
-  ]
-
-config :ha_core, HaCore.Repo.EctoImpl,
-  adapter: Ecto.Adapters.Postgres
-
-config :ha_core,
-  repo_impl: HaCore.Repo.EctoImpl,
-  dispatcher_impl: HaCore.Dispatcher
-
-config :ha_core, HaCore.Jobs.JobHandler,
-  adapter: {
-    GenConsumer.RedisConsumer,
-      topics: ["event:core"],
-      group: "jobs",
-      consumer: "jobs"
-  }
-
-config :ha_core, HaCore.Logs.LogHandler,
-  adapter: {
-    GenConsumer.RedisConsumer,
-      topics: ["event:core", "event:plugins:logs"],
-      group: "logs",
-      consumer: "logs"
-  }
-
-config :ha_core, HaCore.Dispatcher,
+config :ha_plugins, HaPlugins.Dispatcher,
   adapter: GenDispatcher.RedisDispatcher
 
-import_config "#{Mix.env}.exs"
+# import_config "#{Mix.env}.exs"

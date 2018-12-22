@@ -46,7 +46,28 @@ defmodule HaCore.Logs.LogHandler do
     ])
   end
 
-  def handle_event(_event) do
+  # @impl true
+  # def handle_event(%{
+  #   type: :job_activity,
+  #   timestamp: timestamp,
+  #   meta: %{
+  #     url: url
+  #   }
+  # }) do
+  #   LogService.capture(nil, [
+  #     %Log{
+  #       type: "activity",
+  #       data: %{
+  #         plugin: "fetch",
+  #         url: url
+  #       },
+  #       timestamp: timestamp
+  #     }
+  #   ])
+  # end
+
+  def handle_event(event) do
+    # IO.inspect event
     :ok
   end
 

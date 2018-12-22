@@ -2,7 +2,7 @@ defmodule HaServer.TableController do
   use HaServer, :controller
 
   alias HaCore.Tables
-  alias HaCore.Tables.Commands.SaveTableCommand
+  alias HaCore.Tables.Commands.{DeleteTableCommand, SaveTableCommand}
 
   action_fallback HaServer.FallbackController
 
@@ -52,6 +52,26 @@ defmodule HaServer.TableController do
     with {:ok, table} <- Tables.save_table(conn.assigns.user, command) do
       conn
       |> put_status(:created)
+      |> put_resp_header("location", job_path(conn, :show, table))
+      |> render("show.json", table: table)
+    end
+  end
+
+  swagger_path :destroy do
+    delete "/tables/{table_id}"
+    description "Delete table"
+    tag "Tables"
+    parameter :table_id, :path, :string, "Table ID", required: true
+    operation_id "delete_table"
+    response 200, "Success", Schema.ref(:TableSingleResponse)
+    response 422, "Invalid parameters", Schema.ref(:Table)
+  end
+
+  def destroy(conn, params) do
+    command = struct(DeleteTableCommand, params)
+    with {:ok, table} <- Tables.delete_table(conn.assigns.user, command) do
+      conn
+      |> put_status(:accepted)
       |> put_resp_header("location", job_path(conn, :show, table))
       |> render("show.json", table: table)
     end

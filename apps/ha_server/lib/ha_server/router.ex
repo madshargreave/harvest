@@ -31,6 +31,7 @@ defmodule HaServer.Router do
       resources "/jobs", JobController do
         resources "/logs", LogController, only: []
       end
+      delete "/tables/:table_id", TableController, :destroy
       resources "/tables", TableController, only: [:index, :show, :create] do
         resources "/records", RecordController, only: [:index]
       end

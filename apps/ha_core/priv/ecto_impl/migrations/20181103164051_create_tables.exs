@@ -8,6 +8,7 @@ defmodule HaCore.Repo.EctoImpl.Migrations.CreateTables do
       add :size, :integer, default: 0, null: false
       add :saved, :boolean, default: false, null: false
       add :favorited, :boolean, default: false, null: false
+      add :deleted_at, :naive_datetime
       timestamps()
     end
   end

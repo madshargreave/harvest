@@ -34,6 +34,14 @@ defmodule HaPlugins.FetchPlugin do
   @impl true
   def handle_demand(demand, state) do
     opts = [max_concurrency: 10]
+    IO.inspect "Fetching: #{state.url}"
+    HaPlugins.Dispatcher.dispatch(%{
+      type: :job_activity,
+      timestamp: NaiveDateTime.utc_now(),
+      meta: %{
+        url: state.url
+      }
+    })
     {:ok, response} = Client.get(state.client, state.url)
     value = %{"status" => response.status_code, "body" => response.body}
     record = %Exd.Record{key: state.url, value: value}

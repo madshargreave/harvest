@@ -1,4 +1,4 @@
-defmodule HAPlugins.Mixfile do
+defmodule HaPlugins.Mixfile do
   use Mix.Project
 
   def project do
@@ -21,6 +21,7 @@ defmodule HAPlugins.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
+      mod: {HaPlugins, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -34,6 +35,7 @@ defmodule HAPlugins.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:ha_support, in_umbrella: true},
       {:httpoison, "~> 1.4"}
     ]
   end

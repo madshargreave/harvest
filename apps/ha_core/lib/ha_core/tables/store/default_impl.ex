@@ -13,8 +13,8 @@ defmodule HaCore.Tables.Store.DefaultImpl do
   def list(user, pagination) do
     query =
       from t in Table,
-      where: t.saved,
-      order_by: [desc: t.inserted_at],
+      where: t.saved and is_nil(t.deleted_at),
+      order_by: [desc: t.favorited, desc: t.inserted_at],
       preload: ^@preloaded
 
     Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)

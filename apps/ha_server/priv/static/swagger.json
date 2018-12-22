@@ -48,6 +48,39 @@
         "description": "List records"
       }
     },
+    "/tables/{table_id}": {
+      "delete": {
+        "tags": [
+          "Tables"
+        ],
+        "summary": "",
+        "responses": {
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/Table"
+            },
+            "description": "Invalid parameters"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/TableSingleResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "string",
+            "required": true,
+            "name": "table_id",
+            "in": "path",
+            "description": "Table ID"
+          }
+        ],
+        "operationId": "delete_table",
+        "description": "Delete table"
+      }
+    },
     "/tables/{id}": {
       "get": {
         "tags": [
@@ -297,6 +330,7 @@
         "favorited",
         "saved",
         "size",
+        "deleted_at",
         "inserted_at",
         "updated_at"
       ],
@@ -321,19 +355,22 @@
         },
         "favorited": {
           "type": "boolean"
+        },
+        "deleted_at": {
+          "type": "string"
         }
       }
     },
     "SaveTableCommand": {
       "title": "SaveTableCommand",
       "required": [
-        "job_id"
+        "table_id"
       ],
       "properties": {
-        "name": {
+        "table_id": {
           "type": "string"
         },
-        "job_id": {
+        "name": {
           "type": "string"
         }
       }
