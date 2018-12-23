@@ -12,6 +12,6 @@ config :ha_core, HaCore.Repo.EctoImpl,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "server_test",
+  database: "harvest_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

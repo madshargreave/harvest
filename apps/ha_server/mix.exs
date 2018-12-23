@@ -45,7 +45,6 @@ defmodule HAServer.Mixfile do
       {:logster, "~> 0.10"},
       {:phoenix, "~> 1.3.3"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
       {:phoenix_swagger, "~> 0.8.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
