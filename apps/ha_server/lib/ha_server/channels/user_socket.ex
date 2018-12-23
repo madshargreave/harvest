@@ -3,6 +3,7 @@ defmodule HaServer.UserSocket do
 
   ## Channels
   channel "logs:*", HaServer.LogChannel
+  channel "records:*", HaServer.RecordChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,

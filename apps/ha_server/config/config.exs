@@ -37,8 +37,16 @@ config :ha_server, HaServer.LogConsumer,
   adapter: {
     GenConsumer.RedisConsumer,
       topics: ["event:core"],
-      group: "web",
-      consumer: "web"
+      group: "web:logs",
+      consumer: "web:logs"
+  }
+
+config :ha_server, HaServer.RecordConsumer,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "web:records",
+      consumer: "web:records"
   }
 
 # config :exq,
