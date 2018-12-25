@@ -180,6 +180,42 @@
         "description": "List tables"
       }
     },
+    "/queries": {
+      "get": {
+        "tags": [
+          "Queries"
+        ],
+        "summary": "",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/QueryListResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page_size",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of elements per page"
+          },
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of the page"
+          }
+        ],
+        "operationId": "list_latest_queries/2",
+        "description": "List latest queries"
+      }
+    },
     "/jobs/{id}": {
       "get": {
         "tags": [
@@ -402,6 +438,49 @@
     "Record": {
       "type": "object",
       "title": "test"
+    },
+    "QueryListResponse": {
+      "type": "object",
+      "required": [
+        "paging",
+        "data"
+      ],
+      "properties": {
+        "paging": {
+          "description": "",
+          "$ref": "#/definitions/Paging"
+        },
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/Queries"
+        }
+      }
+    },
+    "Query": {
+      "title": "Query",
+      "required": [
+        "id",
+        "query",
+        "inserted_at"
+      ],
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "inserted_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "Queries": {
+      "type": "array",
+      "title": "Queries",
+      "items": {
+        "$ref": "#/definitions/Query"
+      }
     },
     "Paging": {
       "type": "object",
