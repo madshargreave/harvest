@@ -16,7 +16,7 @@ defmodule HaCore.Logs.LogHandler do
         job_id: job.id,
         type: "created",
         data: %{
-          table_id: job.destination.id
+          table_id: job.destination_id
         },
         timestamp: job.inserted_at
       }
@@ -33,7 +33,6 @@ defmodule HaCore.Logs.LogHandler do
       event: event
     }
   }) do
-    IO.inspect "asdad"
     LogService.capture(event, [
       %Log{
         job_id: job_id,

@@ -20,7 +20,7 @@ defmodule HaPlugins.FetchPlugin do
   end
 
   @impl true
-  def init(%Exd.Context{env: env, arguments: [url] = opts} = context) do
+  def init(%Exd.Context{env: env, params: [url] = opts} = context) do
     job_id = Keyword.fetch!(env, :job_id)
     client =
       Client.new(

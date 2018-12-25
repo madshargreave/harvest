@@ -17,7 +17,7 @@ defmodule HaAgent.Handlers.QueryHandler do
     {:ok, query} = HaDSL.parse(job.configuration.query)
     command =
       %SelectCommand{
-        table: job.destination.id,
+        table: job.destination_id,
         query: query,
         meta: %{
           job_id: job.id,

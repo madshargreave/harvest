@@ -2,6 +2,7 @@ defmodule HaDSL do
   @moduledoc """
   Map-based DSL for Exd queries
   """
+  require Logger
 
   @doc """
   Parse string
@@ -16,6 +17,10 @@ defmodule HaDSL do
 
   defp parse_string(string) do
     NodeJS.call({"dist/bundle.js", :parse}, [string])
+  rescue
+    exception ->
+      Logger.error("Failed to parse query: #{inspect exception}")
+      {:error, :invalid_query}
   end
 
   def underscore(ast) do
@@ -32,6 +37,9 @@ defmodule HaDSL do
 
     module = String.to_existing_atom("Elixir.Exd.AST.#{type}")
     struct(module, tree)
+  rescue
+    exception ->
+      Logger.error("Failed to parse AST: #{inspect exception}")
   end
   def do_to_structs(value) do
     value
