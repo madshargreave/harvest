@@ -212,7 +212,7 @@
             "description": "Number of the page"
           }
         ],
-        "operationId": "list_latest_queries/2",
+        "operationId": "list_latest_queries",
         "description": "List latest queries"
       }
     },

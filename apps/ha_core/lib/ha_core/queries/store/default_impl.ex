@@ -14,7 +14,8 @@ defmodule HaCore.Queries.Store.DefaultImpl do
         from j in Job,
         join: jc in JobConfiguration,
           on: j.id == jc.job_id,
-        distinct: jc.query,
+        distinct: jc.query,\
+        order_by: [desc: jc.query, desc: j.inserted_at],
         select: %{
           id: j.id,
           query: jc.query,
