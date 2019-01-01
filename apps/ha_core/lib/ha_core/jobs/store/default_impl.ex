@@ -7,7 +7,7 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   alias HaCore.Repo
   alias HaCore.Jobs.Job
 
-  @preloaded [:statistics, :configuration, :destination]
+  @preloaded [:statistics, :configuration, destination: [:schema]]
 
   @impl true
   def count(_user) do

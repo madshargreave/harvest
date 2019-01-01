@@ -4,7 +4,7 @@ defmodule HaCore.Jobs.Job do
   """
   use HaCore.Schema
 
-  alias HaCore.Tables.Table
+  alias HaCore.Tables.{Table, TableSchema}
   alias HaCore.Commands.{CreateJobCommand, CompleteJobCommand}
   alias HaCore.Jobs.{JobStatistics, JobConfiguration}
   alias HaCore.Jobs.Events
@@ -18,8 +18,8 @@ defmodule HaCore.Jobs.Job do
     timestamps()
   end
 
-  @spec create_changeset(HaCore.user, CreateJobCommand.t) :: Changeset.t
-  def create_changeset(user, command) do
+  @spec create_changeset(HaCore.user, CreateJobCommand.t, TableSchema.t) :: Changeset.t
+  def create_changeset(user, command, schema) do
     required = ~w()a
     optional = ~w()a
 
@@ -30,19 +30,19 @@ defmodule HaCore.Jobs.Job do
       }
     }, optional ++ required)
     |> cast_assoc(:configuration, required: true)
-    |> put_destination(command)
+    |> put_destination(command, schema)
     |> validate_required(required)
     |> register_event(Events.JobCreated)
   end
-  defp put_destination(changeset, %{destination_id: nil} = command),
-    do: put_assoc(changeset, :destination, create_destination_changeset())
-  defp put_destination(changeset, %{destination_id: destination_id} = command),
+  defp put_destination(changeset, %{destination_id: nil} = command, schema),
+    do: put_assoc(changeset, :destination, create_destination_changeset(schema))
+  defp put_destination(changeset, %{destination_id: destination_id} = command, _schema),
     do: put_change(changeset, :destination_id, destination_id)
 
-  defp create_destination_changeset do
-    change(%Table{
-      name: default_name()
-    })
+  defp create_destination_changeset(schema) do
+    %Table{}
+    |> cast(%{name: default_name()}, [:name])
+    |> put_assoc(:schema, schema)
   end
 
   @spec complete_changeset(t, CompleteJobCommand.t) :: Changeset.t
