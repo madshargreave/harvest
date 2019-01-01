@@ -314,6 +314,25 @@
         "operationId": "list_jobs",
         "description": "List jobs"
       }
+    },
+    "/config": {
+      "get": {
+        "tags": [
+          "Config"
+        ],
+        "summary": "",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ConfigResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [],
+        "operationId": "get_config",
+        "description": "List app configuration"
+      }
     }
   },
   "info": {
@@ -678,6 +697,36 @@
         },
         "destination_id": {
           "type": "string"
+        }
+      }
+    },
+    "ConfigResponse": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/Config"
+        }
+      }
+    },
+    "Config": {
+      "type": "object",
+      "title": "Config",
+      "required": [
+        "api_base",
+        "version"
+      ],
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Config version"
+        },
+        "api_base": {
+          "type": "string",
+          "description": "Public base URL for API requests"
         }
       }
     }
