@@ -7,7 +7,7 @@ defmodule HaCore.Tables.TableField do
 
   @derive {Poison.Encoder, only: [:name]}
 
-  embedded_schema do
+  swagger_embedded_schema "fields" do
     field :key, :string
     field :name, :string
     field :description, :string

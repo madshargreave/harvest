@@ -341,49 +341,6 @@
         }
       }
     },
-    "TableSchema": {
-      "title": "Table",
-      "required": [
-        "id",
-        "name",
-        "favorited",
-        "saved",
-        "size",
-        "deleted_at",
-        "schema",
-        "inserted_at",
-        "updated_at"
-      ],
-      "properties": {
-        "updated_at": {
-          "type": "string"
-        },
-        "size": {
-          "type": "integer"
-        },
-        "schema": {
-          "$ref": "#/definitions/TableSchema"
-        },
-        "saved": {
-          "type": "boolean"
-        },
-        "name": {
-          "type": "string"
-        },
-        "inserted_at": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "favorited": {
-          "type": "boolean"
-        },
-        "deleted_at": {
-          "type": "string"
-        }
-      }
-    },
     "TableListResponse": {
       "type": "object",
       "required": [
@@ -422,7 +379,7 @@
           "type": "integer"
         },
         "schema": {
-          "$ref": "#/definitions/TableSchema"
+          "$ref": "#/definitions/Schema"
         },
         "saved": {
           "type": "boolean"
@@ -441,6 +398,21 @@
         },
         "deleted_at": {
           "type": "string"
+        }
+      }
+    },
+    "Schema": {
+      "title": "Schema",
+      "required": [
+        "id",
+        "fields"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "fields": {
+          "$ref": "#/definitions/Fields"
         }
       }
     },
@@ -559,7 +531,7 @@
         "$ref": "#/definitions/Job"
       }
     },
-    "JobStatistics": {
+    "JobStatistic": {
       "title": "JobStatistic",
       "required": [
         "job_id",
@@ -642,7 +614,7 @@
           "type": "string"
         },
         "statistics": {
-          "$ref": "#/definitions/JobStatistics"
+          "$ref": "#/definitions/JobStatistic"
         },
         "inserted_at": {
           "type": "string"
@@ -657,6 +629,40 @@
           "$ref": "#/definitions/JobConfiguration"
         },
         "canceled_at": {
+          "type": "string"
+        }
+      }
+    },
+    "Fields": {
+      "type": "array",
+      "title": "Fields",
+      "items": {
+        "$ref": "#/definitions/Field"
+      }
+    },
+    "Field": {
+      "title": "Field",
+      "required": [
+        "key",
+        "name",
+        "description",
+        "type",
+        "nullable"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "description": {
           "type": "string"
         }
       }
