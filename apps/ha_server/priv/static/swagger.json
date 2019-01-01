@@ -341,6 +341,49 @@
         }
       }
     },
+    "TableSchema": {
+      "title": "Table",
+      "required": [
+        "id",
+        "name",
+        "favorited",
+        "saved",
+        "size",
+        "deleted_at",
+        "schema",
+        "inserted_at",
+        "updated_at"
+      ],
+      "properties": {
+        "updated_at": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "schema": {
+          "$ref": "#/definitions/TableSchema"
+        },
+        "saved": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "inserted_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "favorited": {
+          "type": "boolean"
+        },
+        "deleted_at": {
+          "type": "string"
+        }
+      }
+    },
     "TableListResponse": {
       "type": "object",
       "required": [
@@ -367,6 +410,7 @@
         "saved",
         "size",
         "deleted_at",
+        "schema",
         "inserted_at",
         "updated_at"
       ],
@@ -376,6 +420,9 @@
         },
         "size": {
           "type": "integer"
+        },
+        "schema": {
+          "$ref": "#/definitions/TableSchema"
         },
         "saved": {
           "type": "boolean"

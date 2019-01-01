@@ -8,15 +8,22 @@ defmodule HaDSL do
   Parse string
   """
   def parse(string) do
-    with {:ok, ast} <- parse_string(string),
+    with {:ok, ast} <- call(:parse, string),
          {:ok, underscored} <- underscore(ast),
          {:ok, query} <- to_structs(underscored) do
       {:ok, query}
     end
   end
 
-  defp parse_string(string) do
-    NodeJS.call({"dist/bundle.js", :parse}, [string])
+  def fields(string) do
+    with {:ok, fields} <- call(:schema, string),
+         {:ok, underscored} <- underscore(fields) do
+      {:ok, underscored}
+    end
+  end
+
+  defp call(operation, string) do
+    NodeJS.call({"dist/bundle.js", operation}, [string])
   rescue
     exception ->
       Logger.error("Failed to parse query: #{inspect exception}")

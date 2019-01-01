@@ -4,6 +4,7 @@ defmodule HaCore.Tables.Table do
   """
   use HaCore.Schema
 
+  alias HaCore.Tables.TableSchema
   alias HaCore.Tables.Events
   alias HaCore.Tables.Commands
 
@@ -13,6 +14,7 @@ defmodule HaCore.Tables.Table do
     field :saved, :boolean, default: false
     field :size, :integer, default: 0
     field :deleted_at, :naive_datetime
+    belongs_to :schema, TableSchema
     timestamps()
   end
 

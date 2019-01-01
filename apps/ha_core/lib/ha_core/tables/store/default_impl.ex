@@ -7,7 +7,7 @@ defmodule HaCore.Tables.Store.DefaultImpl do
   alias HaCore.Jobs.Job
   alias HaCore.Tables.Table
 
-  @preloaded []
+  @preloaded [:schema]
 
   @impl true
   def list(user, pagination) do
