@@ -6,7 +6,7 @@ defmodule HaCore.Schemas.DSLSchemaResolver do
 
   @impl true
   def get_schema(query) do
-    {:ok, fields} = HaDSL.fields(query) |> IO.inspect
+    {:ok, fields} = HaDSL.fields(query)
     case TableSchema.changeset(%TableSchema{}, %{fields: fields}) do
       %{valid?: false} ->
         Logger.error "Invalid query: #{inspect fields}"

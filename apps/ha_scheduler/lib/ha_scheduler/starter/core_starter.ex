@@ -9,6 +9,7 @@ defmodule HaScheduler.Starter.CoreStarter do
   alias Crontab.CronExpression.Parser
   alias HaScheduler.Scheduler
   alias HaCore.{Jobs, Queries}
+  alias Jobs.Commands.CreateJobCommand
 
   @impl true
   def start do
@@ -21,6 +22,9 @@ defmodule HaScheduler.Starter.CoreStarter do
         |> Quantum.Job.set_schedule(schedule)
         |> Quantum.Job.set_task(fn ->
           Logger.info "[#{NaiveDateTime.utc_now()} Scheduling #{query.id}"
+          Jobs.create_scheduled_job(%CreateJobCommand{
+            query: query.query
+          })
         end)
 
       Scheduler.add_job(job)
