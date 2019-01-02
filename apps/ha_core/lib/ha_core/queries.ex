@@ -1,12 +1,17 @@
 defmodule HaCore.Queries do
   @moduledoc """
-  The Accounts context.
+  The Queries context.
   """
-  alias HaCore.Queries.QueryService
-  alias HaCore.Queries.Store.DefaultImpl
+  alias HaCore.Queries.{
+    Query,
+    QueryStore,
+    QueryService
+  }
 
-  @store Application.get_env(:ha_core, :query_store_impl) || DefaultImpl
-
-  defdelegate list_latest_queries(user, pagination), to: @store, as: :get_latest_user_queries
+  defdelegate get_latest_queries(user, pagination), to: QueryStore
+  defdelegate get_saved_queries(user, pagination), to: QueryStore
+  defdelegate get_saved_query!(user, id), to: QueryStore
+  defdelegate save_query(user, command), to: QueryService, as: :save
+  defdelegate delete_query(user, command), to: QueryService, as: :delete
 
 end

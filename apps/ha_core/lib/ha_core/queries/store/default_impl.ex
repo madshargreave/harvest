@@ -7,9 +7,10 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   alias HaCore.Queries.Query
   alias HaCore.Jobs.{Job, JobConfiguration}
 
+  @preloaded []
 
   @impl true
-  def get_latest_user_queries(user, pagination) do
+  def get_latest_queries(user, pagination) do
     latest_queries =
         from j in Job,
         join: jc in JobConfiguration,
@@ -28,6 +29,38 @@ defmodule HaCore.Queries.Store.DefaultImpl do
     with %{entries: entries} = result <- Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit) do
       entries = for entry <- entries, do: struct(Query, entry)
       %{result | entries: entries}
+    end
+  end
+
+  @impl true
+  def get_saved_queries(user, pagination) do
+    query =
+      from q in Query,
+      where: q.saved == true,
+      order_by: [desc: q.inserted_at]
+
+    Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
+  end
+
+  @impl true
+  def get_saved_query!(user, id) do
+    Repo.one!(
+      from q in Query,
+      where: q.saved == true and q.id == ^id
+    )
+  end
+
+  @impl true
+  def get!(id) do
+    Job
+    |> Repo.get!(id)
+    |> Repo.preload(@preloaded)
+  end
+
+  @impl true
+  def save(context, changeset) do
+    with {:ok, entity} <- Repo.save(context, changeset) do
+      {:ok, Repo.preload(entity, @preloaded)}
     end
   end
 

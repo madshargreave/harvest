@@ -180,6 +180,75 @@
         "description": "List tables"
       }
     },
+    "/saved_queries": {
+      "post": {
+        "tags": [
+          "Queries"
+        ],
+        "summary": "",
+        "responses": {
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/Query"
+            },
+            "description": "Invalid parameters"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/QuerySingleResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/SaveQueryCommand"
+            },
+            "required": false,
+            "name": "query",
+            "in": "body",
+            "description": "Query attributes"
+          }
+        ],
+        "operationId": "save_query",
+        "description": "Save query"
+      },
+      "get": {
+        "tags": [
+          "Saved Queries"
+        ],
+        "summary": "",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/QueryListResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page_size",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of elements per page"
+          },
+          {
+            "type": "integer",
+            "required": false,
+            "name": "page",
+            "minimum": 1,
+            "in": "query",
+            "description": "Number of the page"
+          }
+        ],
+        "operationId": "list_saved_queries",
+        "description": "List saved user queries"
+      }
+    },
     "/queries": {
       "get": {
         "tags": [
@@ -449,6 +518,21 @@
         }
       }
     },
+    "SaveQueryCommand": {
+      "title": "SaveQueryCommand",
+      "required": [
+        "name",
+        "query"
+      ],
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
     "Records": {
       "type": "array",
       "title": "test",
@@ -477,6 +561,18 @@
       "type": "object",
       "title": "test"
     },
+    "QuerySingleResponse": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/Query"
+        }
+      }
+    },
     "QueryListResponse": {
       "type": "object",
       "required": [
@@ -498,11 +594,31 @@
       "title": "Query",
       "required": [
         "id",
+        "user_id",
+        "name",
         "query",
-        "inserted_at"
+        "saved",
+        "status",
+        "inserted_at",
+        "updated_at"
       ],
       "properties": {
+        "user_id": {
+          "type": "binary_id"
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "saved": {
+          "type": "boolean"
+        },
         "query": {
+          "type": "string"
+        },
+        "name": {
           "type": "string"
         },
         "inserted_at": {
@@ -682,6 +798,17 @@
           "type": "string"
         },
         "description": {
+          "type": "string"
+        }
+      }
+    },
+    "DeleteQueryCommand": {
+      "title": "DeleteQueryCommand",
+      "required": [
+        "query_id"
+      ],
+      "properties": {
+        "query_id": {
           "type": "string"
         }
       }

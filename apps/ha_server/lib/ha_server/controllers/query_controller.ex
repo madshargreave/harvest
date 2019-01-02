@@ -13,8 +13,8 @@ defmodule HaServer.QueryController do
     response 200, "Success", Schema.ref(:QueryListResponse)
   end
 
-  def index(conn, params) do
-    page = Queries.list_latest_queries(conn.assigns.user, conn.assigns.pagination)
+  def index(conn, _params) do
+    page = Queries.get_latest_queries(conn.assigns.user, conn.assigns.pagination)
     render(conn, "index.json", queries: page.entries, paging: page.metadata)
   end
 
@@ -22,6 +22,12 @@ defmodule HaServer.QueryController do
     %{
       Query: Queries.Query.__swagger__(:single),
       Queries: Queries.Query.__swagger__(:list),
+      QuerySingleResponse: swagger_schema do
+        type :object
+        properties do
+          data Schema.ref(:Query), "", required: true
+        end
+      end,
       QueryListResponse: swagger_schema do
         type :object
         properties do

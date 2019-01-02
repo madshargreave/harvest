@@ -6,20 +6,20 @@ defmodule HaServer.LogController do
 
   action_fallback HaServer.FallbackController
 
-  swagger_path :index do
-    get "/jobs/{job_id}/logs"
-    description "List job logs"
-    tag "Logs"
-    parameter :job_id, :path, :string, "Table ID", required: true
-    paging
-    operation_id "list_logs"
-    response 200, "Success", Schema.ref(:JobListResponse)
-  end
+  # swagger_path :index do
+  #   get "/jobs/{job_id}/logs"
+  #   description "List job logs"
+  #   tag "Logs"
+  #   parameter :job_id, :path, :string, "Table ID", required: true
+  #   paging
+  #   operation_id "list_logs"
+  #   response 200, "Success", Schema.ref(:JobListResponse)
+  # end
 
-  def index(conn, params) do
-    page = Records.list_records(conn.assigns.user, params.job_id, conn.assigns.pagination)
-    render(conn, "index.json", records: page.entries, paging: page.metadata)
-  end
+  # def index(conn, params) do
+  #   page = Records.list_records(conn.assigns.user, params.job_id, conn.assigns.pagination)
+  #   render(conn, "index.json", records: page.entries, paging: page.metadata)
+  # end
 
   def swagger_definitions do
     %{

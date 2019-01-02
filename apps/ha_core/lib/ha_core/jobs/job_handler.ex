@@ -5,7 +5,7 @@ defmodule HaCore.Jobs.JobHandler do
 
   alias HaSupport.DomainEvent
   alias HaCore.Jobs.JobService
-  alias HaCore.Commands.CompleteJobCommand
+  alias HaCore.Jobs.Commands.CompleteJobCommand
 
   @impl true
   def handle_event(%{

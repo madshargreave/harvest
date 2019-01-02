@@ -30,6 +30,7 @@ defmodule HaServer.Router do
       pipe_through :api
       resources "/config", ConfigController, only: [:index]
       resources "/queries", QueryController, only: [:index]
+      resources "/saved_queries", SavedQueryController, only: [:index, :show, :create, :delete]
       resources "/jobs", JobController do
         resources "/logs", LogController, only: []
       end
