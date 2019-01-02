@@ -10,7 +10,8 @@ defmodule HaCore.Records.Store.DefaultImpl do
   def get_user_table_records(_user, table_id, pagination) do
     records =
       ExdStreams.Store.RelationalStore.all(table_id)
-      |> Enum.take(50)
+      |> Enum.take(100)
+      |> Enum.sort_by(fn a -> a.key end, &<=/2)
       |> Enum.map(& &1.value)
     %{entries: records, metadata: %{}}
   end
