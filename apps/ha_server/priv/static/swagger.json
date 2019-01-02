@@ -180,10 +180,43 @@
         "description": "List tables"
       }
     },
+    "/saved_queries/{query_id}": {
+      "delete": {
+        "tags": [
+          "Saved Queries"
+        ],
+        "summary": "",
+        "responses": {
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/Query"
+            },
+            "description": "Invalid parameters"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/QuerySingleResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "type": "string",
+            "required": true,
+            "name": "query_id",
+            "in": "path",
+            "description": "Query ID"
+          }
+        ],
+        "operationId": "delete_query",
+        "description": "Delete saved query"
+      }
+    },
     "/saved_queries": {
       "post": {
         "tags": [
-          "Queries"
+          "Saved Queries"
         ],
         "summary": "",
         "responses": {
@@ -599,12 +632,13 @@
         "query",
         "saved",
         "status",
+        "deleted_at",
         "inserted_at",
         "updated_at"
       ],
       "properties": {
         "user_id": {
-          "type": "binary_id"
+          "type": "string"
         },
         "updated_at": {
           "type": "string"
@@ -625,6 +659,9 @@
           "type": "string"
         },
         "id": {
+          "type": "string"
+        },
+        "deleted_at": {
           "type": "string"
         }
       }

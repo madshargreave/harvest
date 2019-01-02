@@ -36,7 +36,7 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   def get_saved_queries(user, pagination) do
     query =
       from q in Query,
-      where: q.saved == true,
+      where: q.saved == true and is_nil(q.deleted_at),
       order_by: [desc: q.inserted_at]
 
     Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
@@ -51,8 +51,8 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   end
 
   @impl true
-  def get!(id) do
-    Job
+  def get!(_user, id) do
+    Query
     |> Repo.get!(id)
     |> Repo.preload(@preloaded)
   end

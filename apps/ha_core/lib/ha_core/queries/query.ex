@@ -19,6 +19,8 @@ defmodule HaCore.Queries.Query do
     field :query, :string
     field :saved, :boolean
     field :status, :string
+    field :deleted_at, :naive_datetime
+    # field :deleted_by, :binary_id
     timestamps()
   end
 

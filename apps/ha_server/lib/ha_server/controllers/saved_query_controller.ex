@@ -23,7 +23,7 @@ defmodule HaServer.SavedQueryController do
   swagger_path :create do
     post "/saved_queries"
     description "Save query"
-    tag "Queries"
+    tag "Saved Queries"
     parameters do
       query :body, Schema.ref(:SaveQueryCommand), "Query attributes"
     end
@@ -38,6 +38,26 @@ defmodule HaServer.SavedQueryController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", saved_query_path(conn, :show, saved_query))
+      |> render("show.json", saved_query: saved_query)
+    end
+  end
+
+  swagger_path :destroy do
+    delete "/saved_queries/{query_id}"
+    description "Delete saved query"
+    tag "Saved Queries"
+    parameter :query_id, :path, :string, "Query ID", required: true
+    operation_id "delete_query"
+    response 200, "Success", Schema.ref(:QuerySingleResponse)
+    response 422, "Invalid parameters", Schema.ref(:Query)
+  end
+
+  def destroy(conn, params) do
+    command = struct(QueryCommands.DeleteQueryCommand, params)
+    with {:ok, saved_query} <- Queries.delete_query(conn.assigns.user, command) do
+      conn
+      |> put_status(:accepted)
+      |> put_resp_header("location", job_path(conn, :show, saved_query))
       |> render("show.json", saved_query: saved_query)
     end
   end

@@ -22,9 +22,9 @@ defmodule HaCore.Queries.QueryService do
   """
   @spec delete(HaCore.context, QueryCommands.DeleteQueryCommand.t) :: {:ok, Query.t} | {:error, InvalidChangesetError.t}
   def delete(user, command) do
-    query = QueryStore.get!(command.query_id)
-    changeset = Query.delete_changeset(query, user)
-    QueryStore.save(user, changeset)
+    query = QueryStore.get!(user, command.query_id)
+    changeset = Query.delete_changeset(query, user) |> IO.inspect
+    QueryStore.save(user, changeset) |> IO.inspect
   end
 
 end

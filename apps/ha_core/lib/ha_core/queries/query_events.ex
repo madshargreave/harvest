@@ -9,7 +9,7 @@ defmodule HaCore.Queries.QueryEvents do
     end
   end
 
-  defmodule QuerySavedEvent do
+  defmodule QueryDeletedEvent do
     @moduledoc false
     def make(context, query) do
       DomainEvent.make(context, :query_deleted, query)

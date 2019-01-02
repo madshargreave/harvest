@@ -30,7 +30,7 @@ defmodule HaCore.Queries.QueryStore do
   Gets a single query.
   """
   @callback get!(HaCore.user, String.t) :: Query.t
-  defdelegate get(user, id), to: @adapter
+  defdelegate get!(user, id), to: @adapter
 
   @doc """
   Saves a query changeset
