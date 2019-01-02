@@ -36,6 +36,7 @@ defmodule HaScheduler.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:ha_support, in_umbrella: true},
       {:ha_core, in_umbrella: true},
       {:quantum, "~> 2.3"},
       {:timex, "~> 3.0"}

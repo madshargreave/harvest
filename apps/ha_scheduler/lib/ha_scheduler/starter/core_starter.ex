@@ -3,32 +3,27 @@ defmodule HaScheduler.Starter.CoreStarter do
   Streams a list of scheduled queries using the core context
   """
   require Logger
-  import Crontab.CronExpression
   use HaScheduler.Starter
 
-  alias Crontab.CronExpression.Parser
-  alias HaScheduler.Scheduler
-  alias HaCore.{Jobs, Queries}
-  alias Jobs.Commands.CreateJobCommand
+  alias HaCore.Queries.{Query, QuerySchedule}
+  alias HaCore.Queries
+  alias HaScheduler.{Schedule, Scheduler}
 
   @impl true
   def start do
     Logger.info "Stream scheduled queries..."
-    stream = Queries.stream_scheduled_queries(fn query ->
-      schedule = Parser.parse!(query.schedule.schedule)
-
-      job =
-        Scheduler.new_job()
-        |> Quantum.Job.set_schedule(schedule)
-        |> Quantum.Job.set_task(fn ->
-          Logger.info "[#{NaiveDateTime.utc_now()} Scheduling #{query.id}"
-          Jobs.create_scheduled_job(%CreateJobCommand{
-            query: query.query
-          })
-        end)
-
-      Scheduler.add_job(job)
-      Logger.info "Query registered: #{query.id} with ref: #{inspect job.name}"
+    Queries.stream_scheduled_queries(fn %Query{
+      id: query_id,
+      query: query_string,
+      schedule: %QuerySchedule{
+        schedule: cron_tab
+      }
+    } ->
+      Scheduler.add(%Schedule{
+        source_id: query_id,
+        cron_tab: cron_tab,
+        query_string: query_string
+      })
     end)
     Logger.info "Queries succesfully registered"
     :ok

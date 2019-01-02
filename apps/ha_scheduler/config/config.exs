@@ -32,6 +32,14 @@ config :ha_scheduler, HaScheduler.Scheduler,
   global: true,
   debug_logging: false
 
+config :ha_scheduler, HaScheduler.ScheduleHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "scheduler",
+      consumer: "scheduler"
+  }
+
 # if File.exists?("#{Mix.env}.exs") do
   import_config "#{Mix.env}.exs"
 # end

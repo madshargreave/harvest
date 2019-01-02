@@ -57,7 +57,7 @@ defmodule HaCore.Queries.Store.DefaultImpl do
     stream = Repo.stream(
       from q in Query,
       join: s in QuerySchedule, on: q.schedule_id == s.id,
-      where: s.active,
+      where: is_nil(q.deleted_at) and s.active,
       preload: ^@preloaded
     )
     Repo.transaction(fn ->

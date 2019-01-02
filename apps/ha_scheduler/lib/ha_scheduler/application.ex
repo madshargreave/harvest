@@ -13,7 +13,9 @@ defmodule HaScheduler.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      worker(HaScheduler.ScheduleStore, []),
       worker(HaScheduler.Scheduler, []),
+      worker(HaScheduler.ScheduleHandler, []),
       worker(Task, tasks(), restart: :transient)
     ]
 
