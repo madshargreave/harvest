@@ -20,6 +20,19 @@ defmodule HaCore.Jobs.Job do
 
   @spec create_changeset(HaCore.user, CreateJobCommand.t, TableSchema.t) :: Changeset.t
   def create_changeset(user, command, schema) do
+    base_create_changeset(command, schema)
+    |> register_event(Events.JobCreated)
+  end
+
+  @spec create_scheduled_changeset(CreateJobCommand.t, TableSchema.t) :: Changeset.t
+  def create_scheduled_changeset(command, schema) do
+    base_create_changeset(command, schema)
+    |> put_change(:scheduled, true)
+    |> register_event(Events.JobCreated)
+  end
+
+  @spec base_create_changeset(CreateJobCommand.t, TableSchema.t) :: Changeset.t
+  defp base_create_changeset(command, schema) do
     required = ~w()a
     optional = ~w()a
 
@@ -32,8 +45,8 @@ defmodule HaCore.Jobs.Job do
     |> cast_assoc(:configuration, required: true)
     |> put_destination(command, schema)
     |> validate_required(required)
-    |> register_event(Events.JobCreated)
   end
+
   defp put_destination(changeset, %{destination_id: nil} = command, schema),
     do: put_assoc(changeset, :destination, create_destination_changeset(schema))
   defp put_destination(changeset, %{destination_id: destination_id} = command, _schema),

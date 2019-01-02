@@ -27,6 +27,12 @@ defmodule HaCore.Queries.QueryStore do
   defdelegate get_saved_query!(user, id), to: @adapter
 
   @doc """
+  Returns a stream of saved queries
+  """
+  @callback stream_scheduled_queries(function) :: [Query.t]
+  defdelegate stream_scheduled_queries(callback), to: @adapter
+
+  @doc """
   Gets a single query.
   """
   @callback get!(HaCore.user, String.t) :: Query.t

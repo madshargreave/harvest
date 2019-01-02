@@ -21,6 +21,17 @@ defmodule HaCore.Jobs.JobService do
   end
 
   @doc """
+  Creates a new job
+  """
+  @spec create_scheduled(Commands.CreateJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
+  def create_scheduled(command) do
+    with {:ok, schema} <- Schemas.get_schema(command.query) do
+      changeset = Job.create_scheduled_changeset(command, schema)
+      JobStore.save(nil, changeset)
+    end
+  end
+
+  @doc """
   Sets the status of an existing job as complete
   """
   @spec complete(HaCore.context, Commands.CompleteJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
