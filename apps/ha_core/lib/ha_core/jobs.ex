@@ -10,5 +10,6 @@ defmodule HaCore.Jobs do
   defdelegate list_jobs(user, pagination), to: @store, as: :list
   defdelegate get_job!(user, id), to: @store, as: :get_by_user!
   defdelegate create_job(user, command), to: JobService, as: :create
+  defdelegate create_scheduled_job(command), to: JobService, as: :create_scheduled
 
 end

@@ -7,6 +7,7 @@ defmodule HaCore.Queries.QueryCommands do
     swagger_embedded_schema "save_query_command" do
       field :name, :string
       field :query, :string
+      field :schedule, :string, required: false
     end
   end
 

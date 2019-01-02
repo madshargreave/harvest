@@ -4,10 +4,10 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   import Ecto.Query
 
   alias HaCore.Repo
-  alias HaCore.Queries.Query
+  alias HaCore.Queries.{QuerySchedule, Query}
   alias HaCore.Jobs.{Job, JobConfiguration}
 
-  @preloaded []
+  @preloaded [:schedule]
 
   @impl true
   def get_latest_queries(user, pagination) do
@@ -27,7 +27,8 @@ defmodule HaCore.Queries.Store.DefaultImpl do
       order_by: [desc: s.inserted_at]
 
     with %{entries: entries} = result <- Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit) do
-      entries = for entry <- entries, do: struct(Query, entry)
+      entries = for entry <- entries,
+        do: struct(Query, Map.put(entry, :schedule, nil))
       %{result | entries: entries}
     end
   end
@@ -36,8 +37,9 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   def get_saved_queries(user, pagination) do
     query =
       from q in Query,
-      where: q.saved == true and is_nil(q.deleted_at),
-      order_by: [desc: q.inserted_at]
+      where: q.saved and is_nil(q.deleted_at),
+      order_by: [desc: q.inserted_at],
+      preload: ^@preloaded
 
     Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
   end
@@ -46,8 +48,23 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   def get_saved_query!(user, id) do
     Repo.one!(
       from q in Query,
-      where: q.saved == true and q.id == ^id
+      where: q.saved and q.id == ^id
     )
+  end
+
+  @impl true
+  def stream_scheduled_queries(callback) do
+    stream = Repo.stream(
+      from q in Query,
+      join: s in QuerySchedule, on: q.schedule_id == s.id,
+      where: s.active,
+      preload: ^@preloaded
+    )
+    Repo.transaction(fn ->
+      stream
+      |> Stream.map(callback)
+      |> Stream.run
+    end)
   end
 
   @impl true

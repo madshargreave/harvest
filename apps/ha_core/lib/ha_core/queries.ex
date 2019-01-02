@@ -11,6 +11,7 @@ defmodule HaCore.Queries do
   defdelegate get_latest_queries(user, pagination), to: QueryStore
   defdelegate get_saved_queries(user, pagination), to: QueryStore
   defdelegate get_saved_query!(user, id), to: QueryStore
+  defdelegate stream_scheduled_queries(callback), to: QueryStore
   defdelegate save_query(user, command), to: QueryService, as: :save
   defdelegate delete_query(user, command), to: QueryService, as: :delete
 

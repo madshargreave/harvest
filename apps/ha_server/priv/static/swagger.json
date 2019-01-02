@@ -558,6 +558,9 @@
         "query"
       ],
       "properties": {
+        "schedule": {
+          "type": "string"
+        },
         "query": {
           "type": "string"
         },
@@ -606,6 +609,33 @@
         }
       }
     },
+    "QuerySchedule": {
+      "title": "QuerySchedule",
+      "required": [
+        "id",
+        "active",
+        "schedule",
+        "inserted_at",
+        "updated_at"
+      ],
+      "properties": {
+        "updated_at": {
+          "type": "string"
+        },
+        "schedule": {
+          "type": "string"
+        },
+        "inserted_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        }
+      }
+    },
     "QueryListResponse": {
       "type": "object",
       "required": [
@@ -633,6 +663,7 @@
         "saved",
         "status",
         "deleted_at",
+        "schedule",
         "inserted_at",
         "updated_at"
       ],
@@ -645,6 +676,9 @@
         },
         "status": {
           "type": "string"
+        },
+        "schedule": {
+          "$ref": "#/definitions/QuerySchedule"
         },
         "saved": {
           "type": "boolean"

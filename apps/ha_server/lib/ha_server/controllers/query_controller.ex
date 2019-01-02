@@ -22,6 +22,7 @@ defmodule HaServer.QueryController do
     %{
       Query: Queries.Query.__swagger__(:single),
       Queries: Queries.Query.__swagger__(:list),
+      QuerySchedule: Queries.QuerySchedule.__swagger__(:single),
       QuerySingleResponse: swagger_schema do
         type :object
         properties do

@@ -4,6 +4,7 @@ defmodule HaCore.Queries.Query do
   """
   use HaCore.Schema
 
+  alias HaCore.Queries.QuerySchedule
   alias HaCore.Queries.QueryEvents.{
     QuerySavedEvent,
     QueryDeletedEvent
@@ -21,6 +22,7 @@ defmodule HaCore.Queries.Query do
     field :status, :string
     field :deleted_at, :naive_datetime
     # field :deleted_by, :binary_id
+    belongs_to :schedule, QuerySchedule
     timestamps()
   end
 
@@ -28,7 +30,7 @@ defmodule HaCore.Queries.Query do
   def save_changeset(user, %SaveQueryCommand{
     name: name,
     query: query
-  }) do
+  } = command) do
     required = ~w(user_id name query)a
     optional = ~w()a
 
@@ -40,9 +42,16 @@ defmodule HaCore.Queries.Query do
     }, optional ++ required)
     |> put_change(:saved, true)
     |> put_change(:status, "created")
+    |> put_schedule(command)
     |> validate_required(required)
     |> register_event(QuerySavedEvent)
   end
+  defp put_schedule(changeset, %{schedule: nil} = command),
+    do: changeset
+  defp put_schedule(changeset, %{schedule: schedule} = command),
+    do: put_assoc(changeset, :schedule, create_schedule_changeset(%{
+      schedule: schedule
+      }))
 
   @spec delete_changeset(t, HaCore.user) :: Changeset.t
   def delete_changeset(struct, user) do
@@ -54,6 +63,15 @@ defmodule HaCore.Queries.Query do
     |> put_change_now(:deleted_at)
     |> put_change(:deleted_by, user.id)
     |> register_event(QueryDeletedEvent)
+  end
+
+  defp create_schedule_changeset(attrs) do
+    required = ~w(schedule)a
+    %QuerySchedule{}
+    |> cast(attrs, required)
+    |> put_change(:active, true)
+    |> validate_required(required)
+    |> validate_cron(:schedule)
   end
 
 end
