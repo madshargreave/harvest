@@ -2,31 +2,28 @@ defmodule HaCore.Jobs.JobService do
   @moduledoc """
   Jobs service
   """
+  alias HaCore.Schemas
   alias HaCore.Jobs.{
     Job,
     JobStore,
-    SchemaResolver
-  }
-
-  alias HaCore.Commands.{
-    CreateJobCommand,
-    CompleteJobCommand
+    Commands
   }
 
   @doc """
   Creates a new job
   """
-  @spec create(HaCore.context, CreateJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
+  @spec create(HaCore.context, Commands.CreateJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def create(user, command) do
-    schema = SchemaResolver.resolve!(command.query)
-    changeset = Job.create_changeset(user, command, schema)
-    JobStore.save(user, changeset)
+    with {:ok, schema} <- Schemas.get_schema(command.query) do
+      changeset = Job.create_changeset(user, command, schema)
+      JobStore.save(user, changeset)
+    end
   end
 
   @doc """
   Sets the status of an existing job as complete
   """
-  @spec complete(HaCore.context, CompleteJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
+  @spec complete(HaCore.context, Commands.CompleteJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def complete(context, command) do
     job = JobStore.get!(command.id)
     changeset = Job.complete_changeset(job, command)

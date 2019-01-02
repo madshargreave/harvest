@@ -1,4 +1,4 @@
-defmodule HaCore.Commands do
+defmodule HaCore.Jobs.Commands do
   @moduledoc false
 
   defmodule CreateJobCommand do

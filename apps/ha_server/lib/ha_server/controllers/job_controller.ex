@@ -2,7 +2,7 @@ defmodule HaServer.JobController do
   use HaServer, :controller
 
   alias HaCore.Jobs
-  alias HaCore.Commands.CreateJobCommand
+  alias HaCore.Jobs.Commands.CreateJobCommand
 
   action_fallback HaServer.FallbackController
 
