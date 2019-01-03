@@ -21,3 +21,4 @@ erl_crash.dump
 
 /docker/
 .vscode
+apps/ha_ingestion/priv/data/

@@ -4,7 +4,7 @@ defmodule HaIngestion.Records.RecordStore do
   """
   alias HaIngestion.Records
   alias HaIngestion.Records.Record
-  alias HaIngestion.Records.ElasticStore
+  alias HaIngestion.Records.{FileStore, ElasticStore}
 
   @adapter Application.get_env(:ha_ingestion, :record_store_adapter) || ElasticStore
 

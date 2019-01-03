@@ -28,6 +28,9 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 
+# config :ha_ingestion,
+#   record_store_adapter: HaIngestion.Records.FileStore
+
 config :ha_ingestion, HaIngestion.Records.RecordHandler,
   adapter: {
     GenConsumer.RedisConsumer,
