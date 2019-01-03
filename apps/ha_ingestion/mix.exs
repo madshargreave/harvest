@@ -1,9 +1,9 @@
-defmodule HAStore.Mixfile do
+defmodule HaIngestion.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :ha_store,
+      app: :ha_ingestion,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -22,7 +22,7 @@ defmodule HAStore.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {HaStore, []},
+      mod: {HaIngestion.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -37,7 +37,7 @@ defmodule HAStore.Mixfile do
   defp deps do
     [
       {:ha_support, in_umbrella: true},
-      {:postgrex, ">= 0.0.0"}
+      {:elasticsearch, "~> 0.6.1"}
     ]
   end
 

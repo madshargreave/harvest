@@ -18,6 +18,7 @@
   "ecto_enum": {:hex, :ecto_enum, "1.1.0", "d44fe2ce6e1c0e907e7c3b6456a69e0f1d662348d8b4e2a662ba312223d8ff62", [:mix], [{:ecto, ">= 2.0.0", [hex: :ecto, repo: "hexpm", optional: false]}, {:mariaex, ">= 0.0.0", [hex: :mariaex, repo: "hexpm", optional: true]}, {:postgrex, ">= 0.0.0", [hex: :postgrex, repo: "hexpm", optional: true]}], "hexpm"},
   "ecto_mnesia": {:hex, :ecto_mnesia, "0.9.1", "5887e3bcae972d9a26494a87cbd318d401a65b4af324480073d11df654d1b235", [:mix], [{:confex, "~> 3.3", [hex: :confex, repo: "hexpm", optional: false]}, {:decimal, "~> 1.5", [hex: :decimal, repo: "hexpm", optional: false]}, {:ecto, "~> 2.1.6", [hex: :ecto, repo: "hexpm", optional: false]}], "hexpm"},
   "ecto_swagger": {:hex, :ecto_swagger, "0.2.0", "e2fe5bf472cb18849c6d8ad7d97540b3f0252b3b8acd6f25aa9606934c0e50fe", [:mix], [{:ecto, "~> 2.1.6", [hex: :ecto, repo: "hexpm", optional: false]}, {:inflex, "~> 1.10.0", [hex: :inflex, repo: "hexpm", optional: false]}, {:phoenix_swagger, "~> 0.8.1", [hex: :phoenix_swagger, repo: "hexpm", optional: false]}], "hexpm"},
+  "elasticsearch": {:hex, :elasticsearch, "0.6.1", "35a5df352c5f2183366afcd149b063d4e53df90b2bc1b25535a6d1da645f25db", [:mix], [{:httpoison, ">= 0.0.0", [hex: :httpoison, repo: "hexpm", optional: false]}, {:maybe, "~> 1.0.0", [hex: :maybe, repo: "hexpm", optional: false]}, {:poison, ">= 0.0.0", [hex: :poison, repo: "hexpm", optional: true]}, {:vex, "~> 0.6.0", [hex: :vex, repo: "hexpm", optional: false]}], "hexpm"},
   "elixir_uuid": {:hex, :elixir_uuid, "1.2.0", "ff26e938f95830b1db152cb6e594d711c10c02c6391236900ddd070a6b01271d", [:mix], [], "hexpm"},
   "esqlite": {:hex, :esqlite, "0.2.4", "3a8a352c190afe2d6b828b252a6fbff65b5cc1124647f38b15bdab3bf6fd4b3e", [:rebar3], [], "hexpm"},
   "event_bus": {:hex, :event_bus, "1.6.0", "00a26d524f061dd142c170afd2084698fcf2c57c434da180ba0b507728d83dd9", [:mix], [], "hexpm"},
@@ -49,6 +50,7 @@
   "libcluster": {:hex, :libcluster, "3.0.3", "492e98c7f5c9a6e95b8d51f0b198cf8eab60af3b490f40b958d4bc326d11e40e", [:mix], [{:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: false]}], "hexpm"},
   "libring": {:hex, :libring, "1.4.0", "41246ba2f3fbc76b3971f6bce83119dfec1eee17e977a48d8a9cfaaf58c2a8d6", [:mix], [], "hexpm"},
   "logster": {:hex, :logster, "0.10.0", "5ba89528f1b143328c2ef2050ced34e4f0c981482a1cfab94393139a9b5189b6", [:mix], [{:jason, "~> 1.1", [hex: :jason, repo: "hexpm", optional: false]}, {:plug, "~> 1.0", [hex: :plug, repo: "hexpm", optional: false]}], "hexpm"},
+  "maybe": {:hex, :maybe, "1.0.0", "65311dd7e16659579116666b268d03d7e1d1b3da8776c81a6b199de7177b43d6", [:mix], [], "hexpm"},
   "metrics": {:hex, :metrics, "1.0.1", "25f094dea2cda98213cecc3aeff09e940299d950904393b2a29d191c346a8486", [:rebar3], [], "hexpm"},
   "mime": {:hex, :mime, "1.3.1", "30ce04ab3175b6ad0bdce0035cba77bba68b813d523d1aac73d9781b4d193cf8", [:mix], [], "hexpm"},
   "mimerl": {:hex, :mimerl, "1.0.2", "993f9b0e084083405ed8252b99460c4f0563e41729ab42d9074fd5e52439be88", [:rebar3], [], "hexpm"},
@@ -88,5 +90,6 @@
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.4.1", "d869e4c68901dd9531385bb0c8c40444ebf624e60b6962d95952775cac5e90cd", [:rebar3], [], "hexpm"},
   "uuid": {:hex, :uuid, "1.1.8", "e22fc04499de0de3ed1116b770c7737779f226ceefa0badb3592e64d5cfb4eb9", [:mix], [], "hexpm"},
   "version_tasks": {:hex, :version_tasks, "0.11.3", "b44c4d99f6af76f69b45e36fec87646f6036d362c0902d04e035889a5f280241", [:mix], [{:git_cli, "~> 0.2", [hex: :git_cli, repo: "hexpm", optional: false]}], "hexpm"},
+  "vex": {:hex, :vex, "0.6.0", "4e79b396b2ec18cd909eed0450b19108d9631842598d46552dc05031100b7a56", [:mix], [], "hexpm"},
   "xxhash": {:hex, :xxhash, "0.2.1", "ab0893a8124f3c11116c57e500485dc5f67817d1d4c44f0fff41f3fd3c590607", [:mix], [], "hexpm"},
 }
