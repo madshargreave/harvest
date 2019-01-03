@@ -18,27 +18,23 @@ services:
       - POSTGRES_DB=harvest_dev
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  # harvest-server:
-  #   image: server:latest
-  #   ports:
-  #     - 4000:4000
-  #   restart: always
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - PORT=4000
-  #     - HARVEST_HOST=http://localhost:4000
-  #     - HARVEST_DB_DATABASE=harvest_dev
-  #     - HARVEST_DB_USERNAME=postgres
-  #     - HARVEST_DB_PASSWORD=postgres
-  #     - HARVEST_DB_HOSTNAME=db
-  # harvest-agent:
-  #   image: harvest-agent:latest
-  #   restart: always
-  #   depends_on:
-  #     - harvest-server
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   environment:
-  #     - HARVEST_SERVER=harvest-server:4000
-  #     - HARVEST_MAX_PROCS=3
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    # networks:
+    #   - esnet
+volumes:
+  esdata:
+    driver: local
