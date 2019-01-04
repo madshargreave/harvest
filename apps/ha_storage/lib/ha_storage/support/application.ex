@@ -1,4 +1,4 @@
-defmodule HaIngestion.Application do
+defmodule HaStorage.Application do
   @moduledoc """
   ExdStreams keeps the contexts that define your domain
   and business logic.
@@ -13,10 +13,10 @@ defmodule HaIngestion.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
-      HaIngestion.Records.RecordHandler
+      supervisor(HaStorage.Elastic.Supervisor, []),
     ]
 
-    opts = [strategy: :one_for_one, name: HaIngestion.Supervisor]
+    opts = [strategy: :one_for_one, name: HaStorage.Supervisor]
     Supervisor.start_link(children, opts)
   end
 

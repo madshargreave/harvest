@@ -1,5 +1,5 @@
-defimpl Elasticsearch.Document, for: HaIngestion.Records.Record do
-  alias HaIngestion.Records.Record
+defimpl Elasticsearch.Document, for: HaStorage.Records.Record do
+  alias HaStorage.Records.Record
 
   def id(%Record{key: key}),
     do: key

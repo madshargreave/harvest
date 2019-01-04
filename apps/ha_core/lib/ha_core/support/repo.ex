@@ -24,6 +24,7 @@ defmodule HaCore.Repo do
     transaction_result =
       @repo.transaction(fn ->
         with {:ok, result} <- @repo.insert_or_update(changeset) do
+          result = @repo.preload(result, result.__struct__.preloaded)
           for dispatch <- Map.get(changeset, :__register_event__, []), do: dispatch.(context, result)
           {:ok, result}
         end

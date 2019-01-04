@@ -1,9 +1,9 @@
-defmodule HaCore.Mixfile do
+defmodule HaStorage.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :ha_core,
+      app: :ha_storage,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -11,6 +11,7 @@ defmodule HaCore.Mixfile do
       lockfile: "../../mix.lock",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       deps: deps()
     ]
@@ -21,7 +22,7 @@ defmodule HaCore.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {HaCore.Application, []},
+      mod: {HaStorage.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -36,13 +37,9 @@ defmodule HaCore.Mixfile do
   defp deps do
     [
       {:ha_support, in_umbrella: true},
-      {:ha_storage, in_umbrella: true},
-      {:exd_streams, path: "../../../exd_streams"},
-      {:postgrex, ">= 0.0.0"},
-      {:event_bus, "~> 1.6.0"},
-      {:ecto_enum, "~> 1.0"},
-      {:paginator, "~> 0.5"},
-      {:mox, "~> 0.4", only: :test}
+      {:exd, path: "../../../exd"},
+      {:exd_codegen_elastic, path: "../../../exd_codegen_elastic" },
+      {:elasticsearch, "~> 0.6.1"}
     ]
   end
 

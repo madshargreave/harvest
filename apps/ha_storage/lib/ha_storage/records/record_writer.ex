@@ -1,13 +1,13 @@
-defmodule HaIngestion.Records.RecordWriter do
+defmodule HaStorage.Records.RecordWriter do
   @moduledoc """
   Write buffer for persisting events to materialised store
   """
   use GenBuffer,
-    otp_app: :ha_ingestion,
+    otp_app: :ha_storage,
     interval: 2000,
     limit: 500
 
-  alias HaIngestion.Records.RecordService
+  alias HaStorage.Records.RecordService
 
   @impl true
   def flush(records) do

@@ -19,6 +19,10 @@ defmodule HaCore.Schema do
       @foreign_key_type :binary_id
       @derive {Poison.Encoder, except: [:__meta__]}
 
+      def preloaded, do: []
+
+      defoverridable preloaded: 0
+
       @before_compile HaCore.Schema
     end
   end

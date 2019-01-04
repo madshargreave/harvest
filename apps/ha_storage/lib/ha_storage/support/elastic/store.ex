@@ -1,6 +1,6 @@
-defmodule HaIngestion.Elastic.ElasticsearchStore do
+defmodule HaStorage.Elastic.ElasticsearchStore do
   import Ecto.Query
-  alias HaIngestion.Repo
+  alias HaStorage.Repo
 
   @behaviour Elasticsearch.Store
 

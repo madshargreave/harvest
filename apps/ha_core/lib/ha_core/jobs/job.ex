@@ -18,6 +18,10 @@ defmodule HaCore.Jobs.Job do
     timestamps()
   end
 
+  def preloaded do
+    [:configuration, :statistics, destination: [:schema]]
+  end
+
   @spec create_changeset(HaCore.user, CreateJobCommand.t, TableSchema.t) :: Changeset.t
   def create_changeset(user, command, schema) do
     base_create_changeset(command, schema)

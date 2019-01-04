@@ -46,7 +46,8 @@ config :exd,
     Exd.Plugin.HTMLParseText,
     Exd.Plugin.HTMLParseAttr,
     # Exd.Plugin.RedisStream,
-    HaPlugins.FetchPlugin
+    HaPlugins.FetchPlugin,
+    HaPlugins.TablePlugin
   ]
 
 # config :exq,

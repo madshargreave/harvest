@@ -1,4 +1,4 @@
-defmodule HaIngestion.Elastic.Supervisor do
+defmodule HaStorage.Elastic.Supervisor do
   use Supervisor
 
   def start_link(args \\ []) do
@@ -7,7 +7,7 @@ defmodule HaIngestion.Elastic.Supervisor do
 
   def init([args]) do
     children = [
-      HaIngestion.Elastic.ElasticsearchCluster
+      HaStorage.Elastic.ElasticsearchCluster
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

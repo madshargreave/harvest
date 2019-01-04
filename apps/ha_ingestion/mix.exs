@@ -37,7 +37,7 @@ defmodule HaIngestion.Mixfile do
   defp deps do
     [
       {:ha_support, in_umbrella: true},
-      {:elasticsearch, "~> 0.6.1"}
+      {:ha_storage, in_umbrella: true}
     ]
   end
 

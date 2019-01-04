@@ -20,6 +20,8 @@ defmodule HaAgent.Handlers.QueryHandler do
         table: job.destination_id,
         query: query,
         meta: %{
+          table_id: job.destination_id,
+          temporary: !job.destination.saved,
           job_id: job.id,
           event: event
         }
