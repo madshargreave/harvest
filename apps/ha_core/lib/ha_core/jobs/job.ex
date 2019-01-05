@@ -4,7 +4,8 @@ defmodule HaCore.Jobs.Job do
   """
   use HaCore.Schema
 
-  alias Exd.AST.Program
+  alias HaCore.Queries
+  alias HaCore.Queries.QueryPlan
   alias HaCore.Tables.{Table, TableSchema}
   alias HaCore.Commands.{CreateJobCommand, CompleteJobCommand}
   alias HaCore.Jobs.{JobStatistics, JobConfiguration}
@@ -23,28 +24,28 @@ defmodule HaCore.Jobs.Job do
     [:configuration, :statistics, destination: [:schema]]
   end
 
-  @spec create_changeset(HaCore.user, CreateJobCommand.t, TableSchema.t, Program.t) :: Changeset.t
-  def create_changeset(user, command, schema, ast) do
-    base_create_changeset(command, schema, ast)
+  @spec create_changeset(HaCore.user, CreateJobCommand.t, Queries.plan) :: Changeset.t
+  def create_changeset(user, command, plan) do
+    base_create_changeset(command, plan)
     |> register_event(Events.JobCreated)
   end
 
-  @spec create_scheduled_changeset(CreateJobCommand.t, TableSchema.t) :: Changeset.t
-  def create_scheduled_changeset(command, schema) do
-    base_create_changeset(command, schema, nil)
+  @spec create_scheduled_changeset(CreateJobCommand.t, Queries.plan) :: Changeset.t
+  def create_scheduled_changeset(command, plan) do
+    base_create_changeset(command, plan)
     |> put_change(:scheduled, true)
     |> register_event(Events.JobCreated)
   end
 
-  @spec base_create_changeset(CreateJobCommand.t, TableSchema.t, Program.t) :: Changeset.t
-  defp base_create_changeset(command, schema, ast) do
+  @spec base_create_changeset(CreateJobCommand.t, Queries.plan) :: Changeset.t
+  defp base_create_changeset(command, %QueryPlan{ast: ast, schema: schema} = plan) do
     required = ~w()a
     optional = ~w()a
-    IO.inspect ast
+
     %__MODULE__{}
     |> cast(%{
       configuration: %{
-        ast: ast,
+        ast: Map.from_struct(ast),
         query: command.query
       }
     }, optional ++ required)

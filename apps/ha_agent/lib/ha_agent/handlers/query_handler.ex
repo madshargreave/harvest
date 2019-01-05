@@ -14,11 +14,11 @@ defmodule HaAgent.Handlers.QueryHandler do
     data: job
   } = event) do
     context = %{id: event.actor_id}
-    {:ok, query} = HaDSL.parse(job.configuration.query)
+
     command =
       %SelectCommand{
         table: job.destination_id,
-        query: query,
+        query: struct(Exd.AST.Program, job.configuration.ast),
         meta: %{
           table_id: job.destination_id,
           temporary: !job.destination.saved,

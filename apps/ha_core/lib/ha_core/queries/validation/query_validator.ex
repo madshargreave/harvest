@@ -2,7 +2,7 @@ defmodule HaCore.Queries.QueryValidator do
   @moduledoc """
   Module behaviour for validating queries
   """
-  alias Exd.AST.Program
+  alias HaCore.Queries
   alias HaCore.Queries.DSLQueryValidator
 
   @adapter HaCore.Queries.DSLQueryValidator
@@ -10,7 +10,7 @@ defmodule HaCore.Queries.QueryValidator do
   @doc """
   Resolves aliases and validates query
   """
-  @callback resolve(HaCore.user, String.t) :: {:ok, Program.t} | {:error, Atom.t}
+  @callback resolve(HaCore.user, String.t) :: {:ok, Queries.plan} | {:error, Atom.t}
   defdelegate resolve(user, query), to: @adapter
 
   @doc false

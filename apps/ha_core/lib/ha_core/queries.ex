@@ -4,10 +4,13 @@ defmodule HaCore.Queries do
   """
   alias HaCore.Queries.{
     Query,
+    QueryPlan,
     QueryStore,
     QueryService,
     QueryValidator
   }
+
+  @type plan :: QueryPlan.t
 
   defdelegate get_latest_queries(user, pagination), to: QueryStore
   defdelegate get_saved_queries(user, pagination), to: QueryStore
@@ -15,6 +18,6 @@ defmodule HaCore.Queries do
   defdelegate stream_scheduled_queries(callback), to: QueryStore
   defdelegate save_query(user, command), to: QueryService, as: :save
   defdelegate delete_query(user, command), to: QueryService, as: :delete
-  defdelegate resolve_query(user, query), to: HaCore.Queries.QueryValidator, as: :resolve
+  defdelegate resolve_query(user, query), to: QueryValidator, as: :resolve
 
 end

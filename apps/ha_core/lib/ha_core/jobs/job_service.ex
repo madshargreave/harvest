@@ -14,9 +14,8 @@ defmodule HaCore.Jobs.JobService do
   """
   @spec create(HaCore.context, Commands.CreateJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def create(user, command) do
-    with {:ok, schema} <- Schemas.get_schema(command.query),
-         {:ok, ast} <- Queries.resolve_query(user, command.query) do
-      changeset = Job.create_changeset(user, command, schema, ast)
+    with {:ok, plan} <- Queries.resolve_query(user, command.query) do
+      changeset = Job.create_changeset(user, command, plan)
       JobStore.save(user, changeset)
     end
   end
@@ -26,8 +25,8 @@ defmodule HaCore.Jobs.JobService do
   """
   @spec create_scheduled(Commands.CreateJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def create_scheduled(command) do
-    with {:ok, schema} <- Schemas.get_schema(command.query) do
-      changeset = Job.create_scheduled_changeset(command, schema)
+    with {:ok, plan} <- Queries.resolve_query(nil, command.query) do
+      changeset = Job.create_scheduled_changeset(command, plan)
       JobStore.save(nil, changeset)
     end
   end
