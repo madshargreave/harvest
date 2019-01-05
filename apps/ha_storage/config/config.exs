@@ -34,7 +34,8 @@ config :ha_storage, HaStorage.Records.RecordHandler,
     GenConsumer.RedisConsumer,
       topics: ["event:storage"],
       group: "storage:records",
-      consumer: "consumer-1"
+      consumer: "consumer-1",
+      max_batch_size: 1000
   }
 
 config :ha_storage, HaStorage.Dispatcher,
