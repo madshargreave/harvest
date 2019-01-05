@@ -11,12 +11,13 @@ defmodule HaCore.Jobs.JobConfiguration do
 
   swagger_schema "job_configurations" do
     field :query, :string
+    field :ast, :map
   end
 
   @spec changeset(map) :: Changeset.t
   def changeset(struct, attrs \\ %{}) do
     required = ~w(query)a
-    optional = ~w()a
+    optional = ~w(ast)a
 
     struct
     |> cast(attrs, optional ++ required)

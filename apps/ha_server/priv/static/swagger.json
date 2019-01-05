@@ -789,7 +789,8 @@
       "title": "JobConfiguration",
       "required": [
         "job_id",
-        "query"
+        "query",
+        "ast"
       ],
       "properties": {
         "query": {
@@ -797,6 +798,9 @@
         },
         "job_id": {
           "type": "string"
+        },
+        "ast": {
+          "type": "object"
         }
       }
     },
