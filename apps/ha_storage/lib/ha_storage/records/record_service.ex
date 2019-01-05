@@ -23,7 +23,6 @@ defmodule HaStorage.Records.RecordService do
           records
           |> Enum.map(& &1.table)
           |> Enum.uniq
-
       Dispatcher.dispatch(%{
         type: :table_updates,
         ids: tables
