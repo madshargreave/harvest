@@ -3,6 +3,7 @@ defmodule HaCore.Jobs.JobConfiguration do
   Query model
   """
   use HaCore.Schema
+
   alias HaCore.Jobs.{Job, Events}
 
   @derive {Poison.Encoder, except: [:__meta__, :job_id]}

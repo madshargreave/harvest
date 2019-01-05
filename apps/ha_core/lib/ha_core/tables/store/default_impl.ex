@@ -10,6 +10,24 @@ defmodule HaCore.Tables.Store.DefaultImpl do
   @preloaded [:schema]
 
   @impl true
+  def list_user_table_names_by_id(user) do
+    result =
+      Repo.all(
+        from t in Table,
+        where: t.saved and is_nil(t.deleted_at),
+        order_by: [desc: t.favorited, desc: t.inserted_at],
+        select: %{
+          t.name => t.id
+        }
+      )
+      |> Enum.reduce(%{}, &collect_list_user_table_names_by_id/2)
+    {:ok, result}
+  end
+  defp collect_list_user_table_names_by_id(map, acc) do
+    Map.merge(acc, map)
+  end
+
+  @impl true
   def list(user, pagination) do
     query =
       from t in Table,

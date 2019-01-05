@@ -10,6 +10,11 @@ defmodule HaCore.Tables.TableStore do
   @doc """
   Returns the list of queries.
   """
+  @callback list_user_table_names_by_id(HaCore.user) :: {:ok, [Table.t]}
+
+  @doc """
+  Returns the list of queries.
+  """
   @callback list(HaCore.user) :: {:ok, [Table.t]}
 
   @doc """

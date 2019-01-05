@@ -2,7 +2,7 @@ defmodule HaCore.Jobs.JobService do
   @moduledoc """
   Jobs service
   """
-  alias HaCore.Schemas
+  alias HaCore.{Jobs, Queries, Schemas}
   alias HaCore.Jobs.{
     Job,
     JobStore,
@@ -14,8 +14,9 @@ defmodule HaCore.Jobs.JobService do
   """
   @spec create(HaCore.context, Commands.CreateJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def create(user, command) do
-    with {:ok, schema} <- Schemas.get_schema(command.query) do
-      changeset = Job.create_changeset(user, command, schema)
+    with {:ok, schema} <- Schemas.get_schema(command.query),
+         {:ok, ast} <- Queries.resolve_query(user, command.query) do
+      changeset = Job.create_changeset(user, command, schema, ast)
       JobStore.save(user, changeset)
     end
   end

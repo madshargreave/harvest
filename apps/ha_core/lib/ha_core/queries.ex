@@ -5,7 +5,8 @@ defmodule HaCore.Queries do
   alias HaCore.Queries.{
     Query,
     QueryStore,
-    QueryService
+    QueryService,
+    QueryValidator
   }
 
   defdelegate get_latest_queries(user, pagination), to: QueryStore
@@ -14,5 +15,6 @@ defmodule HaCore.Queries do
   defdelegate stream_scheduled_queries(callback), to: QueryStore
   defdelegate save_query(user, command), to: QueryService, as: :save
   defdelegate delete_query(user, command), to: QueryService, as: :delete
+  defdelegate resolve_query(user, query), to: HaCore.Queries.QueryValidator, as: :resolve
 
 end

@@ -1,9 +1,9 @@
-defmodule HaDSL.Mixfile do
+defmodule HaQuery.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :ha_dsl,
+      app: :ha_query,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -22,7 +22,7 @@ defmodule HaDSL.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {HaDSL.Application, []},
+      mod: {HaQuery.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -36,11 +36,9 @@ defmodule HaDSL.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:exd, path: "../../../exd"},
-      {:exd_html, path: "../../../exd_plugin_html"},
-      {:exd_redis, path: "../../../exd_plugin_redis"},
-      # {:exd_parser_sql, path: "../../../exd_parser_sql"},
-      {:nodejs, "~> 1.0.0"}
+      {:ha_support, in_umbrella: true},
+      {:ha_dsl, in_umbrella: true},
+      {:exd, path: "../../../exd"}
     ]
   end
 
