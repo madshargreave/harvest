@@ -39,7 +39,7 @@ defmodule HaStorage.Records.ElasticStore do
           "_routing" => table.id
         }
       },
-      "size" => 1000,
+      "size" => 50,
       "sort" => []
     }
     response = Elasticsearch.post(Cluster, "/#{@index}/_doc/_search", query)
