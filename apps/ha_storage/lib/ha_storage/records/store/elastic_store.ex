@@ -40,7 +40,11 @@ defmodule HaStorage.Records.ElasticStore do
         }
       },
       "size" => 50,
-      "sort" => []
+      "sort" => [
+        %{
+          "_ts" => %{"order" => "desc"}
+        }
+      ]
     }
     response = Elasticsearch.post(Cluster, "/#{@index}/_doc/_search", query)
     case response do
@@ -81,6 +85,7 @@ defmodule HaStorage.Records.ElasticStore do
 
   defp save_documents(records, index_name) do
     info("Saving documents...")
+    IO.inspect List.last(records)
     for record <- records, do: Elasticsearch.put_document(Cluster, record, index_name)
     info("#{length(records)} documents was saved")
   end
