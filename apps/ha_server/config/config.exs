@@ -33,6 +33,14 @@ config :ha_server, :phoenix_swagger,
     ]
   }
 
+config :ha_server, HaServer.TableConsumer,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:storage"],
+      group: "web:tables",
+      consumer: "web:tables"
+  }
+
 config :ha_server, HaServer.LogConsumer,
   adapter: {
     GenConsumer.RedisConsumer,

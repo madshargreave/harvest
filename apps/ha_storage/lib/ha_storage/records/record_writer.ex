@@ -4,8 +4,8 @@ defmodule HaStorage.Records.RecordWriter do
   """
   use GenBuffer,
     otp_app: :ha_storage,
-    interval: 5000,
-    limit: 5000
+    interval: 1000,
+    limit: 50
 
   alias HaStorage.Records.RecordService
 

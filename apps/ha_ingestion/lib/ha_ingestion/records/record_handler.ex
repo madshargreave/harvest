@@ -4,6 +4,7 @@ defmodule HaIngestion.Records.RecordHandler do
 
   alias HaStorage.Tables.Table
   alias HaStorage.Records.Record
+  alias HaStorage.Hashes.Hash
 
   @impl true
   def handle_event(%{
@@ -12,13 +13,11 @@ defmodule HaIngestion.Records.RecordHandler do
     temporary: temporary,
     records: records
   } = event) do
-    records =
+    hashes =
       for %{key: key, value: value} <- records do
-        %Record{key: key, table: table_id, value: value}
+        %Hash{key: key, table_id: table_id, value: value}
       end
-
-    table = %Table{id: table_id, temporary: temporary}
-    HaStorage.save(table, records)
+    HaStorage.save(hashes)
     :ok
   end
 

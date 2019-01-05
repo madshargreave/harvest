@@ -58,7 +58,7 @@ defmodule HaStorage.Records.ElasticStore do
   end
 
   @impl true
-  def save(table, records) do
+  def save(records) do
     with {:ok, index_name} <- get_current_index(),
          {:ok, _resp} <- save_documents(records, index_name) do
       refresh_index!(index_name)

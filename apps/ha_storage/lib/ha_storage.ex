@@ -4,19 +4,30 @@ defmodule HaStorage do
   """
   alias Exd.AST.Query
   alias HaStorage.Records.{Record, RecordService, RecordStore}
+  alias HaStorage.Hashes.{Hash, HashService, HashStore}
   alias HaStorage.Tables.Table
 
   @type query :: Query.t
   @type table :: Table.t
   @type table_id :: String.t
+  @type record_id :: String.t
+  @type record_ids :: [record_id]
+  @type hash :: Hash.t
+  @type hashes :: [hash]
   @type record :: Record.t
   @type records :: [record]
 
   @doc """
+  Retrieve a list of records by ID
+  """
+  @spec get(record_ids) :: {:ok, Integer.t} | {:error, Atom.t}
+  defdelegate get(ids), to: HashStore
+
+  @doc """
   Saves records into table
   """
-  @spec save(table, records) :: {:ok, Integer.t} | {:error, Atom.t}
-  defdelegate save(table, records), to: RecordService
+  @spec save(hashes) :: {:ok, Integer.t} | {:error, Atom.t}
+  defdelegate save(hashes), to: HashService
 
   @doc """
   List records in table

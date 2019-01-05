@@ -13,7 +13,11 @@ defmodule HaStorage.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      HaStorage.Dispatcher,
       supervisor(HaStorage.Elastic.Supervisor, []),
+      supervisor(HaStorage.Hashes.HashSupervisor, []),
+      HaStorage.Records.RecordHandler,
+      HaStorage.Records.RecordWriter
     ]
 
     opts = [strategy: :one_for_one, name: HaStorage.Supervisor]

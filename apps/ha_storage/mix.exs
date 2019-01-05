@@ -37,6 +37,7 @@ defmodule HaStorage.Mixfile do
   defp deps do
     [
       {:ha_support, in_umbrella: true},
+      {:postgrex, ">= 0.0.0"},
       {:exd, path: "../../../exd"},
       {:exd_codegen_elastic, path: "../../../exd_codegen_elastic" },
       {:elasticsearch, "~> 0.6.1"}

@@ -28,6 +28,18 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 
+
+config :ha_storage, HaStorage.Records.RecordHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:storage"],
+      group: "storage:records",
+      consumer: "consumer-1"
+  }
+
+config :ha_storage, HaStorage.Dispatcher,
+  adapter: GenDispatcher.RedisDispatcher
+
 config :ha_storage, HaStorage.Elastic.ElasticsearchCluster,
   # The URL where Elasticsearch is hosted on your system
   url: "http://localhost:9200",
