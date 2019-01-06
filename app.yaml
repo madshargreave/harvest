@@ -1,0 +1,6 @@
+env: flex
+runtime: custom
+runtime_config:
+    release_app: app
+beta_settings:
+    cloud_sql_instances: [CONNECTION-NAME]
