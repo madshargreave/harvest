@@ -1,5 +1,5 @@
 env: flex
-runtime: custom
+runtime: gs://elixir-runtime/elixir.yaml
 runtime_config:
     release_app: app
 beta_settings:
