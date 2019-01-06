@@ -56,7 +56,14 @@ release :server do
   set applications: [
     :runtime_tools,
     :ha_core,
-    :ha_server
+    :ha_server,
+    :ha_dsl,
+    :ha_scheduler,
+    :ha_support,
+    :ha_plugins,
+    :ha_ingestion,
+    :ha_storage,
+    :ha_agent
   ]
   set config_providers: [
     {Mix.Releases.Config.Providers.Elixir, ["${RELEASE_ROOT_DIR}/etc/config.exs"]}

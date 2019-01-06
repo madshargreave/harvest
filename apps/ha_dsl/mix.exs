@@ -36,8 +36,6 @@ defmodule HaDSL.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:exd, "~> 0.1.29"},
-      {:exd_plugin_html, "~> 0.1.1"},
       {:nodejs, "~> 1.0.0"}
     ]
   end

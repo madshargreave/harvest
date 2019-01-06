@@ -38,8 +38,6 @@ defmodule HaStorage.Mixfile do
     [
       {:ha_support, in_umbrella: true},
       {:postgrex, ">= 0.0.0"},
-      {:exd, "~> 0.1.29"},
-      {:exd_codegen_elastic, "~> 0.1.0"},
       {:elasticsearch, "~> 0.6.1"}
     ]
   end
