@@ -39,7 +39,7 @@ defmodule HaStorage.Records.ElasticStore do
           "_routing" => table.id
         }
       },
-      "size" => 50,
+      "size" => 100,
       "sort" => [
         %{
           "_ts" => %{"order" => "desc"}
