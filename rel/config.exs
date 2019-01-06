@@ -51,7 +51,7 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :server do
+release :app do
   set version: "0.0.1"
   set applications: [
     :runtime_tools,
