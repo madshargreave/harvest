@@ -52,7 +52,7 @@ end
 # will be used by default
 
 release :app do
-  set version: "0.0.1"
+  set version: "1.0.0"
   set applications: [
     :runtime_tools,
     :ha_core,

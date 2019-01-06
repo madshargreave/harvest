@@ -8,7 +8,7 @@ FROM elixir:1.7.2-alpine AS builder
 # The name of your application/release (required)
 ARG APP_NAME=app
 # The version of the application we are building (required)
-ARG APP_VSN=0.1.0
+ARG APP_VSN=1.0.0
 # The environment to build with
 ARG MIX_ENV=prod
 # Set this to true if this release is not a Phoenix app
