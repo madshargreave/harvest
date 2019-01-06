@@ -1,0 +1,5 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/harvest/harvest-app', '.' ]
+images:
+- 'gcr.io/harvest/harvest-app'
