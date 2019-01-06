@@ -1,5 +1,4 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/harvest/harvest-app', '.' ]
-images:
-- 'gcr.io/harvest/harvest-app'
+- name: "gcr.io/cloud-builders/docker"
+args: ["build", "-t", "gcr.io/$PROJECT_ID/app:$_TAG", "--build-arg", "project_id=$PROJECT_ID", "."]
+images: ["gcr.io/$PROJECT_ID/app:$_TAG"]
