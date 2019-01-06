@@ -2,5 +2,3 @@ env: flex
 runtime: gs://elixir-runtime/elixir.yaml
 runtime_config:
     release_app: app
-beta_settings:
-    cloud_sql_instances: [harvest:us-central1:main]
