@@ -11,7 +11,6 @@ defmodule HaDSL.Mixfile do
       lockfile: "../../mix.lock",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       deps: deps()
     ]
@@ -36,7 +35,9 @@ defmodule HaDSL.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:nodejs, "~> 1.0.0"}
+      {:nodejs, "~> 1.0.0"},
+      {:jason, "~> 1.0"},
+      {:poolboy, "~> 1.5.1"}
     ]
   end
 
