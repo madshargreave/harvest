@@ -2,3 +2,5 @@ env: flex
 runtime: gs://elixir-runtime/elixir.yaml
 runtime_config:
     release_app: app
+skip_files:
+    - ^node_modules/.*$
