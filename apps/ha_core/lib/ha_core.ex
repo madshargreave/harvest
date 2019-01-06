@@ -1,6 +1,6 @@
 defmodule HaCore do
   @doc """
-
+  Core domain context
   """
   alias HaCore.{
     Accounts,
