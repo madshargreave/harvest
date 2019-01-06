@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "@harvestio/harvest-sql": "^1.0.0"
+    "@harvestio/harvest-sql": "^1.1.0"
   }
 }

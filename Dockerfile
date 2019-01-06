@@ -1,69 +1,30 @@
-# The version of Alpine to use for the final image
-# This should match the version of Alpine that the `elixir:1.7.2-alpine` image uses
-ARG ALPINE_VERSION=3.8
-
-FROM elixir:1.7.2-alpine AS builder
-
-# The following are build arguments used to change variable parts of the image.
-# The name of your application/release (required)
-ARG APP_NAME
-# The version of the application we are building (required)
-ARG APP_VSN
-# The environment to build with
-ARG MIX_ENV=prod
-# Set this to true if this release is not a Phoenix app
-ARG SKIP_PHOENIX=true
-# If you are using an umbrella project, you can change this
-# argument to the directory the Phoenix app is in so that the assets
-# can be built
-ARG PHOENIX_SUBDIR=.
-
-ENV SKIP_PHOENIX=${SKIP_PHOENIX} \
-    APP_NAME=${APP_NAME} \
-    APP_VSN=${APP_VSN} \
-    MIX_ENV=${MIX_ENV}
-
-# By convention, /opt is typically used for applications
+FROM elixir:alpine
+ARG app_name=harvest
+ARG phoenix_subdir=./apps/ha_server
+ENV MIX_ENV=prod REPLACE_OS_VARS=true TERM=xterm
 WORKDIR /opt/app
-
-# This step installs all the build tools we'll need
-RUN apk update && \
-    apk upgrade --no-cache && \
-    apk add --no-cache \
-    git \
-    build-base && \
-    mix local.rebar --force && \
-    mix local.hex --force
-
-# This copies our app source code into the build container
+RUN apk update \
+    && mix local.rebar --force \
+    && mix local.hex --force
 COPY . .
-
 RUN mix do deps.get, deps.compile, compile
-
-RUN \
-    mkdir -p /opt/built && \
-    mix release --verbose --name ${APP_NAME} && \
-    cp _build/${MIX_ENV}/rel/${APP_NAME}/releases/${APP_VSN}/${APP_NAME}.tar.gz /opt/built && \
-    cd /opt/built && \
-    tar -xzf ${APP_NAME}.tar.gz && \
-    rm ${APP_NAME}.tar.gz
-
-# From this line onwards, we're in a new image, which will be the image used in production
-FROM alpine:${ALPINE_VERSION}
-
-# The name of your application/release (required)
-ARG APP_NAME
-
-RUN apk update && \
-    apk add --no-cache \
-    bash \
-    openssl-dev
-
-ENV REPLACE_OS_VARS=true \
-    APP_NAME=${APP_NAME}
-
+RUN mix release --env=prod --verbose \
+    && mv _build/prod/rel/${app_name} /opt/release \
+    && mv /opt/release/bin/${app_name} /opt/release/bin/start_server
+FROM alpine:latest
+ARG project_id
+ENV GCLOUD_PROJECT_ID=${project_id}
+RUN apk update \
+    && apk --no-cache --update add bash ca-certificates openssl-dev \
+    && mkdir -p /usr/local/bin \
+    && wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 \
+    -O /usr/local/bin/cloud_sql_proxy \
+    && chmod +x /usr/local/bin/cloud_sql_proxy \
+    && mkdir -p /tmp/cloudsql
+ENV PORT=8080 MIX_ENV=prod REPLACE_OS_VARS=true
 WORKDIR /opt/app
-
-COPY --from=builder /opt/built .
-
-CMD trap 'exit' INT; /opt/app/bin/${APP_NAME} foreground
+EXPOSE ${PORT}
+COPY --from=0 /opt/release .
+CMD (/usr/local/bin/cloud_sql_proxy \
+    -projects=${GCLOUD_PROJECT_ID} -dir=/tmp/cloudsql &); \
+    exec /opt/app/bin/start_server foreground

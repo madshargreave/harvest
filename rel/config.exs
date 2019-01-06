@@ -68,12 +68,3 @@ release :server do
     migrate: "rel/commands/migrate.sh"
   ]
 end
-
-release :agent do
-  set version: "0.0.1"
-  set applications: [
-    :runtime_tools,
-    :ha_agent
-  ]
-end
-

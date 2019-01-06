@@ -31,7 +31,7 @@ defmodule HaDSL do
   end
 
   def underscore(ast) do
-    {:ok, AtomicMap.convert(ast)}
+    {:ok, AtomicMap.convert(ast, %{safe: false})}
   end
 
   def to_structs(ast), do: {:ok, do_to_structs(ast)}

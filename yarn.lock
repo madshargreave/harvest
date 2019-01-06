@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@harvestio/harvest-sql@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@harvestio/harvest-sql/-/harvest-sql-1.0.0.tgz#a4d3a0a7a8602a43cdfb4429dc8b3667b4d8b01e"
+"@harvestio/harvest-sql@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@harvestio/harvest-sql/-/harvest-sql-1.1.0.tgz#e21499578b0f4e2cc85b17dfeabca1678580f482"
   dependencies:
     "@types/lodash" "^4.14.119"
     lodash "^4.17.11"
