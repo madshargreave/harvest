@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@harvestio/harvest-sql": "^1.0.0"
+  }
+}
