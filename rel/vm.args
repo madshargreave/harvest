@@ -1,6 +1,6 @@
 # rel/vm.args
 ## Name of the node - this is the only change
--sname ${NODE_PREFIX}@localhost
+-sname node1
 
 ## Cookie for distributed erlang
 -setcookie harvest

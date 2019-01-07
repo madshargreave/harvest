@@ -13,14 +13,6 @@ use Mix.Releases.Config,
     # This sets the default environment used by `mix release`
     default_environment: Mix.env()
 
-# For a full list of config options for both releases
-# and environments, visit https://hexdocs.pm/distillery/config/distillery.html
-
-environment :default do
-  set pre_start_hooks: "rel/hooks/pre_start"
-  set post_start_hooks: "rel/hooks/post_start"
-end
-
 # You may define one or more environments in this file,
 # an environment's settings will override those of a release
 # when building in that environment, this combination of release
@@ -44,6 +36,25 @@ environment :prod do
   set include_src: false
   set cookie: :"g!a6:7|6Afv1!X3@:GN:!l~TcIU|Vs>~UyLNXqdCQ5|AV9xkV;8@U%PgH:r93TZL"
   set vm_args: "rel/vm.args"
+
+  # Custom commands
+  set commands: [
+    migrate: "rel/commands/migrate.sh"
+  ]
+
+  # We use an extra config evaluated solely at runtime
+  set config_providers: [
+    {Mix.Releases.Config.Providers.Elixir, ["${RELEASE_ROOT_DIR}/etc/config.exs"]}
+  ]
+
+  # We source control our service file, overlay it into the release tarball
+  # and it is expected that this path will be symlinked to the appropriate systemd service
+  # directory on the target
+  set overlays: [
+    {:mkdir, "etc"},
+    {:copy, "rel/etc/config.exs", "etc/config.exs"}
+  ]
+
 end
 
 # You may define one or more releases in this file.
@@ -64,14 +75,5 @@ release :app do
     :ha_ingestion,
     :ha_storage,
     :ha_agent
-  ]
-  set config_providers: [
-    {Mix.Releases.Config.Providers.Elixir, ["${RELEASE_ROOT_DIR}/etc/config.exs"]}
-  ]
-  set overlays: [
-    {:copy, "rel/configs/config.exs", "etc/config.exs"}
-  ]
-  set commands: [
-    migrate: "rel/commands/migrate.sh"
   ]
 end

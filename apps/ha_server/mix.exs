@@ -43,7 +43,7 @@ defmodule HAServer.Mixfile do
       {:cors_plug, "~> 1.5"},
       {:proper_case, "~> 1.0.2"},
       {:logster, "~> 0.10"},
-      {:phoenix, "~> 1.3.3"},
+      {:phoenix, "~> 1.3.2"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_swagger, "~> 0.8.1"},
       {:postgrex, ">= 0.0.0"},

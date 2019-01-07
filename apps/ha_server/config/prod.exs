@@ -70,13 +70,10 @@ use Mix.Config
 #
 
 config :ha_server, HaServer.Endpoint,
-  load_from_system_env: true,
-  http: [port: {:system, "PORT"}],
   debug_errors: false,
   code_reloader: false,
   check_origin: false,
-  server: true,
-  watchers: []
+  server: true
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
