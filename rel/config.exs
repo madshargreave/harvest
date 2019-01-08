@@ -61,6 +61,7 @@ environment :lambda do
   set include_erts: true
   set include_src: false
   set cookie: :test
+  set include_system_libs: true
 
   # Distillery forces the ERTS into 'distributed' mode which will
   # attempt to connect to EPMD. This is not supported behavior in the
@@ -76,10 +77,7 @@ release :harvest do
   set version: current_version(:ha_agent)
   set applications: [
     :runtime_tools,
-    :aws_lambda_elixir_runtime,
-    :ha_agent,
-    :ha_core,
-    :ha_support
+    :aws_lambda_elixir_runtime
   ]
 end
 
