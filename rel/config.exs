@@ -78,14 +78,6 @@ release :harvest do
   set applications: [
     :runtime_tools,
     :aws_lambda_elixir_runtime,
-    :ha_core,
-    :ha_server,
-    :ha_dsl,
-    :ha_scheduler,
-    :ha_support,
-    :ha_plugins,
-    :ha_ingestion,
-    :ha_storage,
     :ha_agent
   ]
 end

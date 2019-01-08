@@ -37,15 +37,11 @@ config :ha_agent, HaAgent.Handlers.QueryHandler,
       consumer: "agent"
   }
 
-config :exd, Exd.Plugin.RedisStream,
-  host: "localhost"
-
 config :exd,
   plugins: [
     Exd.Plugin.HTMLParseList,
     Exd.Plugin.HTMLParseText,
     Exd.Plugin.HTMLParseAttr,
-    # Exd.Plugin.RedisStream,
     HaPlugins.FetchPlugin,
     HaPlugins.TablePlugin
   ]
