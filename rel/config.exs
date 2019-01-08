@@ -57,6 +57,29 @@ environment :prod do
 
 end
 
+environment :lambda do
+  set include_erts: true
+  set include_src: false
+  set cookie: :test
+  set include_system_libs: true
+
+  # Distillery forces the ERTS into 'distributed' mode which will
+  # attempt to connect to EPMD. This is not supported behavior in the
+  # AWS Lambda runtime because our process isn't allowed to connect to
+  # other ports on this host.
+  #
+  # So '-start_epmd false' is set so the ERTS doesn't try to start EPMD.
+  # And '-epmd_module' is set to use a no-op implementation of EPMD
+  set erl_opts: "-start_epmd false -epmd_module Elixir.EPMD.StubClient"
+end
+
+release :harvest do
+  set version: current_version(:ha_agent)
+  set applications: [
+    :runtime_tools, :aws_lambda_elixir_runtime
+  ]
+end
+
 # You may define one or more releases in this file.
 # If you have not set a default release, or selected one
 # when running `mix release`, the first release in the file
