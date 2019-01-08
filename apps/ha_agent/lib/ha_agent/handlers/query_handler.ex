@@ -9,7 +9,7 @@ defmodule HaAgent.Handlers.QueryHandler do
   alias HaCore.Jobs.Job
 
   @impl true
-  def handle_event(%DomainEvent{
+  def handle_event(%{
     type: :job_created,
     data: job
   } = event) do
