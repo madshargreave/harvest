@@ -26,7 +26,7 @@ defmodule HaAgent.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:aws_lambda_elixir_runtime, "~> 0.1.0"}
+      {:aws_lambda_elixir_runtime, "~> 0.1.0"},
       {:ha_core, in_umbrella: true},
       {:ha_plugins, in_umbrella: true},
       {:ha_support, in_umbrella: true}
