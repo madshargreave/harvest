@@ -76,7 +76,9 @@ end
 release :harvest do
   set version: current_version(:ha_agent)
   set applications: [
-    :runtime_tools, :aws_lambda_elixir_runtime
+    :runtime_tools,
+    :aws_lambda_elixir_runtime,
+    :ha_agent
   ]
 end
 

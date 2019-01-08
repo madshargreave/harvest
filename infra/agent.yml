@@ -153,7 +153,7 @@ Resources:
       Environment:
         ComputeType: BUILD_GENERAL1_SMALL
         Type: LINUX_CONTAINER
-        Image: docker.io/elixir:1.7.2-alpine
+        Image: docker.io/elixir:1.7.4
       Source:
         Type: CODEPIPELINE
         BuildSpec: !Sub |
@@ -161,11 +161,11 @@ Resources:
           phases:
             install:
               commands:
-                # Mix installation
-                - apk update
-                - apk upgrade --no-cache
-                - apk add --no-cache git
-                - apk add --no-cache build-base
+                - apt-get -y update
+                - apt-get -y install zip
+                - apt-get -y install python-setuptools python-dev build-essential
+                - easy_install pip
+                - pip install awscli --upgrade --ignore-installed six
             pre_build:
               commands:
                 - mix local.rebar --force
@@ -178,7 +178,7 @@ Resources:
                 - MIX_ENV=prod mix zip
             post_build:
               commands:
-                - aws s3 cp --recursive ./_build/rel/harvest/lambda.zip s3://${DeployBucket}/
+                - aws s3 cp ./_build/prod/rel/harvest/lambda.zip s3://${DeployBucket}/
           artifacts:
             files:
               - '**/*'
