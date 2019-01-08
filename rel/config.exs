@@ -61,7 +61,6 @@ environment :lambda do
   set include_erts: true
   set include_src: false
   set cookie: :test
-  set include_system_libs: true
 
   # Distillery forces the ERTS into 'distributed' mode which will
   # attempt to connect to EPMD. This is not supported behavior in the
