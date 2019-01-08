@@ -18,7 +18,7 @@ defmodule HaAgent.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      # mod: {HaAgent, []},
+      mod: {HaAgent, []},
       extra_applications: [:logger]
     ]
   end
@@ -29,7 +29,7 @@ defmodule HaAgent.MixProject do
       {:aws_lambda_elixir_runtime, "~> 0.1.0"},
       # {:ha_core, in_umbrella: true}
       # {:ha_plugins, in_umbrella: true},
-      {:ha_support, in_umbrella: true}
+      # {:ha_support, in_umbrella: true}
       # {:poolboy, "~> 1.5.1"},
       # {:libcluster, "~> 3.0.1"}
     ]
