@@ -78,7 +78,9 @@ release :harvest do
   set applications: [
     :runtime_tools,
     :aws_lambda_elixir_runtime,
-    :ha_agent
+    :ha_agent,
+    :ha_core,
+    :ha_support
   ]
 end
 
