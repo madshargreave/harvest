@@ -18,19 +18,19 @@ defmodule HaAgent.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {HaAgent, []},
-      extra_applications: [:logger, :runtime_tools]
+      # mod: {HaAgent, []},
+      extra_applications: [:logger]
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ha_core, in_umbrella: true},
-      {:ha_plugins, in_umbrella: true},
-      {:ha_support, in_umbrella: true},
-      {:poolboy, "~> 1.5.1"},
-      {:libcluster, "~> 3.0.1"}
+      # {:ha_core, in_umbrella: true},
+      # {:ha_plugins, in_umbrella: true},
+      # {:ha_support, in_umbrella: true},
+      # {:poolboy, "~> 1.5.1"},
+      # {:libcluster, "~> 3.0.1"}
     ]
   end
 end

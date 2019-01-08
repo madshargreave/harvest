@@ -5,7 +5,7 @@ defmodule HaAgent do
     import Supervisor.Spec
 
     children = [
-      {HaAgent.Handlers.QueryHandler, []}
+      # {HaAgent.Handlers.QueryHandler, []}
     ]
 
     opts = [strategy: :one_for_one, name: HaAgent.Supervisor]
