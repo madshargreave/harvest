@@ -3,6 +3,7 @@ defmodule Harvest.MixProject do
 
   def project do
     [
+      app: :harvest,
       apps_path: "apps",
       start_permanent: Mix.env() == :prod,
       deps: deps()
@@ -16,6 +17,7 @@ defmodule Harvest.MixProject do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
+      {:aws_lambda_elixir_runtime, "~> 0.1.0"},
       {:distillery, "~> 2.0"},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
     ]
