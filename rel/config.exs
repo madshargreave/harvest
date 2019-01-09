@@ -73,21 +73,21 @@ environment :lambda do
   set erl_opts: "-start_epmd false -epmd_module Elixir.EPMD.StubClient"
 end
 
-release :harvest do
-  set version: current_version(:ha_agent)
-  set applications: [
-    :runtime_tools,
-    :aws_lambda_elixir_runtime,
-    :ha_agent
-  ]
-end
+# release :harvest do
+#   set version: current_version(:ha_agent)
+#   set applications: [
+#     :runtime_tools,
+#     :aws_lambda_elixir_runtime,
+#     :ha_agent
+#   ]
+# end
 
 # You may define one or more releases in this file.
 # If you have not set a default release, or selected one
 # when running `mix release`, the first release in the file
 # will be used by default
 
-release :app do
+release :harvest do
   set version: "1.0.0"
   set applications: [
     :runtime_tools,

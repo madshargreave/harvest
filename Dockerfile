@@ -6,9 +6,9 @@ FROM elixir:1.7.2-alpine AS builder
 
 # The following are build arguments used to change variable parts of the image.
 # The name of your application/release (required)
-ARG APP_NAME
+ARG APP_NAME=harvest
 # The version of the application we are building (required)
-ARG APP_VSN
+ARG APP_VSN=1.0.0
 # The environment to build with
 ARG MIX_ENV=prod
 # Set this to true if this release is not a Phoenix app
