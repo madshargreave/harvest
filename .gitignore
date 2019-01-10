@@ -23,3 +23,8 @@ erl_crash.dump
 .vscode
 apps/ha_storage/priv/
 node_modules
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
