@@ -1,18 +1,18 @@
 use Mix.Config
 
 # Application name
-app = System.get_env("APPLICATION_NAME")
-env = System.get_env("ENVIRONMENT_NAME")
-region = System.get_env("GCP_REGION")
+# app = System.get_env("APPLICATION_NAME")
+# env = System.get_env("ENVIRONMENT_NAME")
+# region = System.get_env("GCP_REGION")
 
-cond do
-  is_nil(app) ->
-    raise "APPLICATION_NAME is unset!"
-  is_nil(env) ->
-    raise "ENVIRONMENT_NAME is unset!"
-  :else ->
-    :ok
-end
+# cond do
+#   is_nil(app) ->
+#     raise "APPLICATION_NAME is unset!"
+#   is_nil(env) ->
+#     raise "ENVIRONMENT_NAME is unset!"
+#   :else ->
+#     :ok
+# end
 
 # For production, we often load configuration from external
 # sources, such as your system environment. For this reason,
