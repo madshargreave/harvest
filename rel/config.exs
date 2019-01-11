@@ -101,4 +101,9 @@ release :harvest do
     :ha_storage,
     :ha_agent
   ]
+
+  set commands: [
+    migrate: "rel/commands/migrate.sh",
+    seed: "rel/commands/seed.sh",
+  ]
 end

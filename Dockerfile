@@ -67,4 +67,7 @@ WORKDIR /opt/app
 COPY --from=builder /opt/built .
 
 EXPOSE 4000
-CMD trap 'exit' INT; /opt/app/bin/${APP_NAME} foreground
+CMD trap 'exit' INT; \
+    /opt/app/bin/${APP_NAME} migrate && \
+    /opt/app/bin/${APP_NAME} seed && \
+    /opt/app/bin/${APP_NAME} foreground
