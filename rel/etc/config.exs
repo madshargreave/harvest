@@ -75,3 +75,67 @@ config :ha_core, HaCore.Logs.LogHandler,
       consumer: "logs",
       host: System.get_env("REDIS_HOST")
   }
+
+config :ha_agent, HaAgent.Handlers.QueryHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "agent",
+      consumer: "agent",
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_ingestion, HaIngestion.Records.RecordHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "ingestion",
+      consumer: "ingestion",
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_scheduler, HaScheduler.ScheduleHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "scheduler",
+      consumer: "scheduler",
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_server, HaServer.TableConsumer,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:storage"],
+      group: "web:tables",
+      consumer: "web:tables",
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_server, HaServer.LogConsumer,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "web:logs",
+      consumer: "web:logs",
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_server, HaServer.RecordConsumer,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "web:records",
+      consumer: "web:records",
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_storage, HaStorage.Records.RecordHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:storage"],
+      group: "storage:records",
+      consumer: "consumer-1",
+      host: System.get_env("REDIS_HOST")
+      max_batch_size: 1000
+  }

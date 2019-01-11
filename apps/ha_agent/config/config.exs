@@ -29,13 +29,13 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-# config :ha_agent, HaAgent.Handlers.QueryHandler,
-#   adapter: {
-#     GenConsumer.RedisConsumer,
-#       topics: ["event:core"],
-#       group: "agent",
-#       consumer: "agent"
-#   }
+config :ha_agent, HaAgent.Handlers.QueryHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "agent",
+      consumer: "agent"
+  }
 
 # config :exd,
 #   plugins: [
