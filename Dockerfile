@@ -52,7 +52,7 @@ RUN \
 FROM alpine:${ALPINE_VERSION}
 
 # The name of your application/release (required)
-ARG APP_NAME
+ARG APP_NAME=harvest
 
 RUN apk update && \
     apk add --no-cache \
