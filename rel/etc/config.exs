@@ -136,6 +136,6 @@ config :ha_storage, HaStorage.Records.RecordHandler,
       topics: ["event:storage"],
       group: "storage:records",
       consumer: "consumer-1",
-      host: System.get_env("REDIS_HOST")
+      host: System.get_env("REDIS_HOST"),
       max_batch_size: 1000
   }
