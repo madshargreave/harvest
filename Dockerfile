@@ -49,7 +49,7 @@ RUN \
     rm ${APP_NAME}.tar.gz
 
 # From this line onwards, we're in a new image, which will be the image used in production
-FROM alpine:${ALPINE_VERSION}
+FROM 11.6-alpine
 
 # The name of your application/release (required)
 ARG APP_NAME=harvest
