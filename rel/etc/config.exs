@@ -139,3 +139,27 @@ config :ha_storage, HaStorage.Records.RecordHandler,
       host: System.get_env("REDIS_HOST"),
       max_batch_size: 1000
   }
+
+config :ha_core, HaCore.Dispatcher,
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_storage, HaStorage.Dispatcher,
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :exd_streams, ExdStreams.Core.Dispatcher,
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :exd_streams, ExdStreams.Plugins.Dispatcher,
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
