@@ -49,7 +49,7 @@ RUN \
     rm ${APP_NAME}.tar.gz
 
 # From this line onwards, we're in a new image, which will be the image used in production
-FROM 11-alpine
+FROM mhart/alpine-node:11
 
 # The name of your application/release (required)
 ARG APP_NAME=harvest
