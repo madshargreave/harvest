@@ -57,3 +57,21 @@ config :ha_storage, HaStorage.Hashes.HashStore.Postgres.Repo,
   database: System.get_env("DATABASE_NAME"),
   hostname: System.get_env("DATABASE_HOST"),
   pool_size: 10
+
+config :ha_core, HaCore.Jobs.JobHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core"],
+      group: "jobs",
+      consumer: "jobs",
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_core, HaCore.Logs.LogHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:core", "event:plugins:logs"],
+      group: "logs",
+      consumer: "logs",
+      host: System.get_env("REDIS_HOST")
+  }
