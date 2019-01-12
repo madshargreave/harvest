@@ -15,7 +15,7 @@ defmodule HaScheduler.Application do
     children = [
       worker(HaScheduler.ScheduleStore, []),
       worker(HaScheduler.Scheduler, []),
-      worker(HaScheduler.ScheduleHandler, []),
+      # worker(HaScheduler.ScheduleHandler, []),
       worker(Task, tasks(), restart: :transient)
     ]
 

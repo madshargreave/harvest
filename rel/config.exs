@@ -94,12 +94,12 @@ release :harvest do
     :ha_core,
     :ha_server,
     :ha_dsl,
-    :ha_scheduler,
+    # :ha_scheduler,
     :ha_support,
-    :ha_plugins,
-    :ha_ingestion,
+    # :ha_plugins,
+    # :ha_ingestion,
     :ha_storage,
-    :ha_agent
+    # :ha_agent
   ]
 
   set commands: [
