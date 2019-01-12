@@ -39,6 +39,7 @@ defmodule HASupport.Mixfile do
       {:exd_codegen_elastic, "~> 0.1.0"},
       {:gen_dispatcher, ">= 0.0.0"},
       {:gen_consumer, ">= 0.2.6"},
+      {:gen_buffer, "~> 0.1.0"},
       {:swagger_ecto, "~> 0.2.2"},
       {:ecto, "~> 2.1.6"},
       {:redix, ">= 0.0.0"},
