@@ -38,7 +38,7 @@ defmodule HaCore.Mixfile do
       {:ha_support, in_umbrella: true},
       {:ha_storage, in_umbrella: true},
       {:ha_dsl, in_umbrella: true},
-      {:exd_streams, "~> 0.0.1"},
+      {:exd_streams, "~> 0.0.1", runtime: false},
       {:postgrex, ">= 0.0.0"},
       {:event_bus, "~> 1.6.0"},
       {:ecto_enum, "~> 1.0"},
