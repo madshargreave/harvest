@@ -10,8 +10,8 @@ defmodule HaCore.Application do
     children = [
       supervisor(HaCore.Repo.EctoImpl, []),
       supervisor(HaCore.Dispatcher, []),
-      HaCore.Jobs.JobHandler,
-      HaCore.Logs.LogHandler
+      # HaCore.Jobs.JobHandler,
+      # HaCore.Logs.LogHandler
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
