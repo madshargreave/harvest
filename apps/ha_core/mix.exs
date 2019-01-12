@@ -36,8 +36,8 @@ defmodule HaCore.Mixfile do
   defp deps do
     [
       {:ha_support, in_umbrella: true},
-      # {:ha_storage, in_umbrella: true},
-      # {:ha_dsl, in_umbrella: true},
+      {:ha_storage, in_umbrella: true},
+      {:ha_dsl, in_umbrella: true},
       # {:exd_streams, "~> 0.0.1"},
       {:postgrex, ">= 0.0.0"},
       {:event_bus, "~> 1.6.0"},
