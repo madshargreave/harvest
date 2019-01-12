@@ -38,7 +38,7 @@ defmodule HASupport.Mixfile do
       {:exd_plugin_html, "~> 0.1.1"},
       {:exd_codegen_elastic, "~> 0.1.0"},
       {:gen_dispatcher, ">= 0.0.0"},
-      {:gen_consumer, ">= 0.0.0"},
+      {:gen_consumer, ">= 0.2.6"},
       {:swagger_ecto, "~> 0.2.2"},
       {:ecto, "~> 2.1.6"},
       {:redix, ">= 0.0.0"},

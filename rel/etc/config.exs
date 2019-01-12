@@ -152,6 +152,12 @@ config :ha_storage, HaStorage.Dispatcher,
       host: System.get_env("REDIS_HOST")
   }
 
+config :ha_plugins, HaPlugins.Dispatcher,
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
+
 config :exd_streams, ExdStreams.Core.Dispatcher,
   adapter: {
     GenDispatcher.RedisDispatcher,
