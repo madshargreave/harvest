@@ -46,7 +46,7 @@ defmodule HaCore.QueriesTest do
     test "it emits a domain event", context do
       assert {:ok, query} = Queries.save_query(context.user, context.command)
       assert_dispatched "event:core", event
-      assert event.type == :query_saved
+      assert event.type == :query_savedddddd
       assert event.data.name == context.command.name
       assert event.data.query == context.command.query
     end
