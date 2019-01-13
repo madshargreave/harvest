@@ -25,6 +25,7 @@ defmodule HaServer.Router do
     plug AtomifyPlug
   end
 
+  get "/", HaServer.HealthController, :index
   scope "/api", HaServer do
     scope "/v1" do
       pipe_through :api
