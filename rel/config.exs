@@ -98,7 +98,7 @@ release :harvest do
     :ha_support,
     # :ha_plugins,
     # :ha_ingestion,
-    :ha_storage,
+    # :ha_storage,
     # :ha_agent
   ]
 
