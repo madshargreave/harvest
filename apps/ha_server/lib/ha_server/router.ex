@@ -16,6 +16,12 @@ defmodule HaServer.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :system do
+    plug :accepts, ["json"]
+    plug SnakeCasePlug
+    plug AtomifyPlug
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
     plug SnakeCasePlug
@@ -25,12 +31,14 @@ defmodule HaServer.Router do
     plug AtomifyPlug
   end
 
-  get "/", HaServer.HealthController, :index
   scope "/api", HaServer do
     scope "/v1" do
-      pipe_through :api
-
+      pipe_through :system
       get "/_health", HealthController, :index
+    end
+
+    scope "/v1" do
+      pipe_through :api
 
       resources "/config", ConfigController, only: [:index]
       resources "/queries", QueryController, only: [:index]
