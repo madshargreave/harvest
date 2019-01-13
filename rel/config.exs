@@ -87,6 +87,15 @@ end
 # when running `mix release`, the first release in the file
 # will be used by default
 
+release :agent do
+  set version: "1.0.0"
+  set applications: [
+    :runtime_tools,
+    :ha_agent,
+    :ha_core
+  ]
+end
+
 release :harvest do
   set version: "1.0.0"
   set applications: [
