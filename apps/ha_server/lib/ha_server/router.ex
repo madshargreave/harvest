@@ -29,6 +29,9 @@ defmodule HaServer.Router do
   scope "/api", HaServer do
     scope "/v1" do
       pipe_through :api
+
+      get "/_health", HealthController, :index
+
       resources "/config", ConfigController, only: [:index]
       resources "/queries", QueryController, only: [:index]
 
