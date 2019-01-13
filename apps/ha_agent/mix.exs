@@ -27,9 +27,9 @@ defmodule HaAgent.MixProject do
   defp deps do
     [
       # {:aws_lambda_elixir_runtime, "~> 0.1.0"},
-      {:ha_core, in_umbrella: true},
-      {:ha_plugins, in_umbrella: true},
-      {:ha_support, in_umbrella: true},
+      {:ha_core, in_umbrella: true, runtime: false},
+      {:ha_plugins, in_umbrella: true, runtime: false},
+      {:ha_support, in_umbrella: true, runtime: false},
       {:poolboy, "~> 1.5.1"},
       {:libcluster, "~> 3.0.1"}
     ]
