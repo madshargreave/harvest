@@ -31,6 +31,9 @@ use Mix.Config
 # config :ha_ingestion,
 #   record_store_adapter: HaIngestion.Records.FileStore
 
+config :ha_ingestion,
+  ecto_repos: []
+
 config :ha_ingestion, HaIngestion.Records.RecordHandler,
   adapter: {
     GenConsumer.RedisConsumer,

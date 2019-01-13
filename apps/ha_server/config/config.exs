@@ -7,6 +7,7 @@ use Mix.Config
 
 # General application configuration
 config :ha_server,
+  ecto_repos: [],
   namespace: HAServer
 
 # Configures the endpoint
@@ -56,12 +57,6 @@ config :ha_server, HaServer.RecordConsumer,
       group: "web:records",
       consumer: "web:records"
   }
-
-# config :exq,
-#   host: "127.0.0.1",
-#   port: 6379,
-#   namespace: "exq",
-#   queues: ["default"]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

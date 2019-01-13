@@ -1,11 +1,12 @@
 defmodule HaCore.Queries.Store.DefaultImpl do
   @moduledoc false
   use HaCore.Queries.QueryStore
-  import Ecto.Query
 
-  alias HaCore.Repo
+  import Ecto.Query
   alias HaCore.Queries.{QuerySchedule, Query}
   alias HaCore.Jobs.{Job, JobConfiguration}
+
+  @repo Application.get_env(:ha_core, :repo_impl) || HaCore.Repo
 
   @preloaded [:schedule]
 
@@ -26,7 +27,7 @@ defmodule HaCore.Queries.Store.DefaultImpl do
       from s in subquery(latest_queries),
       order_by: [desc: s.inserted_at]
 
-    with %{entries: entries} = result <- Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit) do
+    with %{entries: entries} = result <- @repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit) do
       entries = for entry <- entries,
         do: struct(Query, Map.put(entry, :schedule, nil))
       %{result | entries: entries}
@@ -41,12 +42,12 @@ defmodule HaCore.Queries.Store.DefaultImpl do
       order_by: [desc: q.inserted_at],
       preload: ^@preloaded
 
-    Repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
+    @repo.paginate(query, cursor_fields: [:inserted_at], limit: pagination.limit)
   end
 
   @impl true
   def get_saved_query!(user, id) do
-    Repo.one!(
+    @repo.one!(
       from q in Query,
       where: q.saved and q.id == ^id
     )
@@ -54,13 +55,13 @@ defmodule HaCore.Queries.Store.DefaultImpl do
 
   @impl true
   def stream_scheduled_queries(callback) do
-    stream = Repo.stream(
+    stream = @repo.stream(
       from q in Query,
       join: s in QuerySchedule, on: q.schedule_id == s.id,
       where: is_nil(q.deleted_at) and s.active,
       preload: ^@preloaded
     )
-    Repo.transaction(fn ->
+    @repo.transaction(fn ->
       stream
       |> Stream.map(callback)
       |> Stream.run
@@ -70,14 +71,14 @@ defmodule HaCore.Queries.Store.DefaultImpl do
   @impl true
   def get!(_user, id) do
     Query
-    |> Repo.get!(id)
-    |> Repo.preload(@preloaded)
+    |> @repo.get!(id)
+    |> @repo.preload(@preloaded)
   end
 
   @impl true
   def save(context, changeset) do
-    with {:ok, entity} <- Repo.save(context, changeset) do
-      {:ok, Repo.preload(entity, @preloaded)}
+    with {:ok, entity} <- @repo.save(context, changeset) do
+      {:ok, @repo.preload(entity, @preloaded)}
     end
   end
 

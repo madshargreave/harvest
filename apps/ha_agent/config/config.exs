@@ -29,6 +29,9 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
+config :ha_agent,
+  ecto_repos: []
+
 config :ha_agent, HaAgent.Handlers.QueryHandler,
   adapter: {
     GenConsumer.RedisConsumer,

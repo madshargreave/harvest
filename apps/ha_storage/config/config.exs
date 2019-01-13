@@ -28,6 +28,8 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 
+config :ha_storage,
+  ecto_repos: []
 
 config :ha_storage, HaStorage.Records.RecordHandler,
   adapter: {

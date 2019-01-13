@@ -10,6 +10,7 @@ defmodule HaCore.Repo do
   @callback insert_or_update(Changeset.t) :: any
   @callback get!(module, any()) :: any
   @callback transaction(function) :: {:ok, any}
+  @callback preload(any(), any()) :: any
 
   defdelegate get!(module, id), to: @repo
   defdelegate one!(queryable), to: @repo
@@ -25,7 +26,9 @@ defmodule HaCore.Repo do
       @repo.transaction(fn ->
         with {:ok, result} <- @repo.insert_or_update(changeset) do
           result = @repo.preload(result, result.__struct__.preloaded)
-          for dispatch <- Map.get(changeset, :__register_event__, []), do: dispatch.(context, result)
+          for dispatch <- Map.get(changeset, :__register_event__, []) do
+            dispatch.(context, result)
+          end
           {:ok, result}
         end
       end)

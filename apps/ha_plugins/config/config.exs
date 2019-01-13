@@ -28,6 +28,9 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 
+config :ha_plugins,
+  ecto_repos: []
+
 config :ha_plugins, HaPlugins.Dispatcher,
   adapter: GenDispatcher.RedisDispatcher
 

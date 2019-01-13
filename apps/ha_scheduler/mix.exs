@@ -21,7 +21,7 @@ defmodule HaScheduler.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {HaScheduler.Application, []},
+      # mod: {HaScheduler.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

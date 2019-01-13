@@ -28,6 +28,9 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 
+config :ha_scheduler,
+  ecto_repos: []
+
 config :ha_scheduler, HaScheduler.Scheduler,
   global: true,
   debug_logging: false
