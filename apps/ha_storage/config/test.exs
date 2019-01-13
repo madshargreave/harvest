@@ -8,3 +8,6 @@ config :ha_storage, HaStorage.Hashes.HashStore.Postgres.Repo,
   database: "harvest_test",
   hostname: "localhost",
   pool_size: 10
+
+config :ha_storage, HaCore.Dispatcher,
+  adapter: GenDispatcher.TestDispatcher

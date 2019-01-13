@@ -34,4 +34,7 @@ config :ha_plugins,
 config :ha_plugins, HaPlugins.Dispatcher,
   adapter: GenDispatcher.RedisDispatcher
 
-# import_config "#{Mix.env}.exs"
+file = "#{Mix.env}.exs"
+if File.exists? file do
+  import_config file
+end

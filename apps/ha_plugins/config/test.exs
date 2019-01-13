@@ -1,4 +1,4 @@
 use Mix.Config
 
-config :ha_ingestion, HaCore.Dispatcher,
+config :ha_plugins, HaCore.Dispatcher,
   adapter: GenDispatcher.TestDispatcher
