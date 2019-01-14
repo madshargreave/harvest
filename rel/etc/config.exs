@@ -42,6 +42,7 @@ config :ha_core, HaCore.Repo.EctoImpl,
   password: System.get_env("DATABASE_PASS"),
   database: System.get_env("DATABASE_NAME"),
   hostname: System.get_env("DATABASE_HOST"),
+  port: System.get_env("DATABASE_PORT"),
   pool_size: 10
 
 config :exd_streams, ExdStreams.Store.RelationalStore.RecordRepo,
@@ -49,6 +50,7 @@ config :exd_streams, ExdStreams.Store.RelationalStore.RecordRepo,
   password: System.get_env("DATABASE_PASS"),
   database: System.get_env("DATABASE_NAME"),
   hostname: System.get_env("DATABASE_HOST"),
+  port: System.get_env("DATABASE_PORT"),
   pool_size: 10
 
 config :ha_storage, HaStorage.Hashes.HashStore.Postgres.Repo,
@@ -56,6 +58,7 @@ config :ha_storage, HaStorage.Hashes.HashStore.Postgres.Repo,
   password: System.get_env("DATABASE_PASS"),
   database: System.get_env("DATABASE_NAME"),
   hostname: System.get_env("DATABASE_HOST"),
+  port: System.get_env("DATABASE_PORT"),
   pool_size: 10
 
 config :ha_core, HaCore.Jobs.JobHandler,
