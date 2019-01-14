@@ -62,7 +62,7 @@ defmodule HaServer.Router do
         version: "1.0",
         title: "Harvest API"
       },
-      schemes: ["http"],
+      schemes: ["https"],
       consumes: "application/json",
       produces: "application/json",
       basePath: "/api/v1"
