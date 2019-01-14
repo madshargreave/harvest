@@ -12,7 +12,7 @@ defmodule HaDSL.Application do
     import Supervisor.Spec
 
     # Define workers and child supervisors to be supervised
-    path = "node_modules/harvest-sql"
+    path = :code.priv_dir(:ha_dsl) |> to_string
     children = [
       supervisor(NodeJS, [[path: path, pool_size: 4]])
     ]

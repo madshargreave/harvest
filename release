@@ -1,2 +1,0 @@
-mix release --name=agent
-mix release --name=server

@@ -23,7 +23,7 @@ defmodule HaDSL do
   end
 
   defp call(operation, args) do
-    NodeJS.call({"dist/bundle.js", operation}, args)
+    NodeJS.call({"parser.js", operation}, args)
   rescue
     exception ->
       Logger.error("Failed to parse query: #{inspect exception}")
