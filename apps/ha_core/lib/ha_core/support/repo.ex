@@ -22,12 +22,18 @@ defmodule HaCore.Repo do
   defdelegate transaction(callback), to: @repo
 
   def save(context, changeset) do
+    IO.inspect "Starting transaction..."
     transaction_result =
       @repo.transaction(fn ->
+        IO.inspect "Inside transaction"
         with {:ok, result} <- @repo.insert_or_update(changeset) do
+          IO.inspect "Insert complete. Preloading..."
           result = @repo.preload(result, result.__struct__.preloaded)
+          IO.inspect "Preload complete"
           for dispatch <- Map.get(changeset, :__register_event__, []) do
+            IO.inspect "Dispatching event..."
             dispatch.(context, result)
+            IO.inspect "Event dispatched"
           end
           {:ok, result}
         end
