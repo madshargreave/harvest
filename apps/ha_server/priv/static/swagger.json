@@ -662,7 +662,6 @@
         "query",
         "saved",
         "status",
-        "deleted_at",
         "schedule",
         "inserted_at",
         "updated_at"

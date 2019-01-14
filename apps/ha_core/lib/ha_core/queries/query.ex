@@ -20,7 +20,7 @@ defmodule HaCore.Queries.Query do
     field :query, :string
     field :saved, :boolean
     field :status, :string
-    field :deleted_at, :naive_datetime
+    field :deleted_at, :naive_datetime, required: false
     # field :deleted_by, :binary_id
     belongs_to :schedule, QuerySchedule
     timestamps()

@@ -37,7 +37,7 @@ config :ha_core, HaCore.Repo.EctoImpl,
   adapter: Ecto.Adapters.Postgres
 
 config :ha_core,
-  repo_impl: HaCore.Repo.EctoImpl
+  repo_impl: HaCore.Repo
 
 config :ha_core, HaCore.Jobs.JobHandler,
   adapter: {
