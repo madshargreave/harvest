@@ -3,6 +3,7 @@ defmodule HaAgent.Handlers.QueryHandler do
   Runs and schedules queries
   """
   use GenConsumer, otp_app: :ha_agent
+  require Logger
 
   alias ExdStreams.Api.Commands.SelectCommand
   alias HaSupport.DomainEvent
@@ -13,6 +14,7 @@ defmodule HaAgent.Handlers.QueryHandler do
     type: :job_created,
     data: job
   } = event) do
+    Logger.info "[Agent] received query event"
     context = %{id: event.actor_id}
 
     command =
@@ -34,6 +36,7 @@ defmodule HaAgent.Handlers.QueryHandler do
 
   @impl true
   def handle_event(_) do
+    Logger.info "[Agent] ignoring event..."
     :ok
   end
 
