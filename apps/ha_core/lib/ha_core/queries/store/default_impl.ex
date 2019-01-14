@@ -77,8 +77,10 @@ defmodule HaCore.Queries.Store.DefaultImpl do
 
   @impl true
   def save(context, changeset) do
+    IO.inspect "Saving: #{inspect changeset}"
     with {:ok, entity} <- @repo.save(context, changeset) do
-      {:ok, @repo.preload(entity, @preloaded)}
+      IO.inspect "Success! #{inspect entity}"
+      {:ok, @repo.preload(entity, @preloaded)} |> IO.inspect
     end
   end
 
