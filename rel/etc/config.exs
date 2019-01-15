@@ -31,6 +31,9 @@ use Mix.Config
 host = System.get_env("HOST") || "localhost"
 port = String.to_integer(System.get_env("PORT") || "4000")
 
+redis = System.get_env("REDIS_HOST")
+IO.puts "Connecting to Redis: #{redis}"
+
 config :ha_server, HaServer.Endpoint,
   load_from_system_env: true,
   http: [port: port],
