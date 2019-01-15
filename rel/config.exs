@@ -105,10 +105,10 @@ release :harvest do
     :ha_dsl,
     # :ha_scheduler,
     :ha_support,
-    # :ha_plugins,
-    # :ha_ingestion,
-    # :ha_storage,
-    # :ha_agent
+    :ha_plugins,
+    :ha_ingestion,
+    :ha_storage,
+    :ha_agent
   ]
 
   set commands: [
