@@ -19,7 +19,7 @@ defmodule HaStorage.Records.RecordService do
   Save records to table
   """
   def save(records) do
-    with {:ok, _} <- ElasticStore.save(records) do
+    # with {:ok, _} <- ElasticStore.save(records) do
       tables =
         records
         |> Enum.map(& &1.table)
@@ -28,14 +28,15 @@ defmodule HaStorage.Records.RecordService do
         type: :table_updates,
         ids: tables
       })
-    end
+    # end
   end
 
   @doc """
   Search records to table
   """
   def search(query) do
-    ElasticStore.search(query)
+    {:ok, []}
+    # ElasticStore.search(query)
   end
 
 end
