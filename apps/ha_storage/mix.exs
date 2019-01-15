@@ -37,7 +37,12 @@ defmodule HaStorage.Mixfile do
     [
       {:ha_support, in_umbrella: true},
       {:postgrex, ">= 0.0.0"},
-      {:elasticsearch, "~> 0.6.1"}
+      {:elasticsearch, "~> 0.6.1"},
+      {:ex_aws, "~> 2.1"},
+      {:ex_aws_s3, "~> 2.0"},
+      {:hackney, "~> 1.9"},
+      {:sweet_xml, "~> 0.6"},
+      {:httpotion, "~> 3.1.0"}
     ]
   end
 

@@ -17,7 +17,8 @@ defmodule HaIngestion.Records.RecordHandler do
       for %{key: key, value: value} <- records do
         %Hash{key: key, table_id: table_id, value: value}
       end
-    HaStorage.save(hashes)
+
+    HaStorage.save(%Table{id: table_id}, hashes)
     :ok
   end
 

@@ -136,23 +136,7 @@ config :ha_server, HaServer.RecordConsumer,
       host: System.get_env("REDIS_HOST")
   }
 
-config :ha_storage, HaStorage.Records.RecordHandler,
-  adapter: {
-    GenConsumer.RedisConsumer,
-      topics: ["event:storage"],
-      group: "storage:records",
-      consumer: "consumer-1",
-      host: System.get_env("REDIS_HOST"),
-      max_batch_size: 1000
-  }
-
 config :ha_core, HaCore.Dispatcher,
-  adapter: {
-    GenDispatcher.RedisDispatcher,
-      host: System.get_env("REDIS_HOST")
-  }
-
-config :ha_storage, HaStorage.Dispatcher,
   adapter: {
     GenDispatcher.RedisDispatcher,
       host: System.get_env("REDIS_HOST")
@@ -175,3 +159,29 @@ config :exd_streams, ExdStreams.Plugins.Dispatcher,
     GenDispatcher.RedisDispatcher,
       host: System.get_env("REDIS_HOST")
   }
+
+## Storage
+
+config :ha_storage, HaStorage.Records.RecordHandler,
+  adapter: {
+    GenConsumer.RedisConsumer,
+      topics: ["event:storage"],
+      group: "storage:records",
+      consumer: "consumer-1",
+      host: System.get_env("REDIS_HOST"),
+      max_batch_size: 1000
+  }
+
+config :ha_storage, HaStorage.Dispatcher,
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
+
+config :ha_storage, HaStorage.Records.S3Store,
+  bucket_name: System.get_env("TABLE_BUCKET_NAME")
+
+config :ex_aws,
+  access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}, :instance_role],
+  secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, :instance_role],
+  region: System.get_env("AWS_DEFAULT_REGION")

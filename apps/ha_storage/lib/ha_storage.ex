@@ -26,14 +26,14 @@ defmodule HaStorage do
   @doc """
   Saves records into table
   """
-  @spec save(hashes) :: {:ok, Integer.t} | {:error, Atom.t}
-  defdelegate save(hashes), to: HashService
+  @spec save(table_id, hashes) :: {:ok, Integer.t} | {:error, Atom.t}
+  defdelegate save(table, hashes), to: RecordStore
 
   @doc """
   List records in table
   """
   @spec list(table_id) :: {:ok, Integer.t} | {:error, Atom.t}
-  defdelegate list(table_id), to: RecordService
+  defdelegate list(table_id), to: RecordStore
 
   @doc """
   List records in table
