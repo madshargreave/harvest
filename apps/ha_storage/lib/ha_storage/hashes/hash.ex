@@ -9,7 +9,7 @@ defmodule HaStorage.Hashes.Hash do
   @foreign_key_type :string
 
   schema "records" do
-    field :table_id, :string
+    field :table_id, :binary_id
     field :state, :string
     field :status, :string
     field :value, :map
