@@ -11,7 +11,8 @@ defmodule HaStorage.Records.RecordService do
   List records in table
   """
   def list(table) do
-    ElasticStore.list(table)
+    {:ok, []}
+    # ElasticStore.list(table)
   end
 
   @doc """
