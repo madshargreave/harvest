@@ -106,8 +106,8 @@ release :harvest do
     # :ha_scheduler,
     :ha_support,
     :ha_plugins,
-    :ha_ingestion,
-    :ha_storage,
+    # :ha_ingestion,
+    # :ha_storage,
     :ha_agent
   ]
 
