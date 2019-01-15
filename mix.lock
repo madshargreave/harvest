@@ -39,7 +39,7 @@
   "floki": {:hex, :floki, "0.20.4", "be42ac911fece24b4c72f3b5846774b6e61b83fe685c2fc9d62093277fb3bc86", [:mix], [{:html_entities, "~> 0.4.0", [hex: :html_entities, repo: "hexpm", optional: false]}, {:mochiweb, "~> 2.15", [hex: :mochiweb, repo: "hexpm", optional: false]}], "hexpm"},
   "flow": {:hex, :flow, "0.14.3", "0d92991fe53035894d24aa8dec10dcfccf0ae00c4ed436ace3efa9813a646902", [:mix], [{:gen_stage, "~> 0.14.0", [hex: :gen_stage, repo: "hexpm", optional: false]}], "hexpm"},
   "gen_buffer": {:hex, :gen_buffer, "0.1.0", "42f8c0386b06ee67d3042e2fe7929433e9e5e33ba4875a1d6087a73cf27101a5", [:mix], [], "hexpm"},
-  "gen_consumer": {:hex, :gen_consumer, "0.2.15", "1f85f90ed7fbe119148394477505480df6bd06aaaaa87d29c7391dc9ad61701a", [:mix], [{:redix, ">= 0.0.0", [hex: :redix, repo: "hexpm", optional: false]}], "hexpm"},
+  "gen_consumer": {:hex, :gen_consumer, "0.2.16", "843d715941c1d834705c36aa66f8ecf61b8ba33fd29a529a393a60615e847f7a", [:mix], [{:redix, ">= 0.0.0", [hex: :redix, repo: "hexpm", optional: false]}], "hexpm"},
   "gen_dispatcher": {:hex, :gen_dispatcher, "0.2.7", "e6146d8b7f83f8f5f3193ae92c73d7ff3f9df8e7652c4f58145d4cc116017ed0", [:mix], [], "hexpm"},
   "gen_queue": {:hex, :gen_queue, "0.1.8", "5be3fa71d0ceb4ed825dcdd3f5333470f71f7fb73f2be733acad002ad2b21588", [:mix], [], "hexpm"},
   "gen_queue_exq": {:hex, :gen_queue_exq, "0.1.3", "c56582ab5323dc1c26e4a5ee086fbaeee5ea80018b5a4224f3cd1050c49e041e", [:mix], [{:exq, "~> 0.10.1", [hex: :exq, repo: "hexpm", optional: false]}, {:gen_queue, "~> 0.1.5", [hex: :gen_queue, repo: "hexpm", optional: false]}], "hexpm"},
