@@ -40,14 +40,14 @@ config :ha_agent, HaAgent.Handlers.QueryHandler,
       consumer: "agent"
   }
 
-# config :exd,
-#   plugins: [
-#     Exd.Plugin.HTMLParseList,
-#     Exd.Plugin.HTMLParseText,
-#     Exd.Plugin.HTMLParseAttr,
-#     HaPlugins.FetchPlugin,
-#     HaPlugins.TablePlugin
-#   ]
+config :exd,
+  plugins: [
+    Exd.Plugin.HTMLParseList,
+    Exd.Plugin.HTMLParseText,
+    Exd.Plugin.HTMLParseAttr,
+    HaPlugins.FetchPlugin,
+    HaPlugins.TablePlugin
+  ]
 
 # config :exq,
 #   host: "127.0.0.1",

@@ -8,7 +8,7 @@ defmodule HaPlugins do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # supervisor(HaPlugins.Dispatcher, []),
+      supervisor(HaPlugins.Dispatcher, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
