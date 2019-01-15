@@ -16,7 +16,7 @@ defmodule HaStorage.Application do
       HaStorage.Dispatcher,
       supervisor(HaStorage.Elastic.Supervisor, []),
       supervisor(HaStorage.Hashes.HashSupervisor, []),
-      # HaStorage.Records.RecordHandler,
+      HaStorage.Records.RecordHandler,
       HaStorage.Records.RecordWriter
     ]
 

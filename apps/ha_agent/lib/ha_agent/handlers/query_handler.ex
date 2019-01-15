@@ -36,7 +36,6 @@ defmodule HaAgent.Handlers.QueryHandler do
 
   @impl true
   def handle_event(_) do
-    Logger.info "[Agent] ignoring event..."
     :ok
   end
 
