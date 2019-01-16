@@ -1,5 +1,6 @@
 defmodule HaStorage.Records.RecordStore do
   @moduledoc false
+  alias HaSupport.Pagination
   alias HaStorage.Records
   alias HaStorage.Records.Record
   alias HaStorage.Records.S3Store
@@ -15,8 +16,8 @@ defmodule HaStorage.Records.RecordStore do
   @doc """
   Delegates to storage layer based on table and saves records
   """
-  @callback list(HaStorage.table) :: {:ok, Storage.records} | :error
-  defdelegate list(table), to: @adapter
+  @callback list(HaStorage.table, Pagination.t) :: {:ok, Storage.records} | :error
+  defdelegate list(table, pagination), to: @adapter
 
   @doc """
   Delegates to storage layer based on table and saves records

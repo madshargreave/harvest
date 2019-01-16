@@ -5,27 +5,36 @@ defmodule HaStorage.Records.S3Store do
   use HaStorage.Records.RecordStore
   require Logger
 
+  alias HaSupport.Pagination
   alias ExAws.S3
   alias :zlib, as: Zlib
   alias HaStorage.Tables.Table
+  alias HaStorage.Records.S3Store.Lazy
 
   @impl true
-  def list(%Table{id: table_id} = _table) do
+  def list(%Table{id: table_id}, pagination) do
     key = get_object_name(table_id)
     bucket_name = get_bucket_name()
     opts = []
-    operation = S3.get_object(bucket_name, key, opts)
-    case ExAws.request(operation) do
-      {:ok, %{body: body} = _resp} ->
-        records =
-          body
-          |> Zlib.gunzip
-          |> String.split("\n")
-          |> Enum.map(&Poison.decode!(&1))
-        {:ok, records}
-      {:error, {:http_error, 404, _}} ->
+    records =
+      Lazy.stream(bucket_name, key)
+      |> Stream.transform(0, fn row, curr_index ->
+        cond do
+          curr_index < pagination.offset ->
+            {[], curr_index + 1}
+          curr_index < pagination.offset + pagination.limit ->
+            {[row], curr_index + 1}
+          true ->
+            {:halt, curr_index}
+        end
+      end)
+      |> Enum.join(",")
+      |> (fn result -> "[#{result}]" end).()
+      |> Poison.decode!
+    {:ok, records}
+    rescue
+      _exp ->
         {:ok, []}
-    end
   end
 
   @impl true

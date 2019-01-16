@@ -3,6 +3,8 @@ defmodule HaStorage do
   Data storage
   """
   alias Exd.AST.Query
+
+  alias HaSupport.Pagination
   alias HaStorage.Records.{Record, RecordService, RecordStore}
   alias HaStorage.Hashes.{Hash, HashService, HashStore}
   alias HaStorage.Tables.Table
@@ -16,6 +18,7 @@ defmodule HaStorage do
   @type hashes :: [hash]
   @type record :: Record.t
   @type records :: [record]
+  @type pagination :: Pagination.t
 
   @doc """
   Retrieve a list of records by ID
@@ -32,8 +35,8 @@ defmodule HaStorage do
   @doc """
   List records in table
   """
-  @spec list(table_id) :: {:ok, Integer.t} | {:error, Atom.t}
-  defdelegate list(table_id), to: RecordStore
+  @spec list(table, pagination) :: {:ok, Integer.t} | {:error, Atom.t}
+  defdelegate list(table, pagination), to: RecordStore
 
   @doc """
   List records in table

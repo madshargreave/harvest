@@ -17,13 +17,13 @@ defmodule HaCore.Records.Store.DefaultImpl do
 
   defp do_get_user_table_records(%Table{id: table_id, saved: true} = table, pagination) do
     table = %HaStorage.Tables.Table{id: table_id, temporary: false}
-    {:ok, records} = HaStorage.list(table)
+    {:ok, records} = HaStorage.list(table, pagination)
     records
   end
 
   defp do_get_user_table_records(%Table{id: table_id, saved: false} = table, pagination) do
     table = %HaStorage.Tables.Table{id: table_id, temporary: true}
-    {:ok, records} = HaStorage.list(table)
+    {:ok, records} = HaStorage.list(table, pagination)
     records
   end
 
