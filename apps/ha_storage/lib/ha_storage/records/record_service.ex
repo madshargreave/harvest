@@ -5,38 +5,17 @@ defmodule HaStorage.Records.RecordService do
   alias HaStorage.Dispatcher
   alias HaStorage.Records
   alias HaStorage.Records.{Record, RecordStore}
-  alias HaStorage.Records.{FileStore, ElasticStore}
-
-  @doc """
-  List records in table
-  """
-  def list(table) do
-    {:ok, []}
-    # ElasticStore.list(table)
-  end
 
   @doc """
   Save records to table
   """
-  def save(records) do
-    # with {:ok, _} <- ElasticStore.save(records) do
-      tables =
-        records
-        |> Enum.map(& &1.table)
-        |> Enum.uniq
+  def save(table, records) do
+    with {:ok, _} <- RecordStore.save(table, records) do
       Dispatcher.dispatch(%{
         type: :table_updates,
-        ids: tables
+        ids: [table.id]
       })
-    # end
-  end
-
-  @doc """
-  Search records to table
-  """
-  def search(query) do
-    {:ok, []}
-    # ElasticStore.search(query)
+    end
   end
 
 end

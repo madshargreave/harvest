@@ -11,6 +11,8 @@ defmodule HaStorage.Records.S3Store do
   alias HaStorage.Tables.Table
   alias HaStorage.Records.S3Store.Lazy
 
+  @limit 100
+
   @impl true
   def list(%Table{id: table_id}, pagination) do
     key = get_object_name(table_id)
@@ -22,7 +24,7 @@ defmodule HaStorage.Records.S3Store do
         cond do
           curr_index < pagination.offset ->
             {[], curr_index + 1}
-          curr_index < pagination.offset + pagination.limit ->
+          curr_index < pagination.offset + @limit ->
             {[row], curr_index + 1}
           true ->
             {:halt, curr_index}
