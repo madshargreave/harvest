@@ -17,9 +17,7 @@ defmodule HaServer.QueriesTest do
 
   def invalid_params(_context) do
     [
-      params: %{
-        "email" => "mads.hargreave@gmail.com"
-      }
+      params: %{}
     ]
   end
 
