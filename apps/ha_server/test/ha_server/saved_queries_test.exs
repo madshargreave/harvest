@@ -1,5 +1,6 @@
 defmodule HaServer.QueriesTest do
   use HaServer.ConnCase
+  use GenDispatcher.Test
   import Mox
   alias HaCore.Queries.{Query, QuerySchedule, QueryStoreMock}
 
