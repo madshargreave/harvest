@@ -4,7 +4,7 @@ defmodule HaServer.Plugs.CurrentUserPlug do
   """
   import Plug.Conn
 
-  @user %HaCore.Accounts.User{id: "d5660ce8-6279-45ff-abcd-616f84fc51fe"}
+  @user %HaCore.Users.User{id: "d5660ce8-6279-45ff-abcd-616f84fc51fe"}
 
   def init(default) do
     default

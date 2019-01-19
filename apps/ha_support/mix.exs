@@ -9,7 +9,7 @@ defmodule HASupport.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.7",
+      elixir: "~> 1.8",
       elixirc_paths: elixirc_paths(Mix.env),
       start_permanent: Mix.env == :prod,
       deps: deps()
@@ -34,14 +34,15 @@ defmodule HASupport.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:exd, "~> 0.1.29"},
+      {:exd, "~> 0.1.31"},
       {:exd_plugin_html, "~> 0.1.1"},
       {:exd_codegen_elastic, "~> 0.1.0"},
       {:gen_dispatcher, ">= 0.0.0"},
       {:gen_consumer, ">= 0.2.6"},
       {:gen_buffer, "~> 0.1.0"},
       {:swagger_ecto, "~> 0.2.2"},
-      {:ecto, "~> 2.1.6"},
+      {:ecto_sql, "~> 3.0", override: true},
+      {:postgrex, ">= 0.0.0"},
       {:redix, ">= 0.0.0"},
       {:redix_stream, "~> 0.1.3"},
       {:poison, "~> 3.1.0"},

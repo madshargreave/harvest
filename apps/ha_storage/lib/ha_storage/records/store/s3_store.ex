@@ -14,7 +14,7 @@ defmodule HaStorage.Records.S3Store do
   @limit 100
 
   @impl true
-  def list(%Table{id: table_id}, pagination) do
+  def list(%Table{id: table_id} = table, pagination) do
     key = get_object_name(table_id)
     bucket_name = get_bucket_name()
     opts = []
@@ -35,8 +35,9 @@ defmodule HaStorage.Records.S3Store do
       |> Poison.decode!
     {:ok, records}
     rescue
-      _exp ->
-        {:ok, []}
+      exception in Poison.SyntaxError ->
+        :timer.sleep(500)
+        list(table, pagination)
   end
 
   @impl true
