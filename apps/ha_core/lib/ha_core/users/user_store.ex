@@ -14,6 +14,12 @@ defmodule HaCore.Users.UserStore do
   @callback find_user_by_token(Users.token) :: {:ok, User.t} | {:error, Atom.t}
   defdelegate find_user_by_token(token), to: @adapter
 
+  @doc """
+  Upserts a user
+  """
+  @callback save(HaCore.context, Ecto.Changeset.t) :: {:ok, User.t} | {:error, Ecto.InvalidChangesetError.t}
+  defdelegate save(context, changeset), to: @adapter
+
   @doc false
   defmacro __using__(_opts) do
     quote do

@@ -2,6 +2,7 @@ defmodule HaCore.Queries.QueryStore do
   @moduledoc """
   Account store
   """
+  alias Ecto.Changeset
   alias HaCore.Queries
   alias HaCore.Queries.Query
   alias HaCore.Queries.Store.DefaultImpl

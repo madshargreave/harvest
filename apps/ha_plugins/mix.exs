@@ -35,8 +35,7 @@ defmodule HaPlugins.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:ha_support, in_umbrella: true},
-      {:httpoison, "~> 1.4"}
+      {:ha_support, in_umbrella: true}
     ]
   end
 
