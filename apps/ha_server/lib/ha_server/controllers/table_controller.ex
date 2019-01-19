@@ -15,7 +15,7 @@ defmodule HaServer.TableController do
     response 200, "Success", Schema.ref(:TableListResponse)
   end
 
-  def index(conn, params) do
+  def index(conn, _params) do
     page = Tables.list_tables(conn.assigns.user, conn.assigns.pagination)
     render(conn, "index.json", tables: page.entries, paging: page.metadata)
   end

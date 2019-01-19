@@ -20,8 +20,8 @@ defmodule HaServer.RecordChannel do
     case Records.list_records(user, table_id, pagination) do
       %{entries: records} ->
         records
-      _ ->
-        []
+      # _ ->
+      #   []
 
     end
   end

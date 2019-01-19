@@ -11,7 +11,7 @@ defmodule HaServer.ConfigController do
     response 200, "Success", Schema.ref(:ConfigResponse)
   end
 
-  def index(conn, params) do
+  def index(conn, _params) do
     config = %{
       api_base: "http://localhost:4000"
     }

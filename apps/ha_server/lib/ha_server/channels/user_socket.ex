@@ -21,8 +21,8 @@ defmodule HaServer.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  @max_age 24 * 60 * 60
-  def connect(%{"token" => token}, socket) do
+  # @max_age 24 * 60 * 60
+  def connect(%{"token" => _token}, socket) do
     # case Phoenix.Token.verify(socket, "user token", token, max_age: @max_age) do
     #   {:ok, user_id} ->
         {:ok, assign(socket, :current_user_id, "mads")}

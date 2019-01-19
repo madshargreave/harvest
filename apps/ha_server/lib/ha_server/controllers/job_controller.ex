@@ -15,7 +15,7 @@ defmodule HaServer.JobController do
     response 200, "Success", Schema.ref(:JobListResponse)
   end
 
-  def index(conn, params) do
+  def index(conn, _params) do
     page = Jobs.list_jobs(conn.assigns.user, conn.assigns.pagination)
     render(conn, "index.json", jobs: page.entries, paging: page.metadata)
   end

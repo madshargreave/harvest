@@ -7,6 +7,7 @@ defmodule HaCore.Users.User do
 
   schema "users" do
     field :admin, :boolean, default: false
+    field :confirmed, :boolean, default: false
     field :email, :string
     field :password, :string
     field :password_confirm, :string, virtual: true
@@ -28,8 +29,9 @@ defmodule HaCore.Users.User do
     |> cast(%{
       email: email,
       password: password,
-      password_confirm: password_confirm
+      password_confirm: password_confirm,
     }, optional ++ required)
+    |> put_change(:admin, true)
     |> unique_constraint(:email, message: "User with email already exists")
     |> validate_required(required)
   end

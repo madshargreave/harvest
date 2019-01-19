@@ -435,6 +435,41 @@
         "operationId": "get_config",
         "description": "List app configuration"
       }
+    },
+    "/auth/accounts": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "",
+        "responses": {
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/User"
+            },
+            "description": "Invalid parameters"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/UserSingleResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/RegisterUserCommand"
+            },
+            "required": false,
+            "name": "account",
+            "in": "body",
+            "description": "Account attributes"
+          }
+        ],
+        "operationId": "create_account",
+        "description": "Create a new account"
+      }
     }
   },
   "info": {
@@ -443,6 +478,56 @@
   },
   "host": "localhost:4000",
   "definitions": {
+    "Users": {
+      "type": "array",
+      "title": "Users",
+      "items": {
+        "$ref": "#/definitions/User"
+      }
+    },
+    "UserSingleResponse": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "description": "",
+          "$ref": "#/definitions/User"
+        }
+      }
+    },
+    "User": {
+      "title": "User",
+      "required": [
+        "id",
+        "admin",
+        "confirmed",
+        "email",
+        "inserted_at",
+        "updated_at"
+      ],
+      "properties": {
+        "updated_at": {
+          "type": "string"
+        },
+        "inserted_at": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "confirmed": {
+          "type": "boolean"
+        },
+        "admin": {
+          "type": "boolean"
+        }
+      }
+    },
     "Tables": {
       "type": "array",
       "title": "Tables",
@@ -565,6 +650,25 @@
           "type": "string"
         },
         "name": {
+          "type": "string"
+        }
+      }
+    },
+    "RegisterUserCommand": {
+      "title": "RegisterUserCommand",
+      "required": [
+        "email",
+        "password",
+        "password_confirm"
+      ],
+      "properties": {
+        "password_confirm": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "email": {
           "type": "string"
         }
       }
@@ -932,6 +1036,5 @@
       }
     }
   },
-  "consumes": "application/json",
-  "basePath": "/api/v1"
+  "consumes": "application/json"
 }

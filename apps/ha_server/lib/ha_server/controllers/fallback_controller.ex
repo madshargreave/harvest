@@ -15,6 +15,6 @@ defmodule HaServer.FallbackController do
   def call(conn, {:error, :not_found}) do
     conn
     |> put_status(:not_found)
-    |> render(HaServer.ErrorView, :"404")
+    # |> render(HaServer.ErrorView, :"404")
   end
 end

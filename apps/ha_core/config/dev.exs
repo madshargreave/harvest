@@ -23,3 +23,10 @@ config :exd_streams, ExdStreams.Store.RelationalStore.RecordRepo,
   database: "harvest_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :aws,
+  key: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  region: System.get_env("AWS_DEFAULT_REGION"),
+  client_id: System.get_env("AWS_CLIENT_ID"),
+  user_pool_id: System.get_env("AWS_USER_POOL_ID")

@@ -33,30 +33,19 @@ defmodule HaCore.UsersTest do
     setup [:valid_command, :verify_on_exit!]
 
     test "it creates and returns query", context do
-      assert {:ok, user} = Users.register_user(context.command)
+      assert {:ok, %User{} = user} = Users.register_user(context.command)
       assert user.email == context.command.email
     end
-
-    # test "it emits a domain event", context do
-    #   assert {:ok, query} = Users.save_query(context.user, context.command)
-    #   assert_dispatched "event:core", event
-    #   assert event.type == :query_saved
-    #   assert event.data.name == context.command.name
-    #   assert event.data.query == context.command.query
-    # end
   end
 
-  # describe "when saving a user with invalid params" do
-  #   setup [:invalid_command]
+  describe "when saving a user with invalid params" do
+    setup [:invalid_command]
 
-  #   test "it returns a changeset with errors", context do
-  #     assert {:error, changeset} = Users.save_query(context.user, context.command)
-  #     assert length(changeset.errors) > 0
-  #   end
+    test "it returns a changeset with errors", context do
+      assert {:error, changeset} = Users.register_user(context.command)
+      assert length(changeset.errors) > 0
+    end
 
-  #   test "it does not emit a domain event", context do
-  #     assert {:error, changeset} = Users.save_query(context.user, context.command)
-  #   end
-  # end
+  end
 
 end

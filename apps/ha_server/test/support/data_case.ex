@@ -1,4 +1,4 @@
-defmodule HAServer.DataCase do
+defmodule HaServer.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,16 +16,29 @@ defmodule HAServer.DataCase do
 
   using do
     quote do
+      alias HaServer.Repo
+
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import HaServer.DataCase
     end
   end
 
-  @doc """
-  A helper that transform changeset errors to a map of messages.
+  setup _tags do
+    # :ok = Ecto.Adapters.SQL.Sandbox.checkout(HaServer.Repo)
 
-      assert {:error, changeset} = Users.create_user(%{password: "short"})
+    # unless tags[:async] do
+    #   Ecto.Adapters.SQL.Sandbox.mode(HaServer.Repo, {:shared, self()})
+    # end
+
+    :ok
+  end
+
+  @doc """
+  A helper that transforms changeset errors into a map of messages.
+
+      assert {:error, changeset} = Accounts.create_user(%{password: "short"})
       assert "password is too short" in errors_on(changeset).password
       assert %{password: ["password is too short"]} = errors_on(changeset)
 
