@@ -11,7 +11,7 @@ defmodule HaCore.Jobs.JobConfiguration do
 
   swagger_schema "job_configurations" do
     field :query, :string
-    field :ast, :map
+    field :ast, :map, virtual: true
   end
 
   @spec changeset(map) :: Changeset.t

@@ -8,11 +8,11 @@ config :ha_core, HaCore.Dispatcher,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# # Configure your database
-# config :ha_core, HaCore.Repo.EctoImpl,
-#   adapter: Ecto.Adapters.Postgres,
-#   username: "postgres",
-#   password: "postgres",
-#   database: "harvest_test",
-#   hostname: "localhost",
-#   pool: Ecto.Adapters.SQL.Sandbox
+# Configure your database
+config :ha_core, HaCore.Repo.EctoImpl,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "harvest_test",
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox

@@ -16,7 +16,7 @@ defmodule HaServer.RecordChannel do
 
   defp get_records(table_id) do
     pagination = %Pagination{limit: 50}
-    user = %HaCore.Accounts.User{id: "sadad"}
+    user = %HaCore.Users.User{id: "sadad"}
     case Records.list_records(user, table_id, pagination) do
       %{entries: records} ->
         records

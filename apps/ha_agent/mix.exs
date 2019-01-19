@@ -9,7 +9,7 @@ defmodule HaAgent.MixProject do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.7",
+      elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -30,7 +30,7 @@ defmodule HaAgent.MixProject do
       {:ha_core, in_umbrella: true, runtime: false},
       {:ha_plugins, in_umbrella: true, runtime: false},
       {:ha_support, in_umbrella: true, runtime: false},
-      {:exd_streams, "~> 0.0.1"},
+      {:exd_streams, "~> 0.0.4"},
       {:poolboy, "~> 1.5.1"},
       {:libcluster, "~> 3.0.1"}
     ]

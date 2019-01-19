@@ -4,7 +4,7 @@ defmodule HaCore.QueriesTest do
   import Mox
 
   alias HaCore.{TestUtils}
-  alias HaCore.Accounts.User
+  alias HaCore.Users.User
   alias HaCore.Queries
   alias HaCore.Queries.{QueryCommands, QueryStoreMock}
 

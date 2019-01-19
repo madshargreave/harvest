@@ -1,4 +1,4 @@
-defmodule HaCore.Accounts.User do
+defmodule HaCore.Users.User do
   @moduledoc """
   User model
   """
