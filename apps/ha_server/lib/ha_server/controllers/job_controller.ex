@@ -7,7 +7,7 @@ defmodule HaServer.JobController do
   action_fallback HaServer.FallbackController
 
   swagger_path :index do
-    get "/jobs"
+    get "/api/v1/jobs"
     description "List jobs"
     tag "Jobs"
     paging
@@ -21,7 +21,7 @@ defmodule HaServer.JobController do
   end
 
   swagger_path :show do
-    get "/jobs/{id}"
+    get "/api/v1/jobs/{id}"
     description "Get job"
     tag "Jobs"
     parameters do
@@ -38,7 +38,7 @@ defmodule HaServer.JobController do
   end
 
   swagger_path :create do
-    post "/jobs"
+    post "/api/v1/jobs"
     description "Create a new job"
     tag "Jobs"
     parameters do

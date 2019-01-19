@@ -5,7 +5,61 @@
   ],
   "produces": "application/json",
   "paths": {
-    "/tables/{table_id}/records": {
+    "/config": {
+      "get": {
+        "tags": [
+          "Config"
+        ],
+        "summary": "",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ConfigResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [],
+        "operationId": "get_config",
+        "description": "List app configuration"
+      }
+    },
+    "/auth/accounts": {
+      "post": {
+        "tags": [
+          "Accounts"
+        ],
+        "summary": "",
+        "responses": {
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/User"
+            },
+            "description": "Invalid parameters"
+          },
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/UserSingleResponse"
+            },
+            "description": "Success"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/RegisterUserCommand"
+            },
+            "required": false,
+            "name": "account",
+            "in": "body",
+            "description": "Account attributes"
+          }
+        ],
+        "operationId": "create_account",
+        "description": "Create a new account"
+      }
+    },
+    "/api/v1/tables/{table_id}/records": {
       "get": {
         "tags": [
           "Records"
@@ -48,7 +102,7 @@
         "description": "List records"
       }
     },
-    "/tables/{table_id}": {
+    "/api/v1/tables/{table_id}": {
       "delete": {
         "tags": [
           "Tables"
@@ -81,7 +135,7 @@
         "description": "Delete table"
       }
     },
-    "/tables/{id}": {
+    "/api/v1/tables/{id}": {
       "get": {
         "tags": [
           "Tables"
@@ -111,7 +165,7 @@
         "description": "Get table"
       }
     },
-    "/tables": {
+    "/api/v1/tables": {
       "post": {
         "tags": [
           "Tables"
@@ -180,7 +234,7 @@
         "description": "List tables"
       }
     },
-    "/saved_queries/{query_id}": {
+    "/api/v1/saved_queries/{query_id}": {
       "delete": {
         "tags": [
           "Saved Queries"
@@ -213,7 +267,7 @@
         "description": "Delete saved query"
       }
     },
-    "/saved_queries": {
+    "/api/v1/saved_queries": {
       "post": {
         "tags": [
           "Saved Queries"
@@ -282,7 +336,7 @@
         "description": "List saved user queries"
       }
     },
-    "/queries": {
+    "/api/v1/queries": {
       "get": {
         "tags": [
           "Queries"
@@ -318,7 +372,7 @@
         "description": "List latest queries"
       }
     },
-    "/jobs/{id}": {
+    "/api/v1/jobs/{id}": {
       "get": {
         "tags": [
           "Jobs"
@@ -348,7 +402,7 @@
         "description": "Get job"
       }
     },
-    "/jobs": {
+    "/api/v1/jobs": {
       "post": {
         "tags": [
           "Jobs"
@@ -415,60 +469,6 @@
         ],
         "operationId": "list_jobs",
         "description": "List jobs"
-      }
-    },
-    "/config": {
-      "get": {
-        "tags": [
-          "Config"
-        ],
-        "summary": "",
-        "responses": {
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/ConfigResponse"
-            },
-            "description": "Success"
-          }
-        },
-        "parameters": [],
-        "operationId": "get_config",
-        "description": "List app configuration"
-      }
-    },
-    "/auth/accounts": {
-      "post": {
-        "tags": [
-          "Accounts"
-        ],
-        "summary": "",
-        "responses": {
-          "422": {
-            "schema": {
-              "$ref": "#/definitions/User"
-            },
-            "description": "Invalid parameters"
-          },
-          "200": {
-            "schema": {
-              "$ref": "#/definitions/UserSingleResponse"
-            },
-            "description": "Success"
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "$ref": "#/definitions/RegisterUserCommand"
-            },
-            "required": false,
-            "name": "account",
-            "in": "body",
-            "description": "Account attributes"
-          }
-        ],
-        "operationId": "create_account",
-        "description": "Create a new account"
       }
     }
   },

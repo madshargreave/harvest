@@ -2,7 +2,8 @@ defmodule HaServer.Endpoint do
   use Phoenix.Endpoint, otp_app: :ha_server
 
   # Websockets
-  socket "/socket", HaServer.UserSocket
+  socket "/socket", HaServer.UserSocket,
+    websocket: [timeout: 45_000]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
