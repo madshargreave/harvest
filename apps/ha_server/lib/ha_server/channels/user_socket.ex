@@ -5,11 +5,6 @@ defmodule HaServer.UserSocket do
   channel "logs:*", HaServer.LogChannel
   channel "records:*", HaServer.RecordChannel
 
-  ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket,
-    timeout: 45_000
-  # transport :longpoll, Phoenix.Transports.LongPoll
-
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
   # verification, you can put default assigns into
@@ -21,8 +16,8 @@ defmodule HaServer.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  @max_age 24 * 60 * 60
-  def connect(%{"token" => token}, socket) do
+  # @max_age 24 * 60 * 60
+  def connect(%{"token" => _token}, socket) do
     # case Phoenix.Token.verify(socket, "user token", token, max_age: @max_age) do
     #   {:ok, user_id} ->
         {:ok, assign(socket, :current_user_id, "mads")}

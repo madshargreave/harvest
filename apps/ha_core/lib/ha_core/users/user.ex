@@ -3,33 +3,37 @@ defmodule HaCore.Users.User do
   User model
   """
   use HaCore.Schema
+  alias HaCore.Users.UserCommands
 
   schema "users" do
     field :admin, :boolean, default: false
+    field :confirmed, :boolean, default: false
     field :email, :string
-    field :name, :string
+    field :password, :string
+    field :password_confirm, :string, virtual: true
     field :session_id, :string, virtual: true
 
     timestamps()
   end
 
   @doc false
-  def changeset(user, attrs) do
-    required = ~w(name email admin)a
+  def register_admin_changeset(%UserCommands.RegisterUserCommand{
+    email: email,
+    password: password,
+    password_confirm: password_confirm
+  }) do
+    required = ~w(email password password_confirm)a
     optional = ~w()a
 
-    user
-    |> cast(attrs, optional ++ required)
+    %__MODULE__{}
+    |> cast(%{
+      email: email,
+      password: password,
+      password_confirm: password_confirm,
+    }, optional ++ required)
+    |> put_change(:admin, true)
     |> unique_constraint(:email, message: "User with email already exists")
     |> validate_required(required)
-  end
-
-  @doc """
-  Check if user is admin
-  """
-  @spec admin?(t) :: boolean
-  def admin?(user) do
-    user.admin
   end
 
   defimpl HaSupport.Context do

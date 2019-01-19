@@ -1,7 +1,6 @@
 defmodule HaServer.LogController do
   use HaServer, :controller
 
-  alias HaCore.Logs
   alias HaCore.Logs.Log
 
   action_fallback HaServer.FallbackController

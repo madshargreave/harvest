@@ -26,9 +26,17 @@ defmodule HaServer.Router do
     plug :accepts, ["json"]
     plug SnakeCasePlug
     plug PaginationPlug
-    plug CurrentUserPlug
     plug PhoenixSwagger.Plug.Validate
     plug AtomifyPlug
+  end
+
+  pipeline :authenticated do
+    plug CurrentUserPlug
+  end
+
+  scope "/auth", HaServer do
+    pipe_through :api
+    resources "/accounts", AccountController, only: [:show, :create, :update]
   end
 
   scope "/api", HaServer do
@@ -38,7 +46,7 @@ defmodule HaServer.Router do
     end
 
     scope "/v1" do
-      pipe_through :api
+      pipe_through [:api, :authenticated]
 
       resources "/config", ConfigController, only: [:index]
       resources "/queries", QueryController, only: [:index]
@@ -64,8 +72,7 @@ defmodule HaServer.Router do
       },
       schemes: ["https"],
       consumes: "application/json",
-      produces: "application/json",
-      basePath: "/api/v1"
+      produces: "application/json"
     }
   end
 

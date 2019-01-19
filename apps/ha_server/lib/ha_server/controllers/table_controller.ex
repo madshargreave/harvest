@@ -7,7 +7,7 @@ defmodule HaServer.TableController do
   action_fallback HaServer.FallbackController
 
   swagger_path :index do
-    get "/tables"
+    get "/api/v1/tables"
     description "List tables"
     tag "Tables"
     paging
@@ -15,13 +15,13 @@ defmodule HaServer.TableController do
     response 200, "Success", Schema.ref(:TableListResponse)
   end
 
-  def index(conn, params) do
+  def index(conn, _params) do
     page = Tables.list_tables(conn.assigns.user, conn.assigns.pagination)
     render(conn, "index.json", tables: page.entries, paging: page.metadata)
   end
 
   swagger_path :show do
-    get "/tables/{id}"
+    get "/api/v1/tables/{id}"
     description "Get table"
     tag "Tables"
     parameter :id, :path, :string, "Table ID", required: true
@@ -36,7 +36,7 @@ defmodule HaServer.TableController do
   end
 
   swagger_path :create do
-    post "/tables"
+    post "/api/v1/tables"
     description "Create a new table from job results"
     tag "Tables"
     parameters do
@@ -58,7 +58,7 @@ defmodule HaServer.TableController do
   end
 
   swagger_path :destroy do
-    delete "/tables/{table_id}"
+    delete "/api/v1/tables/{table_id}"
     description "Delete table"
     tag "Tables"
     parameter :table_id, :path, :string, "Table ID", required: true

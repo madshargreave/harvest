@@ -23,8 +23,10 @@ defmodule HaServer.Application do
 
   defp load_swagger do
     base = :code.priv_dir(:ha_server)
-    path = Path.join(base, "static/swagger.json")
-    PhoenixSwagger.Validator.parse_swagger_schema(path)
+    paths = [
+      Path.join(base, "static/swagger.json")
+    ]
+    for path <- paths, do: PhoenixSwagger.Validator.parse_swagger_schema(path)
   end
 
 end

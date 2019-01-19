@@ -7,7 +7,7 @@ defmodule HaServer.SavedQueryController do
   action_fallback HaServer.FallbackController
 
   swagger_path :index do
-    get "/saved_queries"
+    get "/api/v1/saved_queries"
     description "List saved user queries"
     tag "Saved Queries"
     paging
@@ -21,7 +21,7 @@ defmodule HaServer.SavedQueryController do
   end
 
   swagger_path :create do
-    post "/saved_queries"
+    post "/api/v1/saved_queries"
     description "Save query"
     tag "Saved Queries"
     parameters do
@@ -43,7 +43,7 @@ defmodule HaServer.SavedQueryController do
   end
 
   swagger_path :destroy do
-    delete "/saved_queries/{query_id}"
+    delete "/api/v1/saved_queries/{query_id}"
     description "Delete saved query"
     tag "Saved Queries"
     parameter :query_id, :path, :string, "Query ID", required: true

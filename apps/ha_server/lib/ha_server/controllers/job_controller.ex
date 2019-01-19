@@ -7,7 +7,7 @@ defmodule HaServer.JobController do
   action_fallback HaServer.FallbackController
 
   swagger_path :index do
-    get "/jobs"
+    get "/api/v1/jobs"
     description "List jobs"
     tag "Jobs"
     paging
@@ -15,13 +15,13 @@ defmodule HaServer.JobController do
     response 200, "Success", Schema.ref(:JobListResponse)
   end
 
-  def index(conn, params) do
+  def index(conn, _params) do
     page = Jobs.list_jobs(conn.assigns.user, conn.assigns.pagination)
     render(conn, "index.json", jobs: page.entries, paging: page.metadata)
   end
 
   swagger_path :show do
-    get "/jobs/{id}"
+    get "/api/v1/jobs/{id}"
     description "Get job"
     tag "Jobs"
     parameters do
@@ -38,7 +38,7 @@ defmodule HaServer.JobController do
   end
 
   swagger_path :create do
-    post "/jobs"
+    post "/api/v1/jobs"
     description "Create a new job"
     tag "Jobs"
     parameters do

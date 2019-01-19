@@ -38,6 +38,9 @@ defmodule HaServer do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      # Swagger
+      # use HaCore.Schema
+
       import HaServer.Router.Helpers
       import HaServer.ErrorHelpers
       import HaServer.Gettext

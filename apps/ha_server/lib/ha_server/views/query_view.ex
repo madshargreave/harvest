@@ -1,5 +1,6 @@
 defmodule HaServer.QueryView do
   use HaServer, :view
+
   alias HaServer.QueryView
 
   def render("index.json", %{queries: queries}) do

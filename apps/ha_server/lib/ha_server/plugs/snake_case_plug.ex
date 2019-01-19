@@ -2,8 +2,6 @@ defmodule HaServer.Plugs.SnakeCasePlug do
   @moduledoc """
   Parses parameter based pagination data
   """
-  import Plug.Conn
-  require Logger
 
   def init(default) do
     default

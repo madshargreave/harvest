@@ -1,6 +1,7 @@
 use Mix.Config
 
 config :ha_core, :query_store_impl, HaCore.Queries.QueryStoreMock
+config :ha_core, :user_store_impl, HaCore.Users.UserStoreMock
 
 config :ha_core, HaCore.Dispatcher,
   adapter: GenDispatcher.TestDispatcher

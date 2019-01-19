@@ -5,8 +5,6 @@ defmodule HaServer.Plugs.PaginationPlug do
   import Plug.Conn
   alias HaSupport.Pagination
 
-  @fields ~w(limit)
-
   def init(default) do
     default
   end

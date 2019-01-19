@@ -5,7 +5,7 @@ defmodule HaServer.RecordController do
   action_fallback HaServer.FallbackController
 
   swagger_path :index do
-    get "/tables/{table_id}/records"
+    get "/api/v1/tables/{table_id}/records"
     description "List records"
     tag "Records"
     parameter :table_id, :path, :string, "Table ID", required: true

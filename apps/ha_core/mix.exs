@@ -38,6 +38,8 @@ defmodule HaCore.Mixfile do
       {:ha_support, in_umbrella: true},
       {:ha_storage, in_umbrella: true, runtime: false},
       {:ha_dsl, in_umbrella: true},
+      {:cognitex, "~> 0.1.0"},
+      {:httpoison, "~> 1.4", override: true},
       {:postgrex, ">= 0.0.0"},
       {:event_bus, "~> 1.6.0"},
       {:paginator, "~> 0.5"},

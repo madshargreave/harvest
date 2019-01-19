@@ -5,7 +5,7 @@ defmodule HaServer.QueryController do
   action_fallback HaServer.FallbackController
 
   swagger_path :index do
-    get "/queries"
+    get "/api/v1/queries"
     description "List latest queries"
     tag "Queries"
     paging

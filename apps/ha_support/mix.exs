@@ -45,6 +45,7 @@ defmodule HASupport.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:redix, ">= 0.0.0"},
       {:redix_stream, "~> 0.1.3"},
+      {:httpoison, "~> 1.4", override: true},
       {:poison, "~> 3.1.0"},
       {:atomic_map, "~> 0.8"},
       {:elixir_uuid, "~> 1.2"},
