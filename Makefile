@@ -11,8 +11,14 @@ help:
 clean: ## Clean build artifacts
 	mix clean
 
-run: ## Run the app from Docker
-	docker run --stop-signal=SIGINT --env PORT=4000 --expose 4000 -p 4000:4000 --rm -it $(APP_NAME):latest
+test:
+	source .env.test && mix test.watch
+
+server:
+	source .env.development && iex -S mix
+
+env:
+	docker-compose up
 
 image: ## Build a Docker image
 	docker build --build-arg APP_NAME=$(APP_NAME) \
