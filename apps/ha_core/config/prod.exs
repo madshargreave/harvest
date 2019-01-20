@@ -7,4 +7,5 @@ config :logger, :console,
   handle_otp_reports: false
 
 config :ha_core, HaCore.Repo.EctoImpl,
-  adapter: Ecto.Adapters.Postgres
+  adapter: Ecto.Adapters.Postgres,
+  pool_size: 10
