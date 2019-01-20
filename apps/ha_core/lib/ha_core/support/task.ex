@@ -6,7 +6,7 @@ defmodule HaCore.Task do
     :crypto,
     :ssl,
     :postgrex,
-    :ecto
+    :ecto_sql
   ]
 
   @repos Application.get_env(:ha_core, :ecto_repos, [])
