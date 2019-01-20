@@ -17,7 +17,14 @@ config :ha_server, HaServer.Endpoint,
   render_errors: [view: HaServer.ErrorView, accepts: ~w(json)],
   pubsub: [name: HAServer.PubSub,
            adapter: Phoenix.PubSub.PG2],
-  server: true
+  server: true,
+  http: [
+    protocol_options: [max_request_line_length: 8192, max_header_value_length: 8192]
+  ]
+
+config :ha_server, HaServer.AuthAccessPipeline,
+  module: HaServer.Guardian,
+  error_handler: HaServer.AuthErrorHandler
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -25,6 +32,18 @@ config :logger, :console,
   metadata: [:user_id, :request_id]
 
 config :logster, :allowed_headers, ["x-request-id"]
+
+config :ha_server, HaServer.Guardian,
+  issuer: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_fh5CHrMLu",
+  verify_issuer: false,
+  secret_key: %{
+    "alg" => "RS256",
+    "e" => "AQAB",
+    "kid" => "We7OIFK6KKwLpDuShEIPSQnHjA+JAhEl3TAxu24AQ7w=",
+    "kty" => "RSA",
+    "n" => "iK5OIRQQpaMfDeD0FhfcS-y2zP0m5lzjrPv1y5QPS4vGOtBt26ygyuqpPvjrl6L7R6puwcLQhBI3QU_QEs2KxtwV7LPA8kWzi7DQybF1ecKmcKS-UzalKKzzvcR09aUVRH2rr4WHn_k1O8xN1puPCwAtYJK6oC6aWpiMJJ0IhlNPrDARxTZsvvfv54W0kJCsO1qGbHk_pMUhp5MHA4768pFJiQ1mgfwP7H9ObKXrwz-8kgVJsvzRQWtAw-FP6kqPpQudr0lWHln1oBjDMuAuwK9DFmZt9O57ftqx8C5_8lnw1GBgEuB5GrJYwj7d8Ivo458ZCZ0Og5rb2j9EyrHjMQ",
+    "use" => "sig"
+  }
 
 config :ha_server, :phoenix_swagger,
   swagger_files: %{

@@ -39,6 +39,7 @@ defmodule HAServer.Mixfile do
     [
       {:ha_core, in_umbrella: true},
       {:ha_support, in_umbrella: true},
+      {:guardian, "~> 1.0"},
       {:ex_json_schema, "~> 0.5"},
       {:cors_plug, "~> 1.5"},
       {:proper_case, "~> 1.0.2"},
