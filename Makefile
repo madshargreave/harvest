@@ -1,7 +1,7 @@
 .PHONY: help clean build image run release image docker
 
-APP_NAME ?= `grep 'app:' apps/server/mix.exs | sed -e 's/\[//g' -e 's/ //g' -e 's/app://' -e 's/[:,]//g'`
-APP_VSN ?= `grep 'version:' apps/server/mix.exs | cut -d '"' -f2`
+APP_NAME ?= `grep 'app:' apps/ha_server/mix.exs | sed -e 's/\[//g' -e 's/ //g' -e 's/app://' -e 's/[:,]//g'`
+APP_VSN ?= `grep 'version:' apps/ha_server/mix.exs | cut -d '"' -f2`
 BUILD ?= `git rev-parse --short HEAD`
 
 help:
@@ -11,13 +11,13 @@ help:
 clean: ## Clean build artifacts
 	mix clean
 
-test:
+test: ## Run and watch testing suite
 	source .env.test && mix test.watch
 
-server:
+server: ## Start application server
 	source .env.development && iex -S mix
 
-env:
+env: ## Bootstrap dockerised development dependencies
 	docker-compose up
 
 image: ## Build a Docker image
