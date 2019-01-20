@@ -39,7 +39,8 @@ config :ha_ingestion, HaIngestion.Records.RecordHandler,
     GenConsumer.RedisConsumer,
       topics: ["event:core"],
       group: "ingestion",
-      consumer: "ingestion"
+      consumer: "ingestion",
+      host: System.get_env("REDIS_HOST")
   }
 
 # if File.exists?("#{Mix.env}.exs") do

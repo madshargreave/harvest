@@ -39,7 +39,8 @@ config :ha_server, HaServer.TableConsumer,
     GenConsumer.RedisConsumer,
       topics: ["event:storage"],
       group: "web:tables",
-      consumer: "web:tables"
+      consumer: "web:tables",
+      host: System.get_env("REDIS_HOST")
   }
 
 config :ha_server, HaServer.LogConsumer,
@@ -47,7 +48,8 @@ config :ha_server, HaServer.LogConsumer,
     GenConsumer.RedisConsumer,
       topics: ["event:core"],
       group: "web:logs",
-      consumer: "web:logs"
+      consumer: "web:logs",
+      host: System.get_env("REDIS_HOST")
   }
 
 config :ha_server, HaServer.RecordConsumer,
@@ -55,7 +57,8 @@ config :ha_server, HaServer.RecordConsumer,
     GenConsumer.RedisConsumer,
       topics: ["event:core"],
       group: "web:records",
-      consumer: "web:records"
+      consumer: "web:records",
+      host: System.get_env("REDIS_HOST")
   }
 
 # Import environment specific config. This must remain at the bottom

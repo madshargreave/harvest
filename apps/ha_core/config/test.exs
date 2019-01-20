@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :ha_core, HaCore.Repo.EctoImpl,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "harvest_test",
-  hostname: "localhost",
+  username: System.get_env("DATABASE_USER"),
+  password: System.get_env("DATABASE_PASS"),
+  database: System.get_env("DATABASE_NAME"),
+  hostname: System.get_env("DATABASE_HOST"),
   pool: Ecto.Adapters.SQL.Sandbox

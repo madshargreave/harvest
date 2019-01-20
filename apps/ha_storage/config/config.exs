@@ -37,11 +37,15 @@ config :ha_storage, HaStorage.Records.RecordHandler,
       topics: ["event:storage"],
       group: "storage:records",
       consumer: "consumer-1",
-      max_batch_size: 1000
+      max_batch_size: 1000,
+      host: System.get_env("REDIS_HOST")
   }
 
 config :ha_storage, HaStorage.Dispatcher,
-  adapter: GenDispatcher.RedisDispatcher
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
 
 config :ha_storage, HaStorage.Elastic.ElasticsearchCluster,
   # The URL where Elasticsearch is hosted on your system

@@ -32,7 +32,10 @@ config :ha_plugins,
   ecto_repos: []
 
 config :ha_plugins, HaPlugins.Dispatcher,
-  adapter: GenDispatcher.RedisDispatcher
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
 
 file = "#{Mix.env}.exs"
 if File.exists? file do
