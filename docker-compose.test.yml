@@ -1,6 +1,6 @@
 version: '2.1'
 services:
-  app:
+  tests:
     links:
       - redis
       - postgres
@@ -14,12 +14,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    restart: on-failure
     environment:
-      DATABASE_USER=postgres
-      DATABASE_PASS=postgres
-      DATABASE_NAME=harvest_test
-      DATABASE_HOST=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=postgres
+      - DATABASE_NAME=harvest_test
+      - DATABASE_HOST=postgres
+      - REDIS_HOST=redis
   redis:
     image: bitnami/redis:5.0
     ports:
@@ -28,7 +28,6 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
   postgres:
     image: postgres:10
-    restart: always
     ports:
       - 5432:5432
     volumes:

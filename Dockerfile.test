@@ -1,5 +1,7 @@
 FROM bitwalker/alpine-elixir-phoenix
 
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 ENV MIX_ENV=test
 
 # By convention, /opt is typically used for applications
@@ -17,5 +19,7 @@ RUN apk update && \
 # This copies our app source code into the build container
 COPY . .
 
-RUN mix do deps.get
-RUN iex -S mix
+RUN mix do deps.get, deps.compile
+
+ENTRYPOINT ["mix"]
+CMD ["test"]
