@@ -6,7 +6,7 @@ defmodule HaCore.Task do
     :crypto,
     :ssl,
     :postgrex,
-    :ecto
+    :ecto_sql
   ]
 
   @repos Application.get_env(:ha_core, :ecto_repos, [])
@@ -39,7 +39,7 @@ defmodule HaCore.Task do
     IO.puts("Starting repos..")
 
     # Switch pool_size to 2 for ecto > 3.0
-    Enum.each(@repos, & &1.start_link(pool_size: 1))
+    Enum.each(@repos, & &1.start_link(pool_size: 2))
   end
 
   defp stop_services do

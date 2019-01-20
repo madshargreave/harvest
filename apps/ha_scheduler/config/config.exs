@@ -40,7 +40,8 @@ config :ha_scheduler, HaScheduler.ScheduleHandler,
     GenConsumer.RedisConsumer,
       topics: ["event:core"],
       group: "scheduler",
-      consumer: "scheduler"
+      consumer: "scheduler",
+      host: System.get_env("REDIS_HOST")
   }
 
 # if File.exists?("#{Mix.env}.exs") do

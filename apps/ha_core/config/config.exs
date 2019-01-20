@@ -41,7 +41,8 @@ config :ha_core, HaCore.Jobs.JobHandler,
     GenConsumer.RedisConsumer,
       topics: ["event:core"],
       group: "jobs",
-      consumer: "jobs"
+      consumer: "jobs",
+      host: System.get_env("REDIS_HOST")
   }
 
 config :ha_core, HaCore.Logs.LogHandler,
@@ -49,10 +50,14 @@ config :ha_core, HaCore.Logs.LogHandler,
     GenConsumer.RedisConsumer,
       topics: ["event:core", "event:plugins:logs"],
       group: "logs",
-      consumer: "logs"
+      consumer: "logs",
+      host: System.get_env("REDIS_HOST")
   }
 
 config :ha_core, HaCore.Dispatcher,
-  adapter: GenDispatcher.RedisDispatcher
+  adapter: {
+    GenDispatcher.RedisDispatcher,
+      host: System.get_env("REDIS_HOST")
+  }
 
 import_config "#{Mix.env}.exs"

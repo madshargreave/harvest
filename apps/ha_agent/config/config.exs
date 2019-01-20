@@ -37,7 +37,8 @@ config :ha_agent, HaAgent.Handlers.QueryHandler,
     GenConsumer.RedisConsumer,
       topics: ["event:core"],
       group: "agent",
-      consumer: "agent"
+      consumer: "agent",
+      host: System.get_env("REDIS_HOST")
   }
 
 config :exd,

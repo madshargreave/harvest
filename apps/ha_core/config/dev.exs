@@ -9,19 +9,19 @@ config :logger, :console,
 # Configure your database
 config :ha_core, HaCore.Repo.EctoImpl,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "harvest_dev",
-  hostname: "localhost",
+  username: System.get_env("DATABASE_USER"),
+  password: System.get_env("DATABASE_PASS"),
+  database: System.get_env("DATABASE_NAME"),
+  hostname: System.get_env("DATABASE_HOST"),
   pool_size: 10
 
 # Configure your database
 config :exd_streams, ExdStreams.Store.RelationalStore.RecordRepo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "harvest_dev",
-  hostname: "localhost",
+  username: System.get_env("DATABASE_USER"),
+  password: System.get_env("DATABASE_PASS"),
+  database: System.get_env("DATABASE_NAME"),
+  hostname: System.get_env("DATABASE_HOST"),
   pool_size: 10
 
 config :aws,
