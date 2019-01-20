@@ -31,7 +31,7 @@ defmodule HaServer.Router do
   end
 
   pipeline :authenticated do
-    plug HaServer.AuthAccessPipeline
+    plug CurrentUserPlug
   end
 
   scope "/auth", HaServer do

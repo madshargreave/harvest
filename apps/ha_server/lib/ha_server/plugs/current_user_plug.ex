@@ -11,14 +11,12 @@ defmodule HaServer.Plugs.CurrentUserPlug do
   end
 
   def call(conn, _default) do
-    with {:ok, token} <- fetch_access_token(conn) do
+    with {:ok, token} <- fetch_access_token(conn),
+         {:ok, user} <- fetch_user(token) do
       [request_id] = Plug.Conn.get_resp_header(conn, "x-request-id")
-      user = %{@user | session_id: request_id}
-
-      IO.inspect HaServer.Guardian.decode_and_verify(token)
+      user = %{user | session_id: request_id}
       conn
-      |> fetch_session
-      |> put_session(:default, token)
+      |> assign(:request_id, request_id)
       |> assign(:user, user)
     else
       _ ->
@@ -38,6 +36,16 @@ defmodule HaServer.Plugs.CurrentUserPlug do
           acc
       end
     end)
+  end
+
+  defp fetch_user(token) do
+    case Cognitex.get_user(token) do
+      {:ok, %{user_attributes: %{sub: id}}} when is_binary(id) ->
+        user = %HaCore.Users.User{id: id}
+        {:ok, user}
+      _ ->
+        {:error, :invalid_token}
+    end
   end
 
 end
