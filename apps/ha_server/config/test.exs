@@ -14,6 +14,8 @@ config :ha_server, HaServer.Endpoint,
   watchers: [],
   server: false
 
+config :ha_server, :authenticator_impl, HaServer.AuthenticatorMock
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

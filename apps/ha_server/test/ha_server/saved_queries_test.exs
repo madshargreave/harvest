@@ -34,6 +34,10 @@ defmodule HaServer.QueriesTest do
         |> Map.put(:updated_at, @timestamp)
       {:ok, entity}
     end)
+    HaServer.AuthenticatorMock
+    |> expect(:authenticate, fn _conn ->
+      {:ok, %HaCore.Users.User{id: "test-id"}}
+    end)
     {:ok, []}
   end
 
