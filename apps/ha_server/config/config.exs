@@ -17,7 +17,14 @@ config :ha_server, HaServer.Endpoint,
   render_errors: [view: HaServer.ErrorView, accepts: ~w(json)],
   pubsub: [name: HAServer.PubSub,
            adapter: Phoenix.PubSub.PG2],
-  server: true
+  server: true,
+  http: [
+    protocol_options: [max_request_line_length: 8192, max_header_value_length: 8192]
+  ]
+
+config :cors_plug,
+  send_preflight_response?: false,
+  origin: System.get_env("ORIGIN")
 
 # Configures Elixir's Logger
 config :logger, :console,
