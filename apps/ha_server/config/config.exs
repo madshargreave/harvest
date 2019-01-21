@@ -22,6 +22,10 @@ config :ha_server, HaServer.Endpoint,
     protocol_options: [max_request_line_length: 8192, max_header_value_length: 8192]
   ]
 
+config :cors_plug,
+  send_preflight_response?: false,
+  origin: System.get_env("ORIGIN")
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

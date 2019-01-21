@@ -40,6 +40,10 @@ config :ha_server, HaServer.Endpoint,
   url: [host: host, port: port],
   root: "./apps/server"
 
+config :cors_plug,
+  send_preflight_response?: false,
+  origin: System.get_env("ORIGIN")
+
 config :ha_core, HaCore.Repo.EctoImpl,
   username: System.get_env("DATABASE_USER"),
   password: System.get_env("DATABASE_PASS"),

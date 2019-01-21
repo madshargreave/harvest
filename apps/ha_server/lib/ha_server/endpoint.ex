@@ -58,4 +58,5 @@ defmodule HaServer.Endpoint do
       {:ok, config}
     # end
   end
+
 end
