@@ -19,8 +19,10 @@ defmodule HaServer.Plugs.CurrentUserPlug do
       |> assign(:request_id, request_id)
       |> assign(:user, user)
     else
-      _ ->
-        halt(conn)
+      _error ->
+        conn
+        |> HaServer.FallbackController.call({:error, :unauthorized})
+        |> halt()
     end
   end
 
