@@ -44,7 +44,10 @@ config :ha_server, HaServer.Endpoint,
 # Cors
 config :cors_plug,
   send_preflight_response?: false,
-  origin: System.get_env("ORIGIN")
+  origin: [
+    System.get_env("ORIGIN_FRONTEND"),
+    System.get_env("ORIGIN_API")
+  ]
 
 # Cognito
 config :aws,

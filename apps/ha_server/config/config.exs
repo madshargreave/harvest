@@ -24,7 +24,10 @@ config :ha_server, HaServer.Endpoint,
 
 config :cors_plug,
   send_preflight_response?: false,
-  origin: System.get_env("ORIGIN")
+  origin: [
+    System.get_env("ORIGIN_FRONTEND"),
+    System.get_env("ORIGIN_API")
+  ]
 
 config :aws,
   key: System.get_env("AWS_ACCESS_KEY_ID"),
