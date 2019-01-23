@@ -34,7 +34,7 @@ defmodule HASupport.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:exd, "~> 0.1.31"},
+      {:exd, "~> 0.1.36"},
       {:exd_plugin_html, "~> 0.1.1"},
       {:exd_codegen_elastic, "~> 0.1.0"},
       {:gen_dispatcher, ">= 0.0.0"},

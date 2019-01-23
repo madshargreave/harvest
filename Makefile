@@ -12,7 +12,7 @@ clean: ## Clean build artifacts
 	mix clean
 
 test: ## Run and watch testing suite
-	source .env.test && mix test.watch
+	source .env.test && mix test.watch --stale
 
 server: ## Start application server
 	source .env.development && iex -S mix
@@ -25,3 +25,7 @@ image: ## Build a Docker image
 		--build-arg APP_VSN=$(APP_VSN) \
 		-t $(APP_NAME):$(APP_VSN)-$(BUILD) \
 		-t $(APP_NAME):latest .
+
+link_dsl: ## Bump the DSL to the latest version
+	npm link @harvestio/harvest-sql
+	cp node_modules/harvest-sql/dist/bundle.js apps/ha_dsl/priv/parser.js

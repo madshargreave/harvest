@@ -22,7 +22,7 @@ defmodule HaServer.Authenticator.CognitoAuthenticator do
     |> Enum.reduce(:error, fn {key, value}, acc ->
       case String.split(key, ".") |> List.last do
         "accessToken" ->
-          {:ok, value} |> IO.inspect
+          {:ok, value}
         _ ->
           acc
       end

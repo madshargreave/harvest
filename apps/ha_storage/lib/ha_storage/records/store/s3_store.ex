@@ -11,7 +11,7 @@ defmodule HaStorage.Records.S3Store do
   alias HaStorage.Tables.Table
   alias HaStorage.Records.S3Store.Lazy
 
-  @limit 100
+  @limit 1000
 
   @impl true
   def list(%Table{id: table_id} = table, pagination) do

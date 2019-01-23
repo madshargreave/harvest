@@ -20,6 +20,30 @@ defmodule HaPlugins.FetchPlugin do
   end
 
   @impl true
+  def signature do
+    [
+      %{
+        type: :string,
+        required: true
+      },
+      %{
+        type: :keyword,
+        required: false,
+        values: %{
+          selector: %{
+            type: :string,
+            required: false
+          },
+          generator: %{
+            type: :string,
+            required: false
+          }
+        }
+      }
+    ]
+  end
+
+  @impl true
   def init(%Exd.Context{env: env, params: [url] = opts} = context) do
     job_id = Keyword.fetch!(env, :job_id)
     client =
