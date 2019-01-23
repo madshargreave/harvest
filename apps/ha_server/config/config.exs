@@ -26,6 +26,13 @@ config :cors_plug,
   send_preflight_response?: false,
   origin: System.get_env("ORIGIN")
 
+config :aws,
+  key: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  region: System.get_env("AWS_DEFAULT_REGION"),
+  client_id: System.get_env("AWS_CLIENT_ID"),
+  user_pool_id: System.get_env("AWS_USER_POOL_ID")
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
