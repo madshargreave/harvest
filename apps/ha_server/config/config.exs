@@ -25,8 +25,13 @@ config :ha_server, HaServer.Endpoint,
 config :cors_plug,
   send_preflight_response?: false,
   origin: [
-    System.get_env("ORIGIN_FRONTEND"),
-    System.get_env("ORIGIN_API")
+    "http://localhost:3000",
+    "app.fusery.io",
+    "app.fusery.io",
+    "http://app.fusery.io",
+    "http://app.fusery.io",
+    "https://api.fusery.io",
+    "https://app.fusery.io",
   ]
 
 config :aws,
