@@ -21,7 +21,6 @@ defmodule HaPlugins.FetchPlugin do
 
   @impl true
   def init(%Exd.Context{env: env, params: params} = context) do
-    IO.inspect params
     {url, opts} = build_config(params) |> IO.inspect
     job_id = Keyword.fetch!(env, :job_id)
     client =

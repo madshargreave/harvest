@@ -14,7 +14,6 @@ defmodule HaPlugins.OpenPlugin do
       :base_url,
       :next_url,
       :config,
-      :buffered_demand,
       :current_page
     ]
   end
@@ -37,27 +36,27 @@ defmodule HaPlugins.OpenPlugin do
   @impl true
   def init(%Exd.Context{env: env, params: params} = context) do
     job_id = Keyword.fetch!(env, :job_id)
-    IO.inspect params
     {url, config} = build_config(params) |> IO.inspect
     state = %State{
       job_id: job_id,
       base_url: url,
       next_url: url,
       config: config,
-      buffered_demand: 0,
       current_page: 0
     }
     {:producer, state}
   end
 
   defp build_config([url, opts]) when is_list(opts) do
-    opts = for {key, value} <- opts, do: {String.to_existing_atom(key), value}
+    opts = for {key, value} <- opts, do: {to_atom(key), value}
     config = struct(Config, opts)
     {url, config}
   end
   defp build_config([url]),
     do: {url, struct(Config, [])}
   defp build_config(_), do: raise "Unknown plugin signature"
+  defp to_atom(value) when is_atom(value), do: value
+  defp to_atom(value) when is_binary(value), do: String.to_existing_atom(value)
 
   @impl true
   def handle_demand(demand, state) when demand > 0 do
@@ -68,7 +67,6 @@ defmodule HaPlugins.OpenPlugin do
         %State{
           state |
             next_url: next_url,
-            buffered_demand: state.buffered_demand + demand - 1,
             current_page: state.current_page + 1
         }
       records = [to_record(state.next_url, response, parsed)]

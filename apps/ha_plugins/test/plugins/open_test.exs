@@ -4,7 +4,7 @@ defmodule HaPlugins.Plugins.OpenTest do
 
   @url "https://coinmarketcap.com"
   @job_id 123
-  @env %{job_id: @job_id}
+  @env [job_id: @job_id]
 
   defp context_with_url(_) do
     [
@@ -33,6 +33,7 @@ defmodule HaPlugins.Plugins.OpenTest do
           job_id: @job_id,
           base_url: @url,
           next_url: @url,
+          current_page: 0,
           config: %OpenPlugin.Config{}
         }
       } == OpenPlugin.init(context)
@@ -48,6 +49,7 @@ defmodule HaPlugins.Plugins.OpenTest do
           job_id: @job_id,
           base_url: @url,
           next_url: @url,
+          current_page: 0,
           config: %OpenPlugin.Config{path: "?"}
         }
       } == OpenPlugin.init(context)
