@@ -47,11 +47,10 @@ config :ha_storage, HaStorage.Dispatcher,
       host: System.get_env("REDIS_HOST")
   }
 
-config :ha_storage, HaStorage.Records.DynamoStore.Repo,
-  adapter: Ecto.Adapters.DynamoDB
-
 config :ecto_adapters_dynamodb,
-  log_levels: [:warning]
+  log_levels: [:warning],
+  insert_nil_fields: false,
+  remove_nil_fields_on_update: true
 
 config :ha_storage, HaStorage.Elastic.ElasticsearchCluster,
   # The URL where Elasticsearch is hosted on your system
