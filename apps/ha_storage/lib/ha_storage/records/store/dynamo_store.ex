@@ -20,11 +20,14 @@ defmodule HaStorage.Records.DynamoStore do
   @impl true
   def list(%Table{id: table_id} = table, pagination) do
     opts = [
-      projection_expression: "id"
+      projection_expression: "id",
+      scan_limit: 100,
+      page_limit: 1
     ]
     query =
       from r in get_source(),
-      where: r.table_id == ^table_id
+      where: r.table_id == ^table_id,
+      order_by: [desc: r.cid]
 
     ids = for record <- Repo.all(query, opts), do: record.id
 
