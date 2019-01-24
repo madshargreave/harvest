@@ -47,6 +47,9 @@ config :ha_storage, HaStorage.Dispatcher,
       host: System.get_env("REDIS_HOST")
   }
 
+config :ecto_adapters_dynamodb,
+  log_levels: [:warning]
+
 config :ha_storage, HaStorage.Elastic.ElasticsearchCluster,
   # The URL where Elasticsearch is hosted on your system
   url: "http://localhost:9200",

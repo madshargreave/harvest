@@ -10,6 +10,7 @@ defmodule HaStorage.Records.RecordService do
   Save records to table
   """
   def save(table, records) do
+    Logger.info "Saving #{length(records)} records"
     with {:ok, _} <- RecordStore.save(table, records) do
       Dispatcher.dispatch(%{
         type: :table_updates,
