@@ -13,12 +13,10 @@ config :ha_storage, HaStorage.Hashes.HashStore.Postgres.Repo,
   pool_size: 10
 
 config :ha_storage, HaStorage.Records.DynamoStore.Repo,
-  adapter: Ecto.Adapters.DynamoDB,
-  # ExAws configuration
   access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
   secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
   region: System.get_env("AWS_DEFAULT_REGION"),
-  debug_requests: true	# ExAws option to enable debug on aws http request.
+  debug_requests: false	# ExAws option to enable debug on aws http request.
   # dynamodb: [
   #   scheme: "https://",
   #   host: "localhost",
