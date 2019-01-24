@@ -30,7 +30,6 @@ defmodule HaAgent.MixProject do
       {:ha_core, in_umbrella: true, runtime: false},
       {:ha_plugins, in_umbrella: true, runtime: false},
       {:ha_support, in_umbrella: true, runtime: false},
-      {:exd_streams, "~> 0.0.4"},
       {:poolboy, "~> 1.5.1"},
       {:libcluster, "~> 3.0.1"}
     ]

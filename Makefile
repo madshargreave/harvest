@@ -26,6 +26,10 @@ image: ## Build a Docker image
 		-t $(APP_NAME):$(APP_VSN)-$(BUILD) \
 		-t $(APP_NAME):latest .
 
-link_dsl: ## Bump the DSL to the latest version
+update_dsl: ## Bump the DSL to the latest version
+	npm i @harvestio/harvest-sql@latest --save
+	cp node_modules/@harvestio/harvest-sql/dist/bundle.js apps/ha_dsl/priv/parser.js
+
+link_dsl: ## Link the DSL to the latest version
 	npm link @harvestio/harvest-sql
-	cp node_modules/harvest-sql/dist/bundle.js apps/ha_dsl/priv/parser.js
+	cp node_modules/@harvestio/harvest-sql/dist/bundle.js apps/ha_dsl/priv/parser.js

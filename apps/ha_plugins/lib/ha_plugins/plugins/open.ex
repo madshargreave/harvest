@@ -22,10 +22,10 @@ defmodule HaPlugins.OpenPlugin do
   defmodule Config do
     @moduledoc false
     defstruct [
-      :method,
-      path: "/?",
-      generator: ".bottom-paginator a:fl-contains('Next')",
-      max_pages: 3
+      method: :get,
+      path: nil,
+      generator: nil,
+      max_pages: 1
     ]
   end
 
@@ -35,9 +35,10 @@ defmodule HaPlugins.OpenPlugin do
   end
 
   @impl true
-  def init(%Exd.Context{env: env, params: params = opts} = context) do
+  def init(%Exd.Context{env: env, params: params} = context) do
     job_id = Keyword.fetch!(env, :job_id)
-    {url, config} = build_config(params)
+    IO.inspect params
+    {url, config} = build_config(params) |> IO.inspect
     state = %State{
       job_id: job_id,
       base_url: url,
@@ -49,8 +50,13 @@ defmodule HaPlugins.OpenPlugin do
     {:producer, state}
   end
 
-  defp build_config([url]), do: {url, struct(Config, [])}
-  defp build_config([url, opts]) when is_list(opts), do: {url, struct(Config, opts)}
+  defp build_config([url, opts]) when is_list(opts) do
+    opts = for {key, value} <- opts, do: {String.to_existing_atom(key), value}
+    config = struct(Config, opts)
+    {url, config}
+  end
+  defp build_config([url]),
+    do: {url, struct(Config, [])}
   defp build_config(_), do: raise "Unknown plugin signature"
 
   @impl true

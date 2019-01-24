@@ -20,31 +20,9 @@ defmodule HaPlugins.FetchPlugin do
   end
 
   @impl true
-  def signature do
-    [
-      %{
-        type: :string,
-        required: true
-      },
-      %{
-        type: :keyword,
-        required: false,
-        values: %{
-          selector: %{
-            type: :string,
-            required: false
-          },
-          generator: %{
-            type: :string,
-            required: false
-          }
-        }
-      }
-    ]
-  end
-
-  @impl true
-  def init(%Exd.Context{env: env, params: [url] = opts} = context) do
+  def init(%Exd.Context{env: env, params: params} = context) do
+    IO.inspect params
+    {url, opts} = build_config(params) |> IO.inspect
     job_id = Keyword.fetch!(env, :job_id)
     client =
       Client.new(
@@ -55,6 +33,10 @@ defmodule HaPlugins.FetchPlugin do
     state = %State{job_id: job_id, url: url, client: client}
     {:producer, state}
   end
+
+  defp build_config([url]), do: {url, []}
+  defp build_config([url, opts]) when is_list(opts), do: {url, opts}
+  defp build_config(_), do: raise "Unknown plugin signature"
 
   @impl true
   def handle_demand(demand, state) do

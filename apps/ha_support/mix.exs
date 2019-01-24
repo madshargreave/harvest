@@ -34,7 +34,8 @@ defmodule HASupport.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:exd, "~> 0.1.36"},
+      {:exd, "~> 0.2.1", override: true},
+      {:exd_streams, "~> 0.0.4"},
       {:exd_plugin_html, "~> 0.1.1"},
       {:exd_codegen_elastic, "~> 0.1.0"},
       {:gen_dispatcher, ">= 0.0.0"},
@@ -48,8 +49,7 @@ defmodule HASupport.Mixfile do
       {:httpoison, "~> 1.4", override: true},
       {:poison, "~> 3.1.0"},
       {:atomic_map, "~> 0.8"},
-      {:elixir_uuid, "~> 1.2"},
-
+      {:elixir_uuid, "~> 1.2"}
     ]
   end
 
