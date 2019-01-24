@@ -36,7 +36,7 @@ defmodule HaStorage.Mixfile do
   defp deps do
     [
       {:ha_support, in_umbrella: true},
-      {:postgrex, ">= 0.0.0"},
+      {:ecto_adapters_dynamodb, "~> 0.4.6"},
       {:elasticsearch, "~> 0.6.1"},
       {:ex_aws, "~> 2.1"},
       {:ex_aws_s3, "~> 2.0"},

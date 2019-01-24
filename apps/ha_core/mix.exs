@@ -40,9 +40,8 @@ defmodule HaCore.Mixfile do
       {:ha_dsl, in_umbrella: true},
       {:cognitex, "~> 0.1.0"},
       {:httpoison, "~> 1.4", override: true},
-      {:postgrex, ">= 0.0.0"},
       {:event_bus, "~> 1.6.0"},
-      {:paginator, "~> 0.5"},
+      {:paginator, "~> 0.4.1"},
       {:mox, "~> 0.4", only: :test}
     ]
   end

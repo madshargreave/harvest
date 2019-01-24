@@ -3,9 +3,15 @@ defmodule HaStorage.Records.RecordStore do
   alias HaSupport.Pagination
   alias HaStorage.Records
   alias HaStorage.Records.Record
-  alias HaStorage.Records.S3Store
+  alias HaStorage.Records.DynamoStore
 
-  @adapter Application.get_env(:ha_storage, :record_store_impl) || S3Store
+  @adapter Application.get_env(:ha_storage, :record_store_impl) || DynamoStore
+
+  @doc """
+  Delegates to storage layer based on table and saves records
+  """
+  @callback start_link(Keyword.t) :: GenServer.on_start
+  defdelegate start_link(opts \\ []), to: @adapter
 
   @doc """
   Delegates to storage layer based on table and saves records
@@ -29,6 +35,10 @@ defmodule HaStorage.Records.RecordStore do
   defmacro __using__(_opts) do
     quote do
       @behaviour HaStorage.Records.RecordStore
+      def start_link(_opts) do
+        :ok
+      end
+      defoverridable start_link: 1
     end
   end
 
