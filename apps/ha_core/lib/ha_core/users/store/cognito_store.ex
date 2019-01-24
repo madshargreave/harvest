@@ -14,7 +14,7 @@ defmodule HaCore.Users.Store.CognitoStore do
   def save(context, %Changeset{valid?: false} = changeset), do: {:error, changeset}
   def save(context, changeset) do
     user = Changeset.apply_changes(changeset)
-    case Cognitex.sign_up(user.email, user.password, []) |> IO.inspect do
+    case Cognitex.sign_up(user.email, user.password, []) do
       {:ok, %{"UserSub" => user_id}} ->
         now = NaiveDateTime.utc_now()
         user =

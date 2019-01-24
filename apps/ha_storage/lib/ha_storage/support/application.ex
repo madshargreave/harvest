@@ -13,9 +13,8 @@ defmodule HaStorage.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
+      supervisor(HaStorage.Records.RecordStore, []),
       HaStorage.Dispatcher,
-      # supervisor(HaStorage.Elastic.Supervisor, []),
-      supervisor(HaStorage.Hashes.HashSupervisor, []),
       HaStorage.Records.RecordHandler,
       HaStorage.Records.RecordWriter
     ]

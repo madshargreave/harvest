@@ -20,7 +20,7 @@ defmodule HaStorage.Records.RecordHandler do
   }) do
     spawn_link fn ->
       RecordWriter.add(
-        %Record{key: key, table: table_id, value: value, ts: ts }
+        %Record{id: key, table_id: table_id, value: value, inserted_at: ts}
       )
     end
     :ok
@@ -35,7 +35,7 @@ defmodule HaStorage.Records.RecordHandler do
   }) do
     spawn_link fn ->
       RecordWriter.add(
-        %Record{key: key, table: table_id, value: value, ts: ts }
+        %Record{id: key, table_id: table_id, value: value, inserted_at: ts}
       )
     end
     :ok
