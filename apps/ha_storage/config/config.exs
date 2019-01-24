@@ -47,6 +47,9 @@ config :ha_storage, HaStorage.Dispatcher,
       host: System.get_env("REDIS_HOST")
   }
 
+config :ha_storage, HaStorage.Records.DynamoStore.Repo,
+  adapter: Ecto.Adapters.DynamoDB
+
 config :ecto_adapters_dynamodb,
   log_levels: [:warning],
   insert_nil_fields: false,
