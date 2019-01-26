@@ -4,7 +4,24 @@ defmodule HaCore.Jobs.JobHandler do
   use GenConsumer, otp_app: :ha_core
 
   alias HaCore.Jobs.JobService
-  alias HaCore.Jobs.Commands.CompleteJobCommand
+  alias HaCore.Jobs.Commands.{StartJobCommand, CompleteJobCommand}
+
+  @impl true
+  def handle_event(%{
+    type: :query_started,
+    started_at: started_at,
+    meta: %{
+      job_id: job_id
+    }
+  } = event) do
+    JobService.start(
+      nil,
+      %StartJobCommand{
+        id: job_id,
+        started_at: started_at
+      }
+    )
+  end
 
   @impl true
   def handle_event(%{
@@ -12,12 +29,11 @@ defmodule HaCore.Jobs.JobHandler do
     start_at: started_at,
     end_at: ended_at,
     meta: %{
-      job_id: job_id,
-      event: event
+      job_id: job_id
     }
-  }) do
+  } = event) do
     JobService.complete(
-      event,
+      nil,
       %CompleteJobCommand{
         id: job_id,
         started_at: started_at,

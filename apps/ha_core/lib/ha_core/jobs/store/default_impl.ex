@@ -39,6 +39,13 @@ defmodule HaCore.Jobs.Store.DefaultImpl do
   end
 
   @impl true
+  def get_by_user!(user, id) do
+    Job
+    |> Repo.get!(id)
+    |> Repo.preload(@preloaded)
+  end
+
+  @impl true
   def save(context, changeset) do
     with {:ok, entity} <- Repo.save(context, changeset) do
       {:ok, Repo.preload(entity, @preloaded)}

@@ -5,11 +5,13 @@ defmodule HaPlugins.OpenPlugin do
   use Exd.Plugin
   require Logger
 
+  alias HaPlugins.Dispatcher
   alias HaPlugins.OpenPlugin.{Client, Paginator, Server}
 
   defmodule State do
     @moduledoc false
     defstruct [
+      :started_at,
       :job_id,
       :base_url,
       :next_url,
@@ -36,14 +38,22 @@ defmodule HaPlugins.OpenPlugin do
   @impl true
   def init(%Exd.Context{env: env, params: params} = context) do
     job_id = Keyword.fetch!(env, :job_id)
-    {url, config} = build_config(params) |> IO.inspect
+    {url, config} = build_config(params)
     state = %State{
+      started_at: NaiveDateTime.utc_now(),
       job_id: job_id,
       base_url: url,
       next_url: url,
       config: config,
       current_page: 0
     }
+    Dispatcher.dispatch(%{
+      type: :query_started,
+      started_at: state.started_at,
+      meta: %{
+        job_id: state.job_id
+      }
+    })
     {:producer, state}
   end
 
@@ -71,6 +81,14 @@ defmodule HaPlugins.OpenPlugin do
         }
       records = [to_record(state.next_url, response, parsed)]
       if !next_url || new_state.current_page >= state.config.max_pages do
+        Dispatcher.dispatch(%{
+          type: :query_done,
+          start_at: state.started_at,
+          end_at: NaiveDateTime.utc_now(),
+          meta: %{
+            job_id: state.job_id
+          }
+        })
         schedule_shutdown()
         {:noreply, records, new_state}
       else

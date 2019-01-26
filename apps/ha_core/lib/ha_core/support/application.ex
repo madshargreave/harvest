@@ -9,8 +9,8 @@ defmodule HaCore.Application do
     # Define workers and child supervisors to be supervised
     children = [
       supervisor(HaCore.Repo.EctoImpl, []),
-      supervisor(HaCore.Dispatcher, [])
-      # HaCore.Jobs.JobHandler,
+      supervisor(HaCore.Dispatcher, []),
+      HaCore.Jobs.JobHandler,
       # HaCore.Logs.LogHandler
     ]
 

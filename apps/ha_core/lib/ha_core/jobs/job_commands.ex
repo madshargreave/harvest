@@ -10,6 +10,14 @@ defmodule HaCore.Jobs.Commands do
     end
   end
 
+  defmodule StartJobCommand do
+    @moduledoc false
+    use SwaggerEcto.Schema
+    swagger_embedded_schema "start_job_command" do
+      field :started_at, :string
+    end
+  end
+
   defmodule CompleteJobCommand do
     @moduledoc false
     use SwaggerEcto.Schema

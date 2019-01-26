@@ -20,7 +20,8 @@ defmodule HaCore.Queries.Store.DefaultImpl do
         select: %{
           id: j.id,
           query: jc.query,
-          inserted_at: j.inserted_at
+          inserted_at: j.inserted_at,
+          status: j.status
         }
     query =
       from s in subquery(latest_queries),

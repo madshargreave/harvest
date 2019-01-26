@@ -34,6 +34,16 @@ defmodule HaCore.Jobs.JobService do
   @doc """
   Sets the status of an existing job as complete
   """
+  @spec start(HaCore.context, Commands.StartJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
+  def start(context, command) do
+    job = JobStore.get!(command.id)
+    changeset = Job.start_changeset(job, command)
+    JobStore.save(context, changeset)
+  end
+
+  @doc """
+  Sets the status of an existing job as complete
+  """
   @spec complete(HaCore.context, Commands.CompleteJobCommand.t) :: {:ok, Job.t} | {:error, InvalidChangesetError.t}
   def complete(context, command) do
     job = JobStore.get!(command.id)

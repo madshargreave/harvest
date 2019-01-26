@@ -65,6 +65,14 @@ defmodule HaCore.Jobs.Job do
     |> put_assoc(:schema, schema)
   end
 
+  @spec start_changeset(t, StartJobCommand.t) :: Changeset.t
+  def start_changeset(job, command) do
+    job
+    |> change()
+    |> put_change(:status, "in_progress")
+    |> register_event(Events.JobStarted)
+  end
+
   @spec complete_changeset(t, CompleteJobCommand.t) :: Changeset.t
   def complete_changeset(job, command) do
     job

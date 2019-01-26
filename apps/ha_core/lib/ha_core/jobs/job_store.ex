@@ -24,8 +24,14 @@ defmodule HaCore.Jobs.JobStore do
   @doc """
   Gets a single query.
   """
-  @callback get!(HaCore.user, Jobs.id) :: Job.t
-  defdelegate get(user, id), to: @adapter
+  @callback get!(Jobs.id) :: Job.t
+  defdelegate get!(id), to: @adapter
+
+  @doc """
+  Gets a single query.
+  """
+  @callback get_by_user!(HaCore.user, Jobs.id) :: Job.t
+  defdelegate get_by_user!(user, id), to: @adapter
 
   @doc """
   Saves a job changeset
